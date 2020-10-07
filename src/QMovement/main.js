@@ -992,7 +992,8 @@ function ColliderManager() {
             var value = only(charas[i]);
             if (value === "break") {
               near.push(charas[i]);
-              isBreaking = true;
+              // Why was this in original code? It does not exist in this method.
+              // isBreaking = true;
               return near;
             } else if (value === false) {
               continue;
