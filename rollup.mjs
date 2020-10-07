@@ -3,6 +3,9 @@ import resolve from "rollup-plugin-node-resolve";
 import { rollup } from "rollup";
 import { promises as fs } from "fs";
 
+const OUTPUT_DIR =
+  process.env.NODE_ENV === "production" ? "./dist/" : "./games/";
+
 const filterText = function (text, regex, action) {
   const result = [];
   let match;
@@ -40,7 +43,7 @@ const external = ["fs-extra", "http", "path"];
 const outputOptions = {
   indent: false,
   format: "iife",
-  sourcemap: true,
+  sourcemap: process.env.NODE_ENV !== "production",
 };
 
 (async function () {
@@ -76,7 +79,7 @@ const outputOptions = {
         return await fs.readFile(`./src/${dir}/Params.js`, "utf8");
       },
       name: exportName ? exportName : "",
-      file: `./games/mz/js/plugins/Luna_${dir}.js`,
+      file: `${OUTPUT_DIR}/mz/js/plugins/Luna_${dir}.js`,
       ...outputOptions,
     });
 
@@ -86,7 +89,7 @@ const outputOptions = {
         return await fs.readFile(`./src/${dir}/Params.js`, "utf8");
       },
       name: exportName ? exportName : "",
-      file: `./games/mv/js/plugins/Luna_${dir}.js`,
+      file: `${OUTPUT_DIR}/mv/js/plugins/Luna_${dir}.js`,
       ...outputOptions,
     });
   });

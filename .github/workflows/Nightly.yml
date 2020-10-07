@@ -1,0 +1,23 @@
+name: Build Plugin - Nightly
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build Production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: npm ci
+      - run: npm run build
+      - name: Archive nightly build
+        uses: actions/upload-artifact@v2
+        with:
+          name: nightly
+          path: dist
