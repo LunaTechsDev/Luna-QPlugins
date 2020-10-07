@@ -1205,6 +1205,24 @@ if (Utils.RPGMAKER_NAME === "MZ") {
     $gamePlayer.reserveTransfer(mapId, x, y, dir, fade);
     return;
   });
+
+  PluginManager.registerCommand("Luna_QMovement", "setPosition", (args) => {
+    var { dir = 0 } = args;
+    var chara = null;
+    if (args.charId.toLowerCase() === "this") {
+      chara = this.character(0);
+    } else {
+      chara = QPlus.getCharacter(args.charId);
+    }
+    if (!chara) return;
+    var x = Number(args.x) / QMovement.tileSize;
+    var y = Number(args.y) / QMovement.tileSize;
+    dir = Number(args.dir);
+    chara.locate(x, y);
+    if (dir > 0) {
+      chara.setDirection(dir);
+    }
+  });
 }
 (function () {
   var Alias_Game_Interpreter_pluginCommand =

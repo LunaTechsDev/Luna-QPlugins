@@ -126,7 +126,7 @@
  * -------
  * Commands
  * -------
- * -------
+ *
  * @command transfer
  * @desc Perform a map transfer to a pixel x / y position.
  * @type Type
@@ -165,6 +165,43 @@
  * @desc The y position to transfer to, in pixels
  * @type number
  * @default 0
+ * 
+ * ---------------
+ * 
+ * @command setPosition
+ * @desc Move a character to a x / y pixel position.
+ * @type Type
+ * @default Default
+ * 
+ * @arg charId
+ * @desc The character ID
+ * @arg x
+ * @desc The x position in pixels
+ * @arg y
+ * @desc The y position in pixels
+ * 
+ * @arg dir
+ * @desc The direction the character should face when transferring. Can be 2, 4, 6, 8, or for diagonals 1, 3, 7, 9
+ * @desc The direction to face upon transfer
+ * @type select
+ * @default south
+ * 
+ * @option northWest
+ * @value 1
+ * @option north
+ * @value 2
+ * @option northEast
+ * @value 3
+ * @option south
+ * @value 4
+ * @option west
+ * @value 6
+ * @option southWest
+ * @value 7
+ * @option east
+ * @value 8
+ * @option southEast
+ * @value 9
  * 
  * @help
  * This is a port of the original plugin QMovement by Quixos
