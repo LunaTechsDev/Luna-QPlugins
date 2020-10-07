@@ -1186,6 +1186,26 @@ function ColliderManager() {
 //-----------------------------------------------------------------------------
 // Game_Interpreter
 
+if (Utils.RPGMAKER_NAME === "MZ") {
+  PluginManager.registerCommand("Luna_QMovement", "transfer", (args) => {
+    var { dir = 0, fade = "black" } = args;
+    var mapId = Number(args.mapId);
+    var x = Number(args.x) / QMovement.tileSize;
+    var y = Number(args.y) / QMovement.tileSize;
+    var dir = QPlus.stringToType(dir);
+    if (fade) {
+      if (fade.toLowerCase() === "black") {
+        fade = 0;
+      } else if (args.fade.toLowerCase() === "white") {
+        fade = 1;
+      } else {
+        fade = 3;
+      }
+    }
+    $gamePlayer.reserveTransfer(mapId, x, y, dir, fade);
+    return;
+  });
+}
 (function () {
   var Alias_Game_Interpreter_pluginCommand =
     Game_Interpreter.prototype.pluginCommand;

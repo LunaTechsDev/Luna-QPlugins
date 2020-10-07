@@ -122,7 +122,50 @@
  * @on Show by default
  * @off Hide by default
  * @default true
- *
+ * 
+ * -------
+ * Commands
+ * -------
+ * -------
+ * @command transfer
+ * @desc Perform a map transfer to a pixel x / y position.
+ * @type Type
+ * @default Default
+ * 
+ * @arg mapId
+ * @desc the MapID to transfer to
+ * @type number
+ * 
+ * @arg fade
+ * @desc The fade out effect color to use
+ * @type select
+ * @default black
+ * @option black
+ * @option white
+ * 
+ * @arg dir
+ * @desc The direction to face upon transfer
+ * @type select
+ * @default south
+ * 
+ * @option north
+ * @value 2
+ * @option south
+ * @value 4
+ * @option west
+ * @value 6
+ * @option east
+ * @value 8
+ * 
+ * @arg x
+ * @desc The x position to transfer to, in pixels
+ * @type number
+ * @default 0
+ * @arg y
+ * @desc The y position to transfer to, in pixels
+ * @type number
+ * @default 0
+ * 
  * @help
  * This is a port of the original plugin QMovement by Quixos
  *  | https://quxios.github.io/plugins/QMovement
