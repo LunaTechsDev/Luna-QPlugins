@@ -9,6 +9,7 @@
  * @repo https://github.com/quxios/QMovement
  *
  * @requires QPlus
+ * @exportName QMovement
  *
  * @video TODO
  *

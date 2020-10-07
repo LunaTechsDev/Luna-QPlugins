@@ -11,6 +11,14 @@ if (typeof QPlus === "undefined") {
 
 Imported.QMovement = "1.6.3";
 
+export default {
+  QMovement,
+  Polygon_Collider,
+  Box_Collider,
+  Circle_Collider,
+  ColliderManager,
+  Sprite_Collider,
+};
 //=============================================================================
 
 //=============================================================================
