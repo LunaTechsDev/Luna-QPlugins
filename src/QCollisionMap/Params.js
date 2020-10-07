@@ -19,6 +19,8 @@
  * @default img/parallaxes/
  *
  * @help
+ * This is a port of the original plugin QM + CollisionMap by Quixos
+ *  | https://quxios.github.io/plugins/QM+CollisionMap
  * ============================================================================
  * ## About
  * ============================================================================
