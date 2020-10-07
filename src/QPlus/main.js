@@ -746,7 +746,7 @@ function SimpleTilemap() {
   };
 
   Game_Map.prototype.noTilemap = function () {
-    return !!$dataMap.meta.noTilemap;
+    return $dataMap.meta && !!$dataMap.meta.noTilemap;
   };
 
   //-----------------------------------------------------------------------------
