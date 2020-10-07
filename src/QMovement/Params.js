@@ -122,10 +122,6 @@
  * @on Show by default
  * @off Hide by default
  * @default true
- * 
- * -------
- * Commands
- * -------
  *
  * @command transfer
  * @desc Perform a map transfer to a pixel x / y position.
@@ -166,8 +162,6 @@
  * @type number
  * @default 0
  * 
- * ---------------
- * 
  * @command setPosition
  * @desc Move a character to a x / y pixel position.
  * @type Type
@@ -203,7 +197,6 @@
  * @option southEast
  * @value 9
  * 
- * -------
  * @command changeCollider
  * @desc Change an event or the player's collider
  * @type Type
