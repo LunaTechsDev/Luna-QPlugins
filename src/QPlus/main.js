@@ -356,7 +356,7 @@ const _QPlus = {
         break;
       }
     }
-    return arr.map(this.stringToType);
+    return arr.map(this.stringToType.bind(this));
   },
 
   stringToType(string) {
