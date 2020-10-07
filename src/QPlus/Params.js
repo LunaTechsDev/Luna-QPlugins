@@ -22,7 +22,7 @@
  * @default false
  *
  * @help
- * This is a port of the original plugin QMovement by Quixos
+ * This is a port of the original plugin QPlus by Quixos
  *  | https://quxios.github.io/plugins/QPlus
  *
  * ============================================================================
