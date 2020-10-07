@@ -20,7 +20,18 @@
  * isn't focused / active
  * @type Boolean
  * @default false
- *
+ * 
+ * @command wait
+ * @desc Will insert a random wait between min and max frames.
+ * @type Type
+ * @default Default
+ * 
+ * @arg min
+ * @desc The minimum value to wait.
+ * 
+ * @arg max
+ * @desc The maximum value to wait. If left blank it will set to a random number.
+ * 
  * @help
  * This is a port of the original plugin QPlus by Quixos
  *  | https://quxios.github.io/plugins/QPlus

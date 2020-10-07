@@ -672,6 +672,21 @@ function SimpleTilemap() {
   //-----------------------------------------------------------------------------
   // Game_Interpreter
 
+  if (Utils.RPGMAKER_NAME === "MZ") {
+    PluginManager.registerCommand("Luna_QPlus", "wait", (args) => {
+      var min = Number(args.min);
+      var max = Number(args.max);
+      if (!max) {
+        max = min;
+        min = 0;
+      }
+
+      var waitTime = Math.randomIntBetween(min, max);
+      // @todo probably a much better way to do this
+      $gameMap._interpreter.wait(waitTime);
+    });
+  }
+
   var Alias_Game_Interpreter_pluginCommand =
     Game_Interpreter.prototype.pluginCommand;
   Game_Interpreter.prototype.pluginCommand = function (command, args) {
