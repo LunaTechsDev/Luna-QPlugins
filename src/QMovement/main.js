@@ -1964,6 +1964,7 @@ function ColliderManager() {
   };
 
   Game_CharacterBase.prototype.checkEventTriggerTouchFront = function (d) {
+    var vert;
     var horz = (vert = d);
     if ([1, 3, 7, 9].contains(d)) {
       horz = d === 1 || d === 7 ? 4 : 6;
