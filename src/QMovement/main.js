@@ -1223,6 +1223,22 @@ if (Utils.RPGMAKER_NAME === "MZ") {
       chara.setDirection(dir);
     }
   });
+
+  PluginManager.registerCommand("Luna_QMovement", "changeCollider", (args) => {
+    if (args.charId === `"0"`) {
+      args.charId = 0;
+    }
+    var chara = QPlus.getCharacter(args.charId);
+    if (!chara) return;
+    var type = args.type;
+    chara.changeCollider(type, [
+      args.shape,
+      Number(args.width),
+      Number(args.height),
+      Number(args.ox),
+      Number(args.oy),
+    ]);
+  });
 }
 (function () {
   var Alias_Game_Interpreter_pluginCommand =

@@ -203,6 +203,52 @@
  * @option southEast
  * @value 9
  * 
+ * -------
+ * @command changeCollider
+ * @desc Change an event or the player's collider
+ * @type Type
+ * @default Default
+ * 
+ * @arg charId
+ * @desc The ID of the character - For player: 0, p, or player, otherwise the eventID or "this" for the event this command is called from.
+ * @type note
+ * @default 0
+ * 
+ * @arg type
+ * @desc The type of collider to use.
+ * @type select
+ * @default default
+ * @option default
+ * @option intersection
+ * @option collision
+ * 
+ * @arg shape
+ * @desc The shape of the collider
+ * @type select
+ * @default box
+ * @option box
+ * @option circle
+ * 
+ * @arg width
+ * @desc The width of the collider
+ * @default 32
+ * @type number
+ * 
+ * @arg height
+ * @desc The height of the collider
+ * @type number
+ * @default 24
+ * 
+ * @arg ox
+ * @desc The x offset of the collider in pixels
+ * @type number
+ * @default 0
+ * 
+ * @arg oy
+ * @desc The y offset of the collider in pixels
+ * @type number
+ * @default 0
+ * 
  * @help
  * This is a port of the original plugin QMovement by Quixos
  *  | https://quxios.github.io/plugins/QMovement
