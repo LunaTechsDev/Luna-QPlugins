@@ -3429,6 +3429,12 @@ function ColliderManager() {
     ColliderManager.update();
   };
 
+  var Alias_Scene_Map_terminate = Scene_Map.prototype.terminate;
+  Scene_Map.prototype.terminate = function () {
+    this._spriteset.removeChild(ColliderManager.container);
+    Alias_Scene_Map_terminate.call(this);
+  };
+
   Scene_Map.prototype.processMapTouch = function () {
     if (TouchInput.isTriggered() || this._touchCount > 0) {
       if (TouchInput.isPressed()) {
@@ -3592,7 +3598,10 @@ function Sprite_Collider() {
     Spriteset_Map.prototype.createLowerLayer;
   Spriteset_Map.prototype.createLowerLayer = function () {
     Alias_Spriteset_Map_createLowerLayer.call(this);
-    if ($gameTemp.isPlaytest()) {
+    if (
+      $gameTemp.isPlaytest() &&
+      !this.children.some((c) => c === ColliderManager.container)
+    ) {
       this.createColliders();
     }
   };
