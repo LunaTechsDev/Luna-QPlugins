@@ -5,7 +5,7 @@ Game_CharacterBase.prototype.initMembers = function () {
   this._globalLocked = 0;
   this._comments = "";
   this._waitListeners = [];
-  _QPlus.mixinWait(this);
+  QPlus.mixinWait(this);
 };
 
 Game_CharacterBase.prototype.charaId = function () {
@@ -37,7 +37,7 @@ Game_CharacterBase.prototype.directionToRadian = function (dir) {
 };
 
 Game_CharacterBase.prototype.radianToDirection = function (radian, useDiag) {
-  radian = _QPlus.adjustRadian(radian);
+  radian = QPlus.adjustRadian(radian);
   if (useDiag) {
     // use degrees for diagonals
     // since I don't know clean PI numbers for these degrees

@@ -1,3 +1,5 @@
+import { _PARAMS } from "../constants";
+
 var Alias_DataManager_setupNewGame = DataManager.setupNewGame;
 DataManager.setupNewGame = function () {
   Alias_DataManager_setupNewGame.call(this);

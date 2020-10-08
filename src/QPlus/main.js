@@ -19,15 +19,6 @@ import "./sprites/Spriteset_Map";
 export default { ...QPlus, SimpleTilemap };
 
 //-----------------------------------------------------------------------------
-// Get _QPlus params
-
-var _PARAMS = _QPlus.getParams("<Luna_QPlus>", {
-  "Quick Test": false,
-  "Default Enabled Switches": [],
-  "Ignore Mouse when inactive": false,
-});
-
-//-----------------------------------------------------------------------------
 // Document body
 
 document.body.ondrop = function (e) {
@@ -41,7 +32,7 @@ document.body.ondragover = function (e) {
 };
 
 if (Utils.RPGMAKER_NAME === "MZ") {
-  PluginManager.registerCommand("Luna_QPlus", "wait", (args) => {
+  PluginManager.registerCommand("LunaQPlus", "wait", (args) => {
     var min = Number(args.min);
     var max = Number(args.max);
     if (!max) {

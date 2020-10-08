@@ -1,13 +1,15 @@
+import QPlus from "../QPlus";
+
 var Alias_Game_Interpreter_pluginCommand =
   Game_Interpreter.prototype.pluginCommand;
 Game_Interpreter.prototype.pluginCommand = function (command, args) {
-  if (this._QPlusCommand(command, _QPlus.makeArgs(args))) {
+  if (this.QPlusCommand(command, QPlus.makeArgs(args))) {
     return;
   }
   Alias_Game_Interpreter_pluginCommand.call(this, command, args);
 };
 
-Game_Interpreter.prototype._QPlusCommand = function (command, args) {
+Game_Interpreter.prototype.QPlusCommand = function (command, args) {
   if (command.toLowerCase() === "wait") {
     var min = Number(args[0]);
     var max = Number(args[1]);
@@ -24,7 +26,7 @@ Game_Interpreter.prototype._QPlusCommand = function (command, args) {
     var args2 = args.slice(1);
     var only = args2.indexOf("only");
     if (only !== -1) args2.splice(only, 1);
-    var charas = args2.map(_QPlus.getCharacter);
+    var charas = args2.map(QPlus.getCharacter);
     var mode = only !== -1 ? 1 : 0;
     $gameMap.globalLock(charas, mode, level);
     return true;

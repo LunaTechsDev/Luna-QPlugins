@@ -1,12 +1,15 @@
+import QPlus from "../QPlus";
+import { _PARAMS } from "../constants";
+
 if (_PARAMS["Ignore Mouse when inactive"]) {
   var isFocused = true;
   var focusWaiter;
 
   window.addEventListener("focus", function (e) {
     if (focusWaiter) {
-      _QPlus.removeWaitListener(focusWaiter);
+      QPlus.removeWaitListener(focusWaiter);
     }
-    focusWaiter = _QPlus.wait(1).then(function () {
+    focusWaiter = QPlus.wait(1).then(function () {
       TouchInput.stopPropagation();
       isFocused = true;
       focusWaiter = null;
@@ -15,7 +18,7 @@ if (_PARAMS["Ignore Mouse when inactive"]) {
 
   window.addEventListener("blur", function (e) {
     if (focusWaiter) {
-      _QPlus.removeWaitListener(focusWaiter);
+      QPlus.removeWaitListener(focusWaiter);
       focusWaiter = null;
     }
     isFocused = false;
