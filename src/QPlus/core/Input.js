@@ -1,0 +1,23 @@
+Input.stopPropagation = function () {
+  var key = this._latestButton;
+  this._currentState[key] = false;
+  this._latestButton = null;
+  for (var i = 0; i < this._gamepadStates.length; i++) {
+    if (!this._gamepadStates[i]) continue;
+    for (var j = 0; j < this._gamepadStates[i].length; j++) {
+      var button = Imported.QInput
+        ? this.gamepadKeys[j]
+        : this.gamepadMapper[j];
+      if (button === key) {
+        this._gamepadStates[i][j] = false;
+        break;
+      }
+    }
+  }
+  if (Imported.QInput) {
+    this._ranPress = false;
+    this._lastPressed = null;
+    this._lastTriggered = null;
+    this._lastGamepadTriggered = null;
+  }
+};
