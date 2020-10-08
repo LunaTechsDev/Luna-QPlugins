@@ -123,6 +123,129 @@
  * @off Hide by default
  * @default true
  *
+ * @command transfer
+ * @desc Perform a map transfer to a pixel x / y position.
+ * @type Type
+ * @default Default
+ * 
+ * @arg mapId
+ * @desc the MapID to transfer to
+ * @type number
+ * @default 0
+ * 
+ * @arg fade
+ * @desc The fade out effect color to use
+ * @type select
+ * @default black
+ * @option black
+ * @option white
+ * 
+ * @arg dir
+ * @desc The direction to face upon transfer
+ * @type select
+ * @default south
+ * 
+ * @option north
+ * @value 2
+ * @option south
+ * @value 4
+ * @option west
+ * @value 6
+ * @option east
+ * @value 8
+ * 
+ * @arg x
+ * @desc The x position to transfer to, in pixels
+ * @type number
+ * @default 0
+ * @arg y
+ * @desc The y position to transfer to, in pixels
+ * @type number
+ * @default 0
+ * 
+ * @command setPosition
+ * @desc Move a character to a x / y pixel position.
+ * @type Type
+ * @default Default
+ * 
+ * @arg charId
+ * @desc The character ID
+ * @default 0
+ * @arg x
+ * @desc The x position in pixels
+ * @default 0
+ * @arg y
+ * @desc The y position in pixels
+ * @default 0
+ * 
+ * @arg dir
+ * @desc The direction the character should face when transferring. Can be 2, 4, 6, 8, or for diagonals 1, 3, 7, 9
+ * @desc The direction to face upon transfer
+ * @type select
+ * @default south
+ * 
+ * @option northWest
+ * @value 1
+ * @option north
+ * @value 2
+ * @option northEast
+ * @value 3
+ * @option south
+ * @value 4
+ * @option west
+ * @value 6
+ * @option southWest
+ * @value 7
+ * @option east
+ * @value 8
+ * @option southEast
+ * @value 9
+ * 
+ * @command changeCollider
+ * @desc Change an event or the player's collider
+ * @type Type
+ * @default Default
+ * 
+ * @arg charId
+ * @desc The ID of the character - For player: 0, p, or player, otherwise the eventID or "this" for the event this command is called from.
+ * @type note
+ * @default 0
+ * 
+ * @arg type
+ * @desc The type of collider to use.
+ * @type select
+ * @default default
+ * @option default
+ * @option intersection
+ * @option collision
+ * 
+ * @arg shape
+ * @desc The shape of the collider
+ * @type select
+ * @default box
+ * @option box
+ * @option circle
+ * 
+ * @arg width
+ * @desc The width of the collider
+ * @default 32
+ * @type number
+ * 
+ * @arg height
+ * @desc The height of the collider
+ * @type number
+ * @default 24
+ * 
+ * @arg ox
+ * @desc The x offset of the collider in pixels
+ * @type number
+ * @default 0
+ * 
+ * @arg oy
+ * @desc The y offset of the collider in pixels
+ * @type number
+ * @default 0
+ * 
  * @help
  * This is a port of the original plugin QMovement by Quixos
  *  | https://quxios.github.io/plugins/QMovement
