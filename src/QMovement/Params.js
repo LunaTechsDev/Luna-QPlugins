@@ -131,6 +131,7 @@
  * @arg mapId
  * @desc the MapID to transfer to
  * @type number
+ * @default 0
  * 
  * @arg fade
  * @desc The fade out effect color to use
@@ -169,10 +170,13 @@
  * 
  * @arg charId
  * @desc The character ID
+ * @default 0
  * @arg x
  * @desc The x position in pixels
+ * @default 0
  * @arg y
  * @desc The y position in pixels
+ * @default 0
  * 
  * @arg dir
  * @desc The direction the character should face when transferring. Can be 2, 4, 6, 8, or for diagonals 1, 3, 7, 9
