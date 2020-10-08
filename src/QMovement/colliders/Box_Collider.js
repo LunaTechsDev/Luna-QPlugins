@@ -1,4 +1,4 @@
-function Box_Collider() {
+export default function Box_Collider() {
   this.initialize.apply(this, arguments);
 }
 

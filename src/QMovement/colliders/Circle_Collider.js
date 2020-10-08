@@ -1,4 +1,4 @@
-function Circle_Collider() {
+export default function Circle_Collider() {
   this.initialize.apply(this, arguments);
 }
 

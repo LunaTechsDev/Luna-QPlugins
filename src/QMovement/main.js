@@ -1,7 +1,23 @@
+import QMovement from "./QMovement";
+import ColliderManager from "./ColliderManager";
+import Polygon_Collider from "./colliders/Polygon_Collider";
+import Box_Collider from "./colliders/Box_Collider";
+import Circle_Collider from "./colliders/Circle_Collider";
+import Sprite_Collider from "./colliders/Sprite_Collider";
+
 if (typeof QPlus === "undefined") {
   alert("Error: QMovement requires QPlus 1.6.0 or newer to work.");
   throw new Error("Error: QMovement requires QPlus 1.6.0 or newer to work.");
 }
+
+export default {
+  ColliderManager,
+  Polygon_Collider,
+  Box_Collider,
+  Circle_Collider,
+  Sprite_Collider,
+  ...QMovement,
+};
 
 if (Utils.RPGMAKER_NAME === "MZ") {
   PluginManager.registerCommand("Luna_QMovement", "transfer", (args) => {

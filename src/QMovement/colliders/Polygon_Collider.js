@@ -1,4 +1,4 @@
-function Polygon_Collider() {
+export default function Polygon_Collider() {
   this.initialize.apply(this, arguments);
 }
 

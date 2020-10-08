@@ -1,4 +1,4 @@
-function QMovement() {
+export default function QMovement() {
   throw new Error("This is a static class");
 }
 

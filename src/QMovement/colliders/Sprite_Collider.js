@@ -1,4 +1,4 @@
-function Sprite_Collider() {
+export default function Sprite_Collider() {
   this.initialize.apply(this, arguments);
 }
 
