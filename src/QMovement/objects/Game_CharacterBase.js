@@ -745,7 +745,7 @@ Game_CharacterBase.prototype.arc = function (
   cc,
   frames
 ) {
-  let cc = cc ? 1 : -1;
+  cc = cc ? 1 : -1;
   const dx = this._px - pivotX;
   const dy = this._py - pivotY;
   let rad = Math.atan2(dy, dx);
