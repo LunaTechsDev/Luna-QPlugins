@@ -5,6 +5,20 @@ import Box_Collider from "./colliders/Box_Collider";
 import Circle_Collider from "./colliders/Circle_Collider";
 import Sprite_Collider from "./colliders/Sprite_Collider";
 
+import "./objects/Game_Character";
+import "./objects/Game_CharacterBase";
+import "./objects/Game_Event";
+import "./objects/Game_Interpreter";
+import "./objects/Game_Map";
+import "./objects/Game_Party";
+import "./objects/Game_Player";
+import "./objects/Game_System";
+import "./objects/Game_Temp";
+
+import "./scenes/Scene_Map";
+import "./sprites/Sprite_Destination";
+import "./sprites/Spriteset_Map";
+
 if (typeof QPlus === "undefined") {
   alert("Error: QMovement requires QPlus 1.6.0 or newer to work.");
   throw new Error("Error: QMovement requires QPlus 1.6.0 or newer to work.");
