@@ -1,4 +1,4 @@
-var Alias_Game_Character_processMoveCommand =
+const Alias_Game_Character_processMoveCommand =
   Game_Character.prototype.processMoveCommand;
 Game_Character.prototype.processMoveCommand = function (command) {
   this.subMVMoveCommands(command);
@@ -10,8 +10,8 @@ Game_Character.prototype.processMoveCommand = function (command) {
 };
 
 Game_Character.prototype.subMVMoveCommands = function (command) {
-  var gc = Game_Character;
-  var params = command.parameters;
+  const gc = Game_Character;
+  const params = command.parameters;
   switch (command.code) {
     case gc.ROUTE_MOVE_DOWN: {
       this.subQMove("2, 1," + QMovement.tileSize);
@@ -71,14 +71,14 @@ Game_Character.prototype.subMVMoveCommands = function (command) {
 };
 
 Game_Character.prototype.subQMoveCommand = function (command) {
-  var gc = Game_Character;
-  var code = command.code;
-  var params = command.parameters;
+  const gc = Game_Character;
+  const code = command.code;
+  const params = command.parameters;
   if (command.code === gc.ROUTE_SCRIPT) {
-    var qmove = /^qmove\((.*)\)/i.exec(params[0]);
-    var qmove2 = /^qmove2\((.*)\)/i.exec(params[0]);
-    var arc = /^arc\((.*)\)/i.exec(params[0]);
-    var arc2 = /^arc2\((.*)\)/i.exec(params[0]);
+    const qmove = /^qmove\((.*)\)/i.exec(params[0]);
+    const qmove2 = /^qmove2\((.*)\)/i.exec(params[0]);
+    const arc = /^arc\((.*)\)/i.exec(params[0]);
+    const arc2 = /^arc2\((.*)\)/i.exec(params[0]);
     if (qmove) return this.subQMove(qmove[1]);
     if (qmove2) return this.subQMove2(qmove2[1]);
     if (arc) return this.subArc(arc[1]);
@@ -88,15 +88,15 @@ Game_Character.prototype.subQMoveCommand = function (command) {
 };
 
 Game_Character.prototype.processQMoveCommands = function (command) {
-  var params = command.parameters;
+  const params = command.parameters;
   switch (command.code) {
     case "arc": {
       this.arc(params[0], params[1], eval(params[2]), params[3], params[4]);
       break;
     }
     case "arc2": {
-      var x = params[0] + this.px;
-      var y = params[1] + this.py;
+      const x = params[0] + this.px;
+      const y = params[1] + this.py;
       this.arc(x, y, eval(params[2]), params[3], params[4]);
       break;
     }
@@ -120,7 +120,7 @@ Game_Character.prototype.processQMoveCommands = function (command) {
 };
 
 Game_Character.prototype.subArc = function (settings) {
-  var cmd = {};
+  const cmd = {};
   cmd.code = "arc";
   cmd.parameters = QPlus.stringToAry(settings);
   this._moveRoute.list[this._moveRouteIndex] = cmd;
@@ -128,7 +128,7 @@ Game_Character.prototype.subArc = function (settings) {
 };
 
 Game_Character.prototype.subArc2 = function (settings) {
-  var cmd = {};
+  const cmd = {};
   cmd.code = "arc2";
   cmd.parameters = QPlus.stringToAry(settings);
   this._moveRoute.list[this._moveRouteIndex] = cmd;
@@ -137,16 +137,16 @@ Game_Character.prototype.subArc2 = function (settings) {
 
 Game_Character.prototype.subQMove = function (settings) {
   settings = QPlus.stringToAry(settings);
-  var dir = settings[0];
-  var amt = settings[1];
-  var multi = settings[2] || 1;
-  var tot = amt * multi;
-  var steps = Math.floor(tot / this.moveTiles());
-  var moved = 0;
-  var i;
+  const dir = settings[0];
+  const amt = settings[1];
+  const multi = settings[2] || 1;
+  const tot = amt * multi;
+  const steps = Math.floor(tot / this.moveTiles());
+  let moved = 0;
+  let i;
   for (i = 0; i < steps; i++) {
     moved += this.moveTiles();
-    var cmd = {};
+    const cmd = {};
     if (dir === 0) {
       cmd.code = "fixedMoveBackward";
       cmd.parameters = [this.moveTiles()];
@@ -160,7 +160,7 @@ Game_Character.prototype.subQMove = function (settings) {
     this._moveRoute.list.splice(this._moveRouteIndex + 1, 0, cmd);
   }
   if (moved < tot) {
-    var cmd = {};
+    const cmd = {};
     if (dir === 0) {
       cmd.code = "fixedMoveBackward";
       cmd.parameters = [this.moveTiles()];
@@ -179,20 +179,20 @@ Game_Character.prototype.subQMove = function (settings) {
 
 Game_Character.prototype.subQMove2 = function (settings) {
   settings = QPlus.stringToAry(settings);
-  var radian = settings[0];
-  var dist = settings[1];
-  var maxSteps = Math.floor(dist / this.moveTiles());
-  var steps = 0;
-  var i;
+  const radian = settings[0];
+  const dist = settings[1];
+  const maxSteps = Math.floor(dist / this.moveTiles());
+  let steps = 0;
+  let i;
   for (i = 0; i < maxSteps; i++) {
     steps += this.moveTiles();
-    var cmd = {};
+    const cmd = {};
     cmd.code = "fixedRadianMove";
     cmd.parameters = [radian, this.moveTiles()];
     this._moveRoute.list.splice(this._moveRouteIndex + 1, 0, cmd);
   }
   if (steps < dist) {
-    var cmd = {};
+    const cmd = {};
     cmd.code = "fixedRadianMove";
     cmd.parameters = [radian, dist - steps];
     this._moveRoute.list.splice(this._moveRouteIndex + 1 + i, 0, cmd);
@@ -202,21 +202,21 @@ Game_Character.prototype.subQMove2 = function (settings) {
 };
 
 Game_Character.prototype.moveRandom = function () {
-  var d = 2 + Math.randomInt(4) * 2;
+  const d = 2 + Math.randomInt(4) * 2;
   if (this.canPixelPass(this._px, this._py, d)) {
     this.moveStraight(d);
   }
 };
 
-var Alias_Game_Character_moveTowardCharacter =
+const Alias_Game_Character_moveTowardCharacter =
   Game_Character.prototype.moveTowardCharacter;
 Game_Character.prototype.moveTowardCharacter = function (character) {
   if ($gameMap.offGrid()) {
-    var dx = this.deltaPXFrom(character.cx());
-    var dy = this.deltaPYFrom(character.cy());
-    var radian = Math.atan2(-dy, -dx);
+    const dx = this.deltaPXFrom(character.cx());
+    const dy = this.deltaPYFrom(character.cy());
+    let radian = Math.atan2(-dy, -dx);
     if (radian < 0) radian += Math.PI * 2;
-    var oldSM = this._smartMove;
+    const oldSM = this._smartMove;
     if (oldSM <= 1) this._smartMove = 2;
     this.moveRadian(radian);
     this._smartMove = oldSM;
@@ -225,15 +225,15 @@ Game_Character.prototype.moveTowardCharacter = function (character) {
   }
 };
 
-var Alias_Game_Character_moveAwayFromCharacter =
+const Alias_Game_Character_moveAwayFromCharacter =
   Game_Character.prototype.moveAwayFromCharacter;
 Game_Character.prototype.moveAwayFromCharacter = function (character) {
   if ($gameMap.offGrid()) {
-    var dx = this.deltaPXFrom(character.cx());
-    var dy = this.deltaPYFrom(character.cy());
-    var radian = Math.atan2(dy, dx);
+    const dx = this.deltaPXFrom(character.cx());
+    const dy = this.deltaPYFrom(character.cy());
+    let radian = Math.atan2(dy, dx);
     if (radian < 0) radian += Math.PI * 2;
-    var oldSM = this._smartMove;
+    const oldSM = this._smartMove;
     if (oldSM <= 1) this._smartMove = 2;
     this.moveRadian(radian);
     this._smartMove = oldSM;
@@ -243,8 +243,8 @@ Game_Character.prototype.moveAwayFromCharacter = function (character) {
 };
 
 Game_Character.prototype.turnTowardCharacter = function (character) {
-  var dx = this.deltaPXFrom(character.cx());
-  var dy = this.deltaPYFrom(character.cy());
+  const dx = this.deltaPXFrom(character.cx());
+  const dy = this.deltaPYFrom(character.cy());
   this.setRadian(Math.atan2(-dy, -dx));
 };
 
@@ -253,17 +253,17 @@ Game_Character.prototype.turnTowardCharacterForward = function (character, dt) {
     return this.turnTowardCharacter(character);
   }
   dt = dt || 1;
-  var forward = character.forwardV();
-  var x = character.cx() + forward.x * dt;
-  var y = character.cy() + forward.y * dt;
-  var dx = this.deltaPXFrom(x);
-  var dy = this.deltaPYFrom(y);
+  const forward = character.forwardV();
+  const x = character.cx() + forward.x * dt;
+  const y = character.cy() + forward.y * dt;
+  const dx = this.deltaPXFrom(x);
+  const dy = this.deltaPYFrom(y);
   this.setRadian(Math.atan2(-dy, -dx));
 };
 
 Game_Character.prototype.turnAwayFromCharacter = function (character) {
-  var dx = this.deltaPXFrom(character.cx());
-  var dy = this.deltaPYFrom(character.cy());
+  const dx = this.deltaPXFrom(character.cx());
+  const dy = this.deltaPYFrom(character.cy());
   this.setRadian(Math.atan2(dy, dx));
 };
 
@@ -282,32 +282,32 @@ Game_Character.prototype.pixelDistanceFrom = function (x, y) {
 // Returns the px, py needed for this character to be center aligned
 // with the character passed in (align is based off collision collider)
 Game_Character.prototype.centerWith = function (character) {
-  var dx1 = this.cx() - this._px;
-  var dy1 = this.cy() - this._py;
-  var dx2 = character.cx() - character._px;
-  var dy2 = character.cy() - character._py;
-  var dx = dx2 - dx1;
-  var dy = dy2 - dy1;
+  const dx1 = this.cx() - this._px;
+  const dy1 = this.cy() - this._py;
+  const dx2 = character.cx() - character._px;
+  const dy2 = character.cy() - character._py;
+  const dx = dx2 - dx1;
+  const dy = dy2 - dy1;
   return new Point(character._px + dx, character._py + dy);
 };
 
 Game_Character.prototype.centerWithCollider = function (collider) {
-  var dx1 = this.cx() - this._px;
-  var dy1 = this.cy() - this._py;
-  var dx2 = collider.center.x - collider.x;
-  var dy2 = collider.center.y - collider.y;
-  var dx = dx2 - dx1;
-  var dy = dy2 - dy1;
+  const dx1 = this.cx() - this._px;
+  const dy1 = this.cy() - this._py;
+  const dx2 = collider.center.x - collider.x;
+  const dy2 = collider.center.y - collider.y;
+  const dx = dx2 - dx1;
+  const dy = dy2 - dy1;
   return new Point(collider.x + dx, collider.y + dy);
 };
 
 Game_Character.prototype.adjustPosition = function (xf, yf) {
-  var dx = xf - this._px;
-  var dy = yf - this._py;
-  var radian = Math.atan2(dy, dx);
-  var distX = Math.cos(radian) * this.moveTiles();
-  var distY = Math.sin(radian) * this.moveTiles();
-  var final = new Point(xf, yf);
+  let dx = xf - this._px;
+  let dy = yf - this._py;
+  const radian = Math.atan2(dy, dx);
+  const distX = Math.cos(radian) * this.moveTiles();
+  const distY = Math.sin(radian) * this.moveTiles();
+  const final = new Point(xf, yf);
   while (!this.canPixelPass(final.x, final.y, 5, "collision")) {
     final.x -= distX;
     final.y -= distY;

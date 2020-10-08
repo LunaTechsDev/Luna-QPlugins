@@ -1,4 +1,4 @@
-var Alias_Game_Player_initMembers = Game_Player.prototype.initMembers;
+const Alias_Game_Player_initMembers = Game_Player.prototype.initMembers;
 Game_Player.prototype.initMembers = function () {
   Alias_Game_Player_initMembers.call(this);
   this._lastMouseRequested = 0;
@@ -11,15 +11,15 @@ Game_Player.prototype.defaultColliderConfig = function () {
   return QMovement.playerCollider;
 };
 
-var Alias_Game_Player_refresh = Game_Player.prototype.refresh;
+const Alias_Game_Player_refresh = Game_Player.prototype.refresh;
 Game_Player.prototype.refresh = function () {
   this.reloadColliders();
   Alias_Game_Player_refresh.call(this);
 };
 
 Game_Player.prototype.requestMouseMove = function () {
-  var currFrame = Graphics.frameCount;
-  var dt = currFrame - this._lastMouseRequested;
+  const currFrame = Graphics.frameCount;
+  const dt = currFrame - this._lastMouseRequested;
   if (dt >= 5) {
     this._lastMouseRequested = currFrame;
     this._requestMouseMove = true;
@@ -46,7 +46,7 @@ Game_Player.prototype.clearMouseMove = function () {
 Game_Player.prototype.moveByInput = function () {
   if (!this.startedMoving() && this.canMove()) {
     if (this.triggerAction()) return;
-    var direction = QMovement.diagonal ? Input.dir8 : Input.dir4;
+    const direction = QMovement.diagonal ? Input.dir8 : Input.dir4;
     if (direction > 0) {
       this.clearMouseMove();
     } else if ($gameTemp.isDestinationValid()) {
@@ -56,8 +56,8 @@ Game_Player.prototype.moveByInput = function () {
       }
       this.requestMouseMove();
       if (this._requestMouseMove) {
-        var x = $gameTemp.destinationPX();
-        var y = $gameTemp.destinationPY();
+        const x = $gameTemp.destinationPX();
+        const y = $gameTemp.destinationPY();
         return this.moveByMouse(x, y);
       }
     }
@@ -84,7 +84,7 @@ Game_Player.prototype.moveInputVertical = function (dir) {
 };
 
 Game_Player.prototype.moveInputDiagonal = function (dir) {
-  var diag = {
+  const diag = {
     1: [4, 2],
     3: [6, 2],
     7: [4, 8],
@@ -94,18 +94,18 @@ Game_Player.prototype.moveInputDiagonal = function (dir) {
 };
 
 Game_Player.prototype.moveWithAnalog = function () {
-  var horz = Input._dirAxesA.x;
-  var vert = Input._dirAxesA.y;
+  const horz = Input._dirAxesA.x;
+  const vert = Input._dirAxesA.y;
   if (horz === 0 && vert === 0) return;
-  var radian = Math.atan2(vert, horz);
+  let radian = Math.atan2(vert, horz);
   radian += radian < 0 ? Math.PI * 2 : 0;
   this.moveRadian(radian);
 };
 
 Game_Player.prototype.update = function (sceneActive) {
-  var lastScrolledX = this.scrolledX();
-  var lastScrolledY = this.scrolledY();
-  var wasMoving = this.isMoving();
+  const lastScrolledX = this.scrolledX();
+  const lastScrolledY = this.scrolledY();
+  const wasMoving = this.isMoving();
   this.updateDashing();
   if (sceneActive) {
     this.moveByInput();
@@ -150,11 +150,11 @@ Game_Player.prototype.updateDashing = function () {
 
 Game_Player.prototype.startMapEvent = function (x, y, triggers, normal) {
   if (!$gameMap.isEventRunning()) {
-    var collider = this.collider("interaction");
-    var x1 = this._px;
-    var y1 = this._py;
+    const collider = this.collider("interaction");
+    const x1 = this._px;
+    const y1 = this._py;
     collider.moveTo(x, y);
-    var events = ColliderManager.getCharactersNear(
+    let events = ColliderManager.getCharactersNear(
       collider,
       function (chara) {
         return this.collidesWithEvent(chara, "interaction");
@@ -165,12 +165,12 @@ Game_Player.prototype.startMapEvent = function (x, y, triggers, normal) {
       events = null;
       return;
     }
-    var cx = this.cx();
-    var cy = this.cy();
+    const cx = this.cx();
+    const cy = this.cy();
     events.sort(function (a, b) {
       return a.pixelDistanceFrom(cx, cy) - b.pixelDistanceFrom(cx, cy);
     });
-    var event = events.shift();
+    let event = events.shift();
     while (true) {
       if (event.isTriggerIn(triggers) && event.isNormalPriority() === normal) {
         event.start();
@@ -204,9 +204,9 @@ Game_Player.prototype.checkEventTriggerHere = function (triggers) {
 
 Game_Player.prototype.checkEventTriggerThere = function (triggers, x2, y2) {
   if (this.canStartLocalEvents()) {
-    var direction = this.direction();
-    var x1 = this.collider("interaction").x;
-    var y1 = this.collider("interaction").y;
+    const direction = this.direction();
+    const x1 = this.collider("interaction").x;
+    const y1 = this.collider("interaction").y;
     x2 = x2 || $gameMap.roundPXWithDirection(x1, direction, this.moveTiles());
     y2 = y2 || $gameMap.roundPYWithDirection(y1, direction, this.moveTiles());
     this.startMapEvent(x2, y2, triggers, true);
@@ -218,32 +218,40 @@ Game_Player.prototype.checkEventTriggerThere = function (triggers, x2, y2) {
 
 Game_Player.prototype.triggerTouchAction = function () {
   if ($gameTemp.isDestinationValid()) {
-    var dist = this.pixelDistanceFrom(
+    const dist = this.pixelDistanceFrom(
       $gameTemp.destinationPX(),
       $gameTemp.destinationPY()
     );
     if (dist <= QMovement.tileSize * 1.5) {
-      var dx = $gameTemp.destinationPX() - this.cx();
-      var dy = $gameTemp.destinationPY() - this.cy();
+      const dx = $gameTemp.destinationPX() - this.cx();
+      const dy = $gameTemp.destinationPY() - this.cy();
       if (
         Math.abs(dx) < this.moveTiles() / 2 &&
         Math.abs(dy) < this.moveTiles() / 2
       ) {
         return false;
       }
-      var radian = Math.atan2(dy, dx);
+      let radian = Math.atan2(dy, dx);
       radian += radian < 0 ? 2 * Math.PI : 0;
-      var dir = this.radianToDirection(radian, true);
-      var horz = dir;
-      var vert = dir;
+      const dir = this.radianToDirection(radian, true);
+      let horz = dir;
+      let vert = dir;
       if ([1, 3, 7, 9].contains(dir)) {
         if (dir === 1 || dir === 7) horz = 4;
         if (dir === 1 || dir === 3) vert = 2;
         if (dir === 3 || dir === 9) horz = 6;
         if (dir === 7 || dir === 9) vert = 8;
       }
-      var x1 = $gameMap.roundPXWithDirection(this._px, horz, this.moveTiles());
-      var y1 = $gameMap.roundPYWithDirection(this._py, vert, this.moveTiles());
+      const x1 = $gameMap.roundPXWithDirection(
+        this._px,
+        horz,
+        this.moveTiles()
+      );
+      const y1 = $gameMap.roundPYWithDirection(
+        this._py,
+        vert,
+        this.moveTiles()
+      );
       this.startMapEvent(x1, y1, [0, 1, 2], true);
       if (!$gameMap.isAnyEventStarting()) {
         if (
@@ -268,14 +276,14 @@ Game_Player.prototype.triggerTouchAction = function () {
 };
 
 Game_Player.prototype.checkCounter = function (triggers, x2, y2) {
-  var direction = this.direction();
-  var x1 = this._px;
-  var y1 = this._py;
+  const direction = this.direction();
+  const x1 = this._px;
+  const y1 = this._py;
   x2 = x2 || $gameMap.roundPXWithDirection(x1, direction, this.moveTiles());
   y2 = y2 || $gameMap.roundPYWithDirection(y1, direction, this.moveTiles());
-  var collider = this.collider("interaction");
+  const collider = this.collider("interaction");
   collider.moveTo(x2, y2);
-  var counter;
+  let counter;
   ColliderManager.getCollidersNear(collider, function (tile) {
     if (!tile.isTile) return false;
     if (tile.isCounter && tile.intersects(collider)) {
@@ -287,14 +295,14 @@ Game_Player.prototype.checkCounter = function (triggers, x2, y2) {
   collider.moveTo(x1, y1);
   if (counter) {
     if ([4, 6].contains(direction)) {
-      var dist = Math.abs(counter.center.x - collider.center.x);
+      let dist = Math.abs(counter.center.x - collider.center.x);
       dist += collider.width;
     } else if ([8, 2].contains(direction)) {
-      var dist = Math.abs(counter.center.y - collider.center.y);
+      let dist = Math.abs(counter.center.y - collider.center.y);
       dist += collider.height;
     }
-    var x3 = $gameMap.roundPXWithDirection(x1, direction, dist);
-    var y3 = $gameMap.roundPYWithDirection(y1, direction, dist);
+    const x3 = $gameMap.roundPXWithDirection(x1, direction, dist);
+    const y3 = $gameMap.roundPYWithDirection(y1, direction, dist);
     return this.startMapEvent(x3, y3, triggers, true);
   }
   return false;

@@ -13,7 +13,7 @@ Object.defineProperties(Game_CharacterBase.prototype, {
   },
 });
 
-var Alias_Game_CharacterBase_initMembers =
+const Alias_Game_CharacterBase_initMembers =
   Game_CharacterBase.prototype.initMembers;
 Game_CharacterBase.prototype.initMembers = function () {
   Alias_Game_CharacterBase_initMembers.call(this);
@@ -68,7 +68,7 @@ Game_CharacterBase.prototype.setPixelPosition = function (x, y) {
   this.setPosition(x / QMovement.tileSize, y / QMovement.tileSize);
 };
 
-var Alias_Game_CharacterBase_setPosition =
+const Alias_Game_CharacterBase_setPosition =
   Game_CharacterBase.prototype.setPosition;
 Game_CharacterBase.prototype.setPosition = function (x, y) {
   Alias_Game_CharacterBase_setPosition.call(this, x, y);
@@ -78,7 +78,7 @@ Game_CharacterBase.prototype.setPosition = function (x, y) {
   this.moveColliders();
 };
 
-var Alias_Game_CharacterBase_copyPosition =
+const Alias_Game_CharacterBase_copyPosition =
   Game_CharacterBase.prototype.copyPosition;
 Game_CharacterBase.prototype.copyPosition = function (character) {
   Alias_Game_CharacterBase_copyPosition.call(this, character);
@@ -90,15 +90,15 @@ Game_CharacterBase.prototype.copyPosition = function (character) {
   this.moveColliders();
 };
 
-var Alias_Game_CharacterBase_setDirection =
+const Alias_Game_CharacterBase_setDirection =
   Game_CharacterBase.prototype.setDirection;
 Game_CharacterBase.prototype.setDirection = function (d) {
   if (d) this._radian = this.directionToRadian(d);
   if (!this.isDirectionFixed() && d) {
     if ([1, 3, 7, 9].contains(d)) {
       this._diagonal = d;
-      var horz = [1, 7].contains(d) ? 4 : 6;
-      var vert = [1, 3].contains(d) ? 2 : 8;
+      const horz = [1, 7].contains(d) ? 4 : 6;
+      const vert = [1, 3].contains(d) ? 2 : 8;
       if (this._direction === this.reverseDir(horz)) {
         this._direction = horz;
       }
@@ -128,7 +128,7 @@ Game_CharacterBase.prototype.moveTiles = function () {
 };
 
 Game_CharacterBase.prototype.frameSpeed = function (multi) {
-  var multi = multi === undefined ? 1 : Math.abs(multi);
+  multi = multi === undefined ? 1 : Math.abs(multi);
   return this.distancePerFrame() * QMovement.tileSize * multi;
 };
 
@@ -143,7 +143,7 @@ Game_CharacterBase.prototype.forwardV = function () {
   };
 };
 
-var Alias_Game_CharacterBase_canMove = Game_CharacterBase.prototype.canMove;
+const Alias_Game_CharacterBase_canMove = Game_CharacterBase.prototype.canMove;
 Game_CharacterBase.prototype.canMove = function () {
   if (this._locked) return false;
   return Alias_Game_CharacterBase_canMove.call(this);
@@ -156,8 +156,8 @@ Game_CharacterBase.prototype.canPass = function (x, y, dir) {
 Game_CharacterBase.prototype.canPixelPass = function (x, y, dir, dist, type) {
   dist = dist || this.moveTiles();
   type = type || "collision";
-  var x1 = $gameMap.roundPXWithDirection(x, dir, dist);
-  var y1 = $gameMap.roundPYWithDirection(y, dir, dist);
+  const x1 = $gameMap.roundPXWithDirection(x, dir, dist);
+  const y1 = $gameMap.roundPYWithDirection(y, dir, dist);
   if (!this.collisionCheck(x1, y1, dir, dist, type)) {
     this.collider(type).moveTo(this._px, this._py);
     return false;
@@ -187,13 +187,13 @@ Game_CharacterBase.prototype.canPixelPassDiagonally = function (
 ) {
   dist = dist || this.moveTiles();
   type = type || "collision";
-  var x1 = $gameMap.roundPXWithDirection(x, horz, dist);
-  var y1 = $gameMap.roundPYWithDirection(y, vert, dist);
+  const x1 = $gameMap.roundPXWithDirection(x, horz, dist);
+  const y1 = $gameMap.roundPYWithDirection(y, vert, dist);
   if (dist === this.moveTiles()) {
     if (!this.canPixelPass(x1, y1, 5, null, type)) return false;
     if ($gameMap.midPass()) {
-      var x2 = $gameMap.roundPXWithDirection(x, horz, dist / 2);
-      var y2 = $gameMap.roundPYWithDirection(y, vert, dist / 2);
+      const x2 = $gameMap.roundPXWithDirection(x, horz, dist / 2);
+      const y2 = $gameMap.roundPYWithDirection(y, vert, dist / 2);
       if (!this.canPixelPass(x2, y2, 5, null, type)) return false;
     }
   } else {
@@ -220,9 +220,9 @@ Game_CharacterBase.prototype.collisionCheck = function (x, y, dir, dist, type) {
 };
 
 Game_CharacterBase.prototype.middlePass = function (x, y, dir, dist, type) {
-  var dist = dist / 2 || this.moveTiles() / 2;
-  var x2 = $gameMap.roundPXWithDirection(x, this.reverseDir(dir), dist);
-  var y2 = $gameMap.roundPYWithDirection(y, this.reverseDir(dir), dist);
+  dist = dist / 2 || this.moveTiles() / 2;
+  const x2 = $gameMap.roundPXWithDirection(x, this.reverseDir(dir), dist);
+  const y2 = $gameMap.roundPYWithDirection(y, this.reverseDir(dir), dist);
   this.collider(type).moveTo(x2, y2);
   if (this.collidesWithAnyTile(type)) return false;
   if (this.collidesWithAnyCharacter(type)) return false;
@@ -231,8 +231,8 @@ Game_CharacterBase.prototype.middlePass = function (x, y, dir, dist, type) {
 };
 
 Game_CharacterBase.prototype.collidesWithAnyTile = function (type) {
-  var collider = this.collider(type);
-  var collided = false;
+  const collider = this.collider(type);
+  let collided = false;
   ColliderManager.getCollidersNear(
     collider,
     function (collider) {
@@ -257,8 +257,8 @@ Game_CharacterBase.prototype.collidedWithTile = function (type, collider) {
 };
 
 Game_CharacterBase.prototype.collidesWithAnyCharacter = function (type) {
-  var collider = this.collider(type);
-  var collided = false;
+  const collider = this.collider(type);
+  let collided = false;
   ColliderManager.getCharactersNear(
     collider,
     function (chara) {
@@ -286,9 +286,9 @@ Game_CharacterBase.prototype.ignoreCharacters = function (type) {
 };
 
 Game_CharacterBase.prototype.valid = function (type) {
-  var edge = this.collider(type).gridEdge();
-  var maxW = $gameMap.width();
-  var maxH = $gameMap.height();
+  const edge = this.collider(type).gridEdge();
+  const maxW = $gameMap.width();
+  const maxH = $gameMap.height();
   if (!$gameMap.isLoopHorizontal()) {
     if (edge.x1 < 0 || edge.x2 >= maxW) return false;
   }
@@ -300,7 +300,7 @@ Game_CharacterBase.prototype.valid = function (type) {
 
 Game_CharacterBase.prototype.passableColors = function () {
   // #00000000 is a transparent return value in collisionmap addon
-  var colors = ["#ffffff", "#00000000"];
+  const colors = ["#ffffff", "#00000000"];
   switch (this._passabilityLevel) {
     case 1:
     case 3: {
@@ -330,11 +330,11 @@ Game_CharacterBase.prototype.canPassToFrom = function (xf, yf, xi, yi, type) {
     this.collider(type).moveTo(this._px, this._py);
     return false;
   }
-  var dx = xf - xi;
-  var dy = yf - yi;
-  var radian = Math.atan2(dy, dx);
+  const dx = xf - xi;
+  const dy = yf - yi;
+  let radian = Math.atan2(dy, dx);
   if (radian < 0) radian += Math.PI * 2;
-  var dist = Math.sqrt(dx * dx + dy * dy);
+  const dist = Math.sqrt(dx * dx + dy * dy);
   this._colliders["_stretched"] = this.collider(type).stretchedPoly(
     radian,
     dist
@@ -348,22 +348,22 @@ Game_CharacterBase.prototype.canPassToFrom = function (xf, yf, xi, yi, type) {
 };
 
 Game_CharacterBase.prototype.checkEventTriggerTouchFront = function (d) {
-  var vert;
-  var horz = (vert = d);
+  let vert;
+  let horz = (vert = d);
   if ([1, 3, 7, 9].contains(d)) {
     horz = d === 1 || d === 7 ? 4 : 6;
     vert = d === 1 || d === 3 ? 2 : 8;
   }
-  var x2 = $gameMap.roundPXWithDirection(this.px, horz, this.moveTiles());
-  var y2 = $gameMap.roundPYWithDirection(this.py, vert, this.moveTiles());
+  const x2 = $gameMap.roundPXWithDirection(this.px, horz, this.moveTiles());
+  const y2 = $gameMap.roundPYWithDirection(this.py, vert, this.moveTiles());
   this.checkEventTriggerTouch(x2, y2);
 };
 
 Game_CharacterBase.prototype.isOnLadder = function () {
   if (!this.collider()) return false;
-  var collider = this.collider("collision");
-  var collided = false;
-  var colliders = ColliderManager.getCollidersNear(collider, function (tile) {
+  const collider = this.collider("collision");
+  let collided = false;
+  const colliders = ColliderManager.getCollidersNear(collider, function (tile) {
     if (!tile.isTile) return false;
     if (tile.isLadder && tile.intersects(collider)) {
       collided = true;
@@ -376,9 +376,9 @@ Game_CharacterBase.prototype.isOnLadder = function () {
 
 Game_CharacterBase.prototype.isOnBush = function () {
   if (!this.collider()) return false;
-  var collider = this.collider("collision");
-  var collided = false;
-  var colliders = ColliderManager.getCollidersNear(collider, function (tile) {
+  const collider = this.collider("collision");
+  let collided = false;
+  const colliders = ColliderManager.getCollidersNear(collider, function (tile) {
     if (!tile.isTile) return false;
     if (tile.isBush && tile.intersects(collider)) {
       collided = true;
@@ -407,10 +407,10 @@ Game_CharacterBase.prototype.regionId = function () {
   );
 };
 
-var Alias_Game_CharacterBase_update = Game_CharacterBase.prototype.update;
+const Alias_Game_CharacterBase_update = Game_CharacterBase.prototype.update;
 Game_CharacterBase.prototype.update = function () {
-  var prevX = this._realPX;
-  var prevY = this._realPY;
+  const prevX = this._realPX;
+  const prevY = this._realPY;
   if (this.startedMoving()) {
     this._isMoving = true;
   } else {
@@ -433,8 +433,8 @@ Game_CharacterBase.prototype.update = function () {
 };
 
 Game_CharacterBase.prototype.updateMove = function () {
-  var xSpeed = 1;
-  var ySpeed = 1;
+  let xSpeed = 1;
+  let ySpeed = 1;
   if (this._adjustFrameSpeed) {
     xSpeed = Math.cos(this._radian);
     ySpeed = Math.sin(this._radian);
@@ -458,19 +458,19 @@ Game_CharacterBase.prototype.updateMove = function () {
 
 Game_CharacterBase.prototype.updateArc = function () {
   if (this._currentRad < this._targetRad) {
-    var newRad = Math.min(
+    let newRad = Math.min(
       this._currentRad + this.angularSpeed(),
       this._targetRad
     );
   }
   if (this._currentRad > this._targetRad) {
-    var newRad = Math.max(
+    let newRad = Math.max(
       this._currentRad - this.angularSpeed(),
       this._targetRad
     );
   }
-  var x1 = this._pivotX + this._radiusL * Math.cos(newRad);
-  var y1 = this._pivotY + this._radiusH * Math.sin(newRad);
+  const x1 = this._pivotX + this._radiusL * Math.cos(newRad);
+  const y1 = this._pivotY + this._radiusH * Math.sin(newRad);
   this._currentRad = newRad;
   this._px = this._realPX = x1;
   this._py = this._realPY = y1;
@@ -480,7 +480,7 @@ Game_CharacterBase.prototype.updateArc = function () {
   this.checkEventTriggerTouchFront(this._direction);
 };
 
-var Alias_Game_CharacterBase_updateJump =
+const Alias_Game_CharacterBase_updateJump =
   Game_CharacterBase.prototype.updateJump;
 Game_CharacterBase.prototype.updateJump = function () {
   Alias_Game_CharacterBase_updateJump.call(this);
@@ -490,14 +490,14 @@ Game_CharacterBase.prototype.updateJump = function () {
 };
 
 Game_CharacterBase.prototype.updateColliders = function () {
-  var colliders = this._colliders;
+  const colliders = this._colliders;
   if (!colliders) return;
-  var hidden = false;
+  let hidden = false;
   hidden = this.isTransparent() || this._erased;
   if (!hidden && this.isVisible) {
     hidden = !this.isVisible();
   }
-  for (var type in colliders) {
+  for (const type in colliders) {
     if (colliders.hasOwnProperty(type)) {
       colliders[type]._isHidden = !!hidden;
     }
@@ -528,8 +528,8 @@ Game_CharacterBase.prototype.pixelJump = function (xPlus, yPlus) {
 Game_CharacterBase.prototype.pixelJumpForward = function (dist, dir) {
   dir = dir || this._direction;
   dist = dist / QMovement.tileSize;
-  var x = dir === 6 ? dist : dir === 4 ? -dist : 0;
-  var y = dir === 2 ? dist : dir === 8 ? -dist : 0;
+  const x = dir === 6 ? dist : dir === 4 ? -dist : 0;
+  const y = dir === 2 ? dist : dir === 8 ? -dist : 0;
   this.jump(x, y);
 };
 
@@ -538,7 +538,7 @@ Game_CharacterBase.prototype.pixelJumpBackward = function (dist) {
 };
 
 Game_CharacterBase.prototype.pixelJumpFixed = function (dir, dist) {
-  var lastDirectionFix = this.isDirectionFixed();
+  const lastDirectionFix = this.isDirectionFixed();
   this.setDirectionFix(true);
   this.pixelJumpForward(dist, dir);
   this.setDirectionFix(lastDirectionFix);
@@ -547,7 +547,7 @@ Game_CharacterBase.prototype.pixelJumpFixed = function (dir, dist) {
 Game_CharacterBase.prototype.moveStraight = function (dir, dist) {
   dist = dist || this.moveTiles();
   this.setMovementSuccess(this.canPixelPass(this._px, this._py, dir, dist));
-  var originalSpeed = this._moveSpeed;
+  const originalSpeed = this._moveSpeed;
   if (this.smartMove() === 1 || this.smartMove() > 2) {
     this.smartMoveSpeed(dir);
   }
@@ -583,7 +583,7 @@ Game_CharacterBase.prototype.moveDiagonally = function (horz, vert, dist) {
   this.setMovementSuccess(
     this.canPixelPassDiagonally(this._px, this._py, horz, vert, dist)
   );
-  var originalSpeed = this._moveSpeed;
+  const originalSpeed = this._moveSpeed;
   if (this.smartMove() === 1 || this.smartMove() > 2) {
     this.smartMoveSpeed([horz, vert]);
   }
@@ -621,11 +621,11 @@ Game_CharacterBase.prototype.moveRadian = function (radian, dist) {
   dist = dist || this.moveTiles();
   this.fixedRadianMove(radian, dist);
   if (!this.isMovementSucceeded() && this.smartMove() > 1) {
-    var realDir = this.radianToDirection(radian, true);
-    var xAxis = Math.cos(radian);
-    var yAxis = Math.sin(radian);
-    var horz = xAxis > 0 ? 6 : xAxis < 0 ? 4 : 0;
-    var vert = yAxis > 0 ? 2 : yAxis < 0 ? 8 : 0;
+    const realDir = this.radianToDirection(radian, true);
+    const xAxis = Math.cos(radian);
+    const yAxis = Math.sin(radian);
+    const horz = xAxis > 0 ? 6 : xAxis < 0 ? 4 : 0;
+    const vert = yAxis > 0 ? 2 : yAxis < 0 ? 8 : 0;
     if ([1, 3, 7, 9].contains(realDir)) {
       if (this.canPixelPass(this._px, this._py, horz, dist)) {
         this.moveStraight(horz, dist);
@@ -633,7 +633,7 @@ Game_CharacterBase.prototype.moveRadian = function (radian, dist) {
         this.moveStraight(vert, dist);
       }
     } else {
-      var dir = this.radianToDirection(radian);
+      const dir = this.radianToDirection(radian);
       this.smartMoveDir8(dir);
     }
   }
@@ -643,8 +643,8 @@ Game_CharacterBase.prototype.fixedMove = function (dir, dist) {
   dist = dist || this.moveTiles();
   dir = dir === 5 ? this.direction() : dir;
   if ([1, 3, 7, 9].contains(dir)) {
-    var horz = dir === 1 || dir === 7 ? 4 : 6;
-    var vert = dir === 1 || dir === 3 ? 2 : 8;
+    const horz = dir === 1 || dir === 7 ? 4 : 6;
+    const vert = dir === 1 || dir === 3 ? 2 : 8;
     return this.fixedDiagMove(horz, vert, dist);
   }
   this.setMovementSuccess(this.canPixelPass(this._px, this._py, dir, dist));
@@ -699,15 +699,15 @@ Game_CharacterBase.prototype.fixedDiagMove = function (horz, vert, dist) {
 
 Game_CharacterBase.prototype.fixedRadianMove = function (radian, dist) {
   dist = dist || this.moveTiles();
-  var dir = this.radianToDirection(radian, true);
-  var xAxis = Math.cos(radian);
-  var yAxis = Math.sin(radian);
-  var horzSteps = Math.abs(xAxis) * dist;
-  var vertSteps = Math.abs(yAxis) * dist;
-  var horz = xAxis > 0 ? 6 : xAxis < 0 ? 4 : 0;
-  var vert = yAxis > 0 ? 2 : yAxis < 0 ? 8 : 0;
-  var x2 = $gameMap.roundPXWithDirection(this._px, horz, horzSteps);
-  var y2 = $gameMap.roundPYWithDirection(this._py, vert, vertSteps);
+  const dir = this.radianToDirection(radian, true);
+  const xAxis = Math.cos(radian);
+  const yAxis = Math.sin(radian);
+  const horzSteps = Math.abs(xAxis) * dist;
+  const vertSteps = Math.abs(yAxis) * dist;
+  const horz = xAxis > 0 ? 6 : xAxis < 0 ? 4 : 0;
+  const vert = yAxis > 0 ? 2 : yAxis < 0 ? 8 : 0;
+  const x2 = $gameMap.roundPXWithDirection(this._px, horz, horzSteps);
+  const y2 = $gameMap.roundPYWithDirection(this._py, vert, vertSteps);
   this.setMovementSuccess(this.canPassToFrom(x2, y2, this._px, this._py));
   this.setRadian(radian);
   if (this.isMovementSucceeded()) {
@@ -732,7 +732,7 @@ Game_CharacterBase.prototype.fixedRadianMove = function (radian, dist) {
 };
 
 Game_CharacterBase.prototype.fixedMoveBackward = function (dist) {
-  var lastDirectionFix = this.isDirectionFixed();
+  const lastDirectionFix = this.isDirectionFixed();
   this.setDirectionFix(true);
   this.fixedMove(this.reverseDir(this.direction()), dist);
   this.setDirectionFix(lastDirectionFix);
@@ -745,10 +745,10 @@ Game_CharacterBase.prototype.arc = function (
   cc,
   frames
 ) {
-  var cc = cc ? 1 : -1;
-  var dx = this._px - pivotX;
-  var dy = this._py - pivotY;
-  var rad = Math.atan2(dy, dx);
+  let cc = cc ? 1 : -1;
+  const dx = this._px - pivotX;
+  const dy = this._py - pivotY;
+  let rad = Math.atan2(dy, dx);
   frames = frames || 1;
   rad += rad < 0 ? 2 * Math.PI : 0;
   this._currentRad = rad;
@@ -764,14 +764,14 @@ Game_CharacterBase.prototype.smartMove = function () {
 };
 
 Game_CharacterBase.prototype.smartMoveDir8 = function (dir) {
-  var dist = this.moveTiles();
-  var collider = this.collider("collision");
-  var x1 = this._px;
-  var y1 = this._py;
-  var x2 = $gameMap.roundPXWithDirection(x1, dir, dist);
-  var y2 = $gameMap.roundPYWithDirection(y1, dir, dist);
+  const dist = this.moveTiles();
+  const collider = this.collider("collision");
+  const x1 = this._px;
+  const y1 = this._py;
+  let x2 = $gameMap.roundPXWithDirection(x1, dir, dist);
+  let y2 = $gameMap.roundPYWithDirection(y1, dir, dist);
   collider.moveTo(x2, y2);
-  var collided = false;
+  let collided = false;
   ColliderManager.getCharactersNear(
     collider,
     function (chara) {
@@ -792,15 +792,15 @@ Game_CharacterBase.prototype.smartMoveDir8 = function (dir) {
   );
   collider.moveTo(x1, y1);
   if (collided) return;
-  var horz = [4, 6].contains(dir) ? true : false;
-  var steps = horz ? collider.height : collider.width;
+  const horz = [4, 6].contains(dir) ? true : false;
+  let steps = horz ? collider.height : collider.width;
   steps /= 2;
-  var pass = false;
-  for (var i = 0; i < 2; i++) {
-    var sign = i === 0 ? 1 : -1;
-    var j = 0;
-    var x2 = x1;
-    var y2 = y1;
+  let pass = false;
+  for (let i = 0; i < 2; i++) {
+    const sign = i === 0 ? 1 : -1;
+    let j = 0;
+    let x2 = x1;
+    let y2 = y1;
     if (horz) {
       x2 = $gameMap.roundPXWithDirection(x1, dir, dist);
     } else {
@@ -819,7 +819,7 @@ Game_CharacterBase.prototype.smartMoveDir8 = function (dir) {
     if (pass) break;
   }
   if (!pass) return;
-  var radian = QPlus.adjustRadian(Math.atan2(y2 - y1, x2 - x1));
+  const radian = QPlus.adjustRadian(Math.atan2(y2 - y1, x2 - x1));
   this._forwardRadian = radian;
   this._px = x2;
   this._py = y2;
@@ -831,7 +831,7 @@ Game_CharacterBase.prototype.smartMoveDir8 = function (dir) {
 };
 
 Game_CharacterBase.prototype.smartMoveSpeed = function (dir) {
-  var diag = dir.constructor === Array;
+  const diag = dir.constructor === Array;
   while (!this.isMovementSucceeded()) {
     // should improve by figuring out what 1 pixel is in terms of movespeed
     // and subtract by that value instead
@@ -854,7 +854,7 @@ Game_CharacterBase.prototype.reloadColliders = function () {
 
 Game_CharacterBase.prototype.removeColliders = function () {
   ColliderManager.remove(this);
-  for (var collider in this._colliders) {
+  for (const collider in this._colliders) {
     if (!this._colliders.hasOwnProperty(collider)) continue;
     ColliderManager.remove(this._colliders[collider]);
     this._colliders[collider] = null;
@@ -867,7 +867,7 @@ Game_CharacterBase.prototype.removeColliders = function () {
 // will return first one thats found
 Game_CharacterBase.prototype.collider = function (type, alternative) {
   if (!this._colliders) this.setupColliders();
-  for (var i = 0; i < arguments.length; i++) {
+  for (let i = 0; i < arguments.length; i++) {
     if (this._colliders[arguments[i]]) {
       return this._colliders[arguments[i]];
     }
@@ -881,11 +881,11 @@ Game_CharacterBase.prototype.defaultColliderConfig = function () {
 
 Game_CharacterBase.prototype.setupColliders = function () {
   this._colliders = {};
-  var defaultCollider = this.defaultColliderConfig();
-  var notes = this.notes(true);
-  var configs = {};
-  var multi = /<colliders>([\s\S]*)<\/colliders>/i.exec(notes);
-  var single = /<collider[:|=](.*?)>/i.exec(notes);
+  const defaultCollider = this.defaultColliderConfig();
+  const notes = this.notes(true);
+  let configs = {};
+  const multi = /<colliders>([\s\S]*)<\/colliders>/i.exec(notes);
+  const single = /<collider[:|=](.*?)>/i.exec(notes);
   if (multi) {
     configs = QPlus.stringToObj(multi[1]);
   }
@@ -895,7 +895,7 @@ Game_CharacterBase.prototype.setupColliders = function () {
     configs.default = QPlus.stringToAry(defaultCollider);
   }
   Object.assign(configs, this._overrideColliders);
-  for (var collider in configs) {
+  for (const collider in configs) {
     this.makeCollider(collider, configs[collider]);
   }
   this.makeBounds();
@@ -915,13 +915,13 @@ Game_CharacterBase.prototype.changeCollider = function (type, settings) {
 };
 
 Game_CharacterBase.prototype.makeBounds = function () {
-  var minX = null;
-  var maxX = null;
-  var minY = null;
-  var maxY = null;
-  for (var type in this._colliders) {
+  let minX = null;
+  let maxX = null;
+  let minY = null;
+  let maxY = null;
+  for (const type in this._colliders) {
     if (!this._colliders.hasOwnProperty(type)) continue;
-    var edge = this._colliders[type].edge();
+    const edge = this._colliders[type].edge();
     if (minX === null || minX > edge.x1) {
       minX = edge.x1;
     }
@@ -935,8 +935,8 @@ Game_CharacterBase.prototype.makeBounds = function () {
       maxY = edge.y2;
     }
   }
-  var w = maxX - minX + 1;
-  var h = maxY - minY + 1;
+  const w = maxX - minX + 1;
+  const h = maxY - minY + 1;
   this._colliders["bounds"] = new Box_Collider(w, h, minX, minY);
   this._colliders["bounds"]._charaId = String(this.charaId());
   ColliderManager.addCharacter(this, 0);
@@ -945,8 +945,8 @@ Game_CharacterBase.prototype.makeBounds = function () {
 Game_CharacterBase.prototype.moveColliders = function (x, y) {
   x = typeof x === "number" ? x : this.px;
   y = typeof y === "number" ? y : this.py;
-  var prev = this._colliders["bounds"].sectorEdge();
-  for (var collider in this._colliders) {
+  const prev = this._colliders["bounds"].sectorEdge();
+  for (const collider in this._colliders) {
     if (this._colliders.hasOwnProperty(collider)) {
       this._colliders[collider].moveTo(x, y);
     }
@@ -955,13 +955,13 @@ Game_CharacterBase.prototype.moveColliders = function (x, y) {
 };
 
 Game_CharacterBase.prototype.cx = function (grid) {
-  var x = this.collider("collision").center.x;
+  let x = this.collider("collision").center.x;
   if (grid) x /= QMovement.tileSize;
   return x;
 };
 
 Game_CharacterBase.prototype.cy = function (grid) {
-  var y = this.collider("collision").center.y;
+  let y = this.collider("collision").center.y;
   if (grid) y /= QMovement.tileSize;
   return y;
 };

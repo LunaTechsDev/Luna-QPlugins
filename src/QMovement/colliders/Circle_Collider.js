@@ -13,11 +13,11 @@ Circle_Collider.prototype.initialize = function (
   options
 ) {
   this._radius = new Point(width / 2, height / 2);
-  var points = [];
-  for (var i = 7; i >= 0; i--) {
-    var rad = (Math.PI / 4) * i + Math.PI;
-    var x = this._radius.x + this._radius.x * Math.cos(rad);
-    var y = this._radius.y + this._radius.y * -Math.sin(rad);
+  const points = [];
+  for (let i = 7; i >= 0; i--) {
+    const rad = (Math.PI / 4) * i + Math.PI;
+    const x = this._radius.x + this._radius.x * Math.cos(rad);
+    const y = this._radius.y + this._radius.y * -Math.sin(rad);
     points.push(new Point(x, y));
   }
   Polygon_Collider.prototype.initialize.call(
@@ -60,9 +60,9 @@ Circle_Collider.prototype.scale = function (zX, zY) {
 };
 
 Circle_Collider.prototype.circlePosition = function (radian) {
-  var x = this.radiusX * Math.cos(radian);
-  var y = this.radiusY * -Math.sin(radian);
-  var dist = Math.sqrt(x * x + y * y);
+  let x = this.radiusX * Math.cos(radian);
+  let y = this.radiusY * -Math.sin(radian);
+  const dist = Math.sqrt(x * x + y * y);
   radian -= this._radian;
   x = dist * Math.cos(radian);
   y = dist * -Math.sin(radian);
@@ -74,13 +74,13 @@ Circle_Collider.prototype.intersects = function (other) {
   if (other.height === 0 || other.width === 0) return false;
   if (this.containsPoint(other.center.x, other.center.y)) return true;
   if (other.containsPoint(this.center.x, this.center.y)) return true;
-  var x1 = this.center.x;
-  var x2 = other.center.x;
-  var y1 = this.center.y;
-  var y2 = other.center.y;
-  var rad = Math.atan2(y1 - y2, x2 - x1);
+  let x1 = this.center.x;
+  const x2 = other.center.x;
+  let y1 = this.center.y;
+  const y2 = other.center.y;
+  let rad = Math.atan2(y1 - y2, x2 - x1);
   rad += rad < 0 ? 2 * Math.PI : 0;
-  var pos = this.circlePosition(rad);
+  let pos = this.circlePosition(rad);
   if (other.containsPoint(pos.x, pos.y)) return true;
   if (other.isCircle()) {
     rad = Math.atan2(y2 - y1, x1 - x2);
@@ -88,7 +88,7 @@ Circle_Collider.prototype.intersects = function (other) {
     pos = other.circlePosition(rad);
     if (this.containsPoint(pos.x, pos.y)) return true;
   }
-  var i, j;
+  let i, j;
   for (i = 0, j = other._vertices.length; i < j; i++) {
     x1 = other._vertices[i].x;
     y1 = other._vertices[i].y;

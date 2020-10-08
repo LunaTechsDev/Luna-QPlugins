@@ -5,11 +5,11 @@ if (typeof QPlus === "undefined") {
 
 if (Utils.RPGMAKER_NAME === "MZ") {
   PluginManager.registerCommand("Luna_QMovement", "transfer", (args) => {
-    var { dir = 0, fade = "black" } = args;
-    var mapId = Number(args.mapId);
-    var x = Number(args.x) / QMovement.tileSize;
-    var y = Number(args.y) / QMovement.tileSize;
-    var dir = QPlus.stringToType(dir);
+    let { dir = 0, fade = "black" } = args;
+    const mapId = Number(args.mapId);
+    const x = Number(args.x) / QMovement.tileSize;
+    const y = Number(args.y) / QMovement.tileSize;
+    dir = QPlus.stringToType(dir);
     if (fade) {
       if (fade.toLowerCase() === "black") {
         fade = 0;
@@ -24,16 +24,16 @@ if (Utils.RPGMAKER_NAME === "MZ") {
   });
 
   PluginManager.registerCommand("Luna_QMovement", "setPosition", (args) => {
-    var { dir = 0 } = args;
-    var chara = null;
+    let { dir = 0 } = args;
+    let chara = null;
     if (args.charId.toLowerCase() === "this") {
       chara = this.character(0);
     } else {
       chara = QPlus.getCharacter(args.charId);
     }
     if (!chara) return;
-    var x = Number(args.x) / QMovement.tileSize;
-    var y = Number(args.y) / QMovement.tileSize;
+    const x = Number(args.x) / QMovement.tileSize;
+    const y = Number(args.y) / QMovement.tileSize;
     dir = Number(args.dir);
     chara.locate(x, y);
     if (dir > 0) {
@@ -45,9 +45,9 @@ if (Utils.RPGMAKER_NAME === "MZ") {
     if (args.charId === `"0"`) {
       args.charId = 0;
     }
-    var chara = QPlus.getCharacter(args.charId);
+    const chara = QPlus.getCharacter(args.charId);
     if (!chara) return;
-    var type = args.type;
+    const type = args.type;
     chara.changeCollider(type, [
       args.shape,
       Number(args.width),

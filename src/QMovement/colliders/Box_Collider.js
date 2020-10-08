@@ -6,7 +6,7 @@ Box_Collider.prototype = Object.create(Polygon_Collider.prototype);
 Box_Collider.prototype.constructor = Box_Collider;
 
 Box_Collider.prototype.initialize = function (width, height, ox, oy, options) {
-  var points = [
+  const points = [
     new Point(0, 0),
     new Point(width, 0),
     new Point(width, height),
@@ -45,12 +45,12 @@ Box_Collider.prototype.isBox = function () {
 
 Box_Collider.prototype.containsPoint = function (x, y) {
   if (this._radian === 0) {
-    var xMin = this._xMin + this.x + this.ox;
-    var xMax = this._xMax + this.x + this.ox;
-    var yMin = this._yMin + this.y + this.oy;
-    var yMax = this._yMax + this.y + this.oy;
-    var insideX = x >= xMin && x <= xMax;
-    var insideY = y >= yMin && y <= yMax;
+    const xMin = this._xMin + this.x + this.ox;
+    const xMax = this._xMax + this.x + this.ox;
+    const yMin = this._yMin + this.y + this.oy;
+    const yMax = this._yMax + this.y + this.oy;
+    const insideX = x >= xMin && x <= xMax;
+    const insideY = y >= yMin && y <= yMax;
     return insideX && insideY;
   } else {
     return Polygon_Collider.prototype.containsPoint.call(this, x, y);

@@ -34,7 +34,7 @@ Sprite_Collider.prototype.needsRedraw = function () {
 
 Sprite_Collider.prototype.setupCollider = function (collider) {
   this._collider = collider;
-  var isNew = false;
+  let isNew = false;
   if (!this._colliderSprite) {
     this._colliderSprite = new PIXI.Graphics();
     isNew = true;
@@ -46,14 +46,14 @@ Sprite_Collider.prototype.setupCollider = function (collider) {
 };
 
 Sprite_Collider.prototype.drawCollider = function () {
-  var collider = this._collider;
+  const collider = this._collider;
   this._colliderSprite.clear();
-  var color = (collider.color || "#ff0000").replace("#", "");
+  let color = (collider.color || "#ff0000").replace("#", "");
   color = parseInt(color, 16);
   this._colliderSprite.beginFill(color);
   if (collider.isCircle()) {
-    var radiusX = collider.radiusX;
-    var radiusY = collider.radiusY;
+    const radiusX = collider.radiusX;
+    const radiusY = collider.radiusY;
     this._colliderSprite.drawEllipse(0, 0, radiusX, radiusY);
     this._colliderSprite.rotation = collider._radian;
   } else {

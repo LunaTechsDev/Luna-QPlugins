@@ -1,4 +1,4 @@
-var Alias_Spriteset_Map_createLowerLayer =
+const Alias_Spriteset_Map_createLowerLayer =
   Spriteset_Map.prototype.createLowerLayer;
 Spriteset_Map.prototype.createLowerLayer = function () {
   Alias_Spriteset_Map_createLowerLayer.call(this);

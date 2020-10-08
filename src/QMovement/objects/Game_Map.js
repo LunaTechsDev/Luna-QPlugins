@@ -1,4 +1,4 @@
-var Alias_Game_Map_setup = Game_Map.prototype.setup;
+const Alias_Game_Map_setup = Game_Map.prototype.setup;
 Game_Map.prototype.setup = function (mapId) {
   if ($dataMap) {
     ColliderManager._mapWidth = this.width();
@@ -18,12 +18,12 @@ Game_Map.prototype.tileHeight = function () {
 };
 
 Game_Map.prototype.flagAt = function (x, y) {
-  var x = x || $gamePlayer.x;
-  var y = y || $gamePlayer.y;
-  var flags = this.tilesetFlags();
-  var tiles = this.allTiles(x, y);
-  for (var i = 0; i < tiles.length; i++) {
-    var flag = flags[tiles[i]];
+  x = x || $gamePlayer.x;
+  y = y || $gamePlayer.y;
+  const flags = this.tilesetFlags();
+  const tiles = this.allTiles(x, y);
+  for (let i = 0; i < tiles.length; i++) {
+    const flag = flags[tiles[i]];
     console.log("layer", i, ":", flag);
     if (flag & 0x20) console.log("layer", i, "is ladder");
     if (flag & 0x40) console.log("layer", i, "is bush");
@@ -53,7 +53,7 @@ Game_Map.prototype.midPass = function () {
   return QMovement.midPass;
 };
 
-var Alias_Game_Map_refreshIfNeeded = Game_Map.prototype.refreshIfNeeded;
+const Alias_Game_Map_refreshIfNeeded = Game_Map.prototype.refreshIfNeeded;
 Game_Map.prototype.refreshIfNeeded = function () {
   Alias_Game_Map_refreshIfNeeded.call(this);
   if (ColliderManager._needsRefresh) {
@@ -66,34 +66,34 @@ Game_Map.prototype.refreshIfNeeded = function () {
 
 Game_Map.prototype.reloadColliders = function () {
   this.reloadTileMap();
-  var events = this.events();
-  var i, j;
+  const events = this.events();
+  let i, j;
   for (i = 0, j = events.length; i < j; i++) {
     events[i].reloadColliders();
   }
-  var vehicles = this._vehicles;
+  const vehicles = this._vehicles;
   for (i = 0, j = vehicles.length; i < j; i++) {
     vehicles[i].reloadColliders();
   }
   $gamePlayer.reloadColliders();
-  var followers = $gamePlayer.followers()._data;
+  const followers = $gamePlayer.followers()._data;
   for (i = 0, j = followers.length; i < j; i++) {
     followers[i].reloadColliders();
   }
 };
 
 Game_Map.prototype.clearColliders = function () {
-  var events = this.events();
-  var i, j;
+  const events = this.events();
+  let i, j;
   for (i = 0, j = events.length; i < j; i++) {
     events[i].removeColliders();
   }
-  var vehicles = this._vehicles;
+  const vehicles = this._vehicles;
   for (i = 0, j = vehicles.length; i < j; i++) {
     vehicles[i].removeColliders();
   }
   $gamePlayer.removeColliders();
-  var followers = $gamePlayer.followers()._data;
+  const followers = $gamePlayer.followers()._data;
   for (i = 0, j = followers.length; i < j; i++) {
     followers[i].removeColliders();
   }
@@ -107,18 +107,18 @@ Game_Map.prototype.reloadTileMap = function () {
 
 Game_Map.prototype.setupMapColliders = function () {
   this._tileCounter = 0;
-  for (var x = 0; x < this.width(); x++) {
-    for (var y = 0; y < this.height(); y++) {
-      var flags = this.tilesetFlags();
-      var tiles = this.allTiles(x, y);
-      var id = x + y * this.width();
-      for (var i = tiles.length - 1; i >= 0; i--) {
-        var flag = flags[tiles[i]];
+  for (let x = 0; x < this.width(); x++) {
+    for (let y = 0; y < this.height(); y++) {
+      const flags = this.tilesetFlags();
+      const tiles = this.allTiles(x, y);
+      const id = x + y * this.width();
+      for (let i = tiles.length - 1; i >= 0; i--) {
+        const flag = flags[tiles[i]];
         if (flag === 16) continue;
-        var data = this.getMapCollider(x, y, flag);
+        const data = this.getMapCollider(x, y, flag);
         if (!data) continue;
         if (data[0].constructor === Array) {
-          for (var j = 0; j < data.length; j++) {
+          for (let j = 0; j < data.length; j++) {
             this.makeTileCollider(x, y, flag, data[j], j);
           }
         } else {
@@ -130,17 +130,17 @@ Game_Map.prototype.setupMapColliders = function () {
 };
 
 Game_Map.prototype.getMapCollider = function (x, y, flag) {
-  var realFlag = flag;
+  const realFlag = flag;
   if (flag >> 12 > 0) {
     flag = flag.toString(2);
     flag = flag.slice(flag.length - 12, flag.length);
     flag = parseInt(flag, 2);
   }
-  var boxData;
+  let boxData;
   if (QMovement.regionColliders[this.regionId(x, y)]) {
-    var regionData = QMovement.regionColliders[this.regionId(x, y)];
+    const regionData = QMovement.regionColliders[this.regionId(x, y)];
     boxData = [];
-    for (var i = 0; i < regionData.length; i++) {
+    for (let i = 0; i < regionData.length; i++) {
       boxData[i] = [
         regionData[i].width || 0,
         regionData[i].height || 0,
@@ -166,15 +166,15 @@ Game_Map.prototype.getMapCollider = function (x, y, flag) {
 
 Game_Map.prototype.makeTileCollider = function (x, y, flag, boxData, index) {
   // boxData is array [width, height, ox, oy, note, type]
-  var x1 = x * this.tileWidth();
-  var y1 = y * this.tileHeight();
-  var ox = boxData[2] || 0;
-  var oy = boxData[3] || 0;
-  var w = boxData[0];
-  var h = boxData[1];
+  const x1 = x * this.tileWidth();
+  const y1 = y * this.tileHeight();
+  const ox = boxData[2] || 0;
+  const oy = boxData[3] || 0;
+  const w = boxData[0];
+  const h = boxData[1];
   if (w === 0 || h === 0) return;
-  var type = boxData[5] || "box";
-  var newBox;
+  const type = boxData[5] || "box";
+  let newBox;
   if (type === "circle") {
     newBox = new Circle_Collider(w, h, ox, oy);
   } else if (type === "box") {
@@ -196,9 +196,9 @@ Game_Map.prototype.makeTileCollider = function (x, y, flag, boxData, index) {
   newBox.isCounter = flag & 0x80 || /<counter>/i.test(newBox.note);
   newBox.isDamage = flag & 0x100 || /<damage>/i.test(newBox.note);
   newBox.moveTo(x1, y1);
-  var vx = x * this.height() * this.width();
-  var vy = y * this.height();
-  var vz = index;
+  const vx = x * this.height() * this.width();
+  const vy = y * this.height();
+  const vz = index;
   newBox.location = vx + vy + vz;
   if (newBox.isWater2) {
     newBox.color = QMovement.water2.toLowerCase();
@@ -246,7 +246,7 @@ Game_Map.prototype.roundPYWithDirection = function (y, d, dist) {
 };
 
 Game_Map.prototype.deltaPX = function (x1, x2) {
-  var result = x1 - x2;
+  let result = x1 - x2;
   if (
     this.isLoopHorizontal() &&
     Math.abs(result) > (this.width() * QMovement.tileSize) / 2
@@ -261,7 +261,7 @@ Game_Map.prototype.deltaPX = function (x1, x2) {
 };
 
 Game_Map.prototype.deltaPY = function (y1, y2) {
-  var result = y1 - y2;
+  let result = y1 - y2;
   if (
     this.isLoopVertical() &&
     Math.abs(result) > (this.height() * QMovement.tileSize) / 2
@@ -276,13 +276,13 @@ Game_Map.prototype.deltaPY = function (y1, y2) {
 };
 
 Game_Map.prototype.canvasToMapPX = function (x) {
-  var tileWidth = this.tileWidth();
-  var originX = this.displayX() * tileWidth;
+  const tileWidth = this.tileWidth();
+  const originX = this.displayX() * tileWidth;
   return this.roundPX(originX + x);
 };
 
 Game_Map.prototype.canvasToMapPY = function (y) {
-  var tileHeight = this.tileHeight();
-  var originY = this.displayY() * tileHeight;
+  const tileHeight = this.tileHeight();
+  const originY = this.displayY() * tileHeight;
   return this.roundPY(originY + y);
 };

@@ -2,7 +2,7 @@ function QMovement() {
   throw new Error("This is a static class");
 }
 
-var _PARAMS = QPlus.getParams("<Luna_QMovement>", {
+const _PARAMS = QPlus.getParams("<Luna_QMovement>", {
   "Player Collider": {
     Type: "box",
     Width: 36,
@@ -114,12 +114,12 @@ QMovement.tileBoxes = {
   3599: [48, 48], // Impassable A2, A3, A4
   3727: [48, 48],
 };
-var rs = QMovement.tileSize / 48;
-for (var key in QMovement.tileBoxes) {
+const rs = QMovement.tileSize / 48;
+for (const key in QMovement.tileBoxes) {
   if (QMovement.tileBoxes.hasOwnProperty(key)) {
-    for (var i = 0; i < QMovement.tileBoxes[key].length; i++) {
+    for (let i = 0; i < QMovement.tileBoxes[key].length; i++) {
       if (QMovement.tileBoxes[key][i].constructor === Array) {
-        for (var j = 0; j < QMovement.tileBoxes[key][i].length; j++) {
+        for (let j = 0; j < QMovement.tileBoxes[key][i].length; j++) {
           QMovement.tileBoxes[key][i][j] *= rs;
         }
       } else {
