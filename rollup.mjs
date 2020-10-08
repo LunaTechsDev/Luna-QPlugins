@@ -1,4 +1,5 @@
 import resolve from "rollup-plugin-node-resolve";
+import jscc from "rollup-plugin-jscc";
 
 import { rollup } from "rollup";
 import { promises as fs } from "fs";
@@ -56,7 +57,7 @@ const outputOptions = {
     const paramsData = await fs.readFile(`./src/${dir}/Params.js`, "utf8");
     const exportName = await getPluginTag(paramsData, "exportName");
 
-    const bundle = await rollup({
+    const bundleMZ = await rollup({
       input: `./src/${dir}/main.js`,
       external,
       onwarn(warning, warn) {
@@ -70,11 +71,13 @@ const outputOptions = {
         resolve({
           mainFields: ["module", "main"],
         }),
+        jscc({
+          values: { _MV: false },
+        }),
       ],
     });
 
-    // Output to MZ demo game
-    await bundle.write({
+    await bundleMZ.write({
       banner: async () => {
         return await fs.readFile(`./src/${dir}/Params.js`, "utf8");
       },
@@ -83,8 +86,27 @@ const outputOptions = {
       ...outputOptions,
     });
 
-    // Output to MV demo game
-    await bundle.write({
+    const bundleMV = await rollup({
+      input: `./src/${dir}/main.js`,
+      external,
+      onwarn(warning, warn) {
+        // suppress eval warnings
+        if (warning.code === "EVAL") {
+          return;
+        }
+        warn(warning);
+      },
+      plugins: [
+        resolve({
+          mainFields: ["module", "main"],
+        }),
+        jscc({
+          values: { _MV: true },
+        }),
+      ],
+    });
+
+    await bundleMV.write({
       banner: async () => {
         return await fs.readFile(`./src/${dir}/Params.js`, "utf8");
       },
