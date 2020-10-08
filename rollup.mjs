@@ -1,7 +1,11 @@
 import resolve from "rollup-plugin-node-resolve";
+import jscc from "rollup-plugin-jscc";
 
 import { rollup } from "rollup";
 import { promises as fs } from "fs";
+
+const argv = process.argv;
+const IS_MV = argv.some((arg) => arg.includes("--mv"));
 
 const OUTPUT_DIR =
   process.env.NODE_ENV === "production" ? "./dist/" : "./games/";
@@ -69,6 +73,9 @@ const outputOptions = {
       plugins: [
         resolve({
           mainFields: ["module", "main"],
+        }),
+        jscc({
+          values: { _MV: IS_MV },
         }),
       ],
     });
