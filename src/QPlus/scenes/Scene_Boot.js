@@ -1,6 +1,6 @@
 import { _PARAMS } from "../constants";
 
-var Alias_Scene_Boot_start = Scene_Boot.prototype.start;
+const Alias_Scene_Boot_start = Scene_Boot.prototype.start;
 Scene_Boot.prototype.start = function () {
   if (DataManager.isBattleTest() || DataManager.isEventTest()) {
     Alias_Scene_Boot_start.call(this);

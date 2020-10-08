@@ -1,4 +1,4 @@
-var Alias_Game_Player_canMove = Game_Player.prototype.canMove;
+const Alias_Game_Player_canMove = Game_Player.prototype.canMove;
 Game_Player.prototype.canMove = function () {
   return (
     Alias_Game_Player_canMove.call(this) &&

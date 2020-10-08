@@ -12,23 +12,23 @@ export default {
   },
 
   getParams(id, convert) {
-    var plugin = $plugins.filter(function (p) {
+    const plugin = $plugins.filter(function (p) {
       return p.description.contains(id) && p.status;
     });
-    var hasDefaults = typeof convert === "object";
+    const hasDefaults = typeof convert === "object";
     if (!plugin[0]) {
       return hasDefaults ? convert : {};
     }
-    var params = Object.assign(
+    const params = Object.assign(
       hasDefaults ? convert : {},
       plugin[0].parameters
     );
     if (convert) {
-      for (var param in params) {
+      for (const param in params) {
         params[param] = this.stringToType(String(params[param]));
         if (hasDefaults && convert[param] !== undefined) {
           if (convert[param].constructor !== params[param].constructor) {
-            var err =
+            let err =
               "Plugin Parameter value error. " + id + ", Parameter: " + param;
             err += "\nDefault value will be used.";
             console.warn(err);
@@ -70,10 +70,10 @@ export default {
     if (string.constructor === Array) {
       string = string.join(" ");
     }
-    var args = [];
-    var regex = /("?|'?)(.+?)\1(?:\s|$)/g;
+    const args = [];
+    const regex = /("?|'?)(.+?)\1(?:\s|$)/g;
     while (true) {
-      var match = regex.exec(string);
+      const match = regex.exec(string);
       if (match) {
         args.push(match[2]);
       } else {
@@ -84,20 +84,20 @@ export default {
   },
 
   formatArgs(args) {
-    for (var i = 0; i < args.length; i++) {
-      var arg = args[i].trim();
-      var match = /\{(.*?)\}/.exec(arg);
+    for (let i = 0; i < args.length; i++) {
+      const arg = args[i].trim();
+      const match = /\{(.*?)\}/.exec(arg);
       if (match) {
-        var val = match[1];
-        var cmd = match[1][0].toLowerCase();
+        let val = match[1];
+        const cmd = match[1][0].toLowerCase();
         switch (cmd) {
           case "v": {
-            var id = Number(match[1].slice(1));
+            const id = Number(match[1].slice(1));
             val = $gameVariables.value(id);
             break;
           }
           case "s": {
-            var id = Number(match[1].slice(1));
+            const id = Number(match[1].slice(1));
             val = $gameSwitches.value(id);
             break;
           }
@@ -109,9 +109,9 @@ export default {
   },
 
   getArg(args, regex) {
-    var arg = null;
-    for (var i = 0; i < args.length; i++) {
-      var match = regex.exec(args[i]);
+    let arg = null;
+    for (let i = 0; i < args.length; i++) {
+      const match = regex.exec(args[i]);
       if (match) {
         if (match.length === 1) {
           arg = true;
@@ -125,11 +125,11 @@ export default {
   },
 
   getMeta(string) {
-    var meta = {};
-    var inlineRegex = /<([^<>:\/]+)(?::?)([^>]*)>/g;
-    var blockRegex = /<([^<>:\/]+)>([\s\S]*?)<\/\1>/g;
+    const meta = {};
+    const inlineRegex = /<([^<>:\/]+)(?::?)([^>]*)>/g;
+    const blockRegex = /<([^<>:\/]+)>([\s\S]*?)<\/\1>/g;
     for (;;) {
-      var match = inlineRegex.exec(string);
+      const match = inlineRegex.exec(string);
       if (match) {
         if (match[2] === "") {
           meta[match[1]] = true;
@@ -141,7 +141,7 @@ export default {
       }
     }
     for (;;) {
-      var match = blockRegex.exec(string);
+      const match = blockRegex.exec(string);
       if (match) {
         meta[match[1]] = match[2];
       } else {
@@ -154,14 +154,14 @@ export default {
   getCharacter(string) {
     string = String(string).toLowerCase();
     if (/^[0-9]+$/.test(string)) {
-      var id = Number(string);
+      const id = Number(string);
       return id === 0 ? $gamePlayer : $gameMap.event(id);
     } else if (/^(player|p)$/.test(string)) {
       return $gamePlayer;
     } else {
-      var isEvent = /^(event|e)([0-9]+)$/.exec(string);
+      const isEvent = /^(event|e)([0-9]+)$/.exec(string);
       if (isEvent) {
-        var eventId = Number(isEvent[2]);
+        const eventId = Number(isEvent[2]);
         return eventId > 0 ? $gameMap.event(eventId) : null;
       }
       return null;
@@ -175,7 +175,7 @@ export default {
     } else if (/^(player|p)$/.test(string)) {
       return 0;
     } else {
-      var isEvent = /^(event|e)([0-9]+)$/.exec(string);
+      const isEvent = /^(event|e)([0-9]+)$/.exec(string);
       if (isEvent) {
         return Number(isEvent[2]);
       }
@@ -200,10 +200,10 @@ export default {
    * @return {XMLHttpRequest}
    */
   request(filePath, callback, err) {
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.url = filePath;
     xhr.open("GET", filePath, true);
-    var type = filePath.split(".").pop().toLowerCase();
+    const type = filePath.split(".").pop().toLowerCase();
     if (type === "txt") {
       xhr.overrideMimeType("text/plain");
     } else if (type === "json") {
@@ -211,7 +211,7 @@ export default {
     }
     xhr.onload = function () {
       if (this.status < 400) {
-        var val = this.responseText;
+        let val = this.responseText;
         if (type === "json") val = JSON.parse(val);
         this._onSuccess(val);
       }
@@ -247,7 +247,7 @@ export default {
    *         instead of passing the callback in the parameter
    */
   wait(duration, callback) {
-    var waiter = {
+    const waiter = {
       duration: duration || 0,
       callback: callback,
       then: function (callback) {
@@ -260,7 +260,7 @@ export default {
   },
 
   removeWaitListener(waiter) {
-    var i = this._waitListeners.indexOf(waiter);
+    const i = this._waitListeners.indexOf(waiter);
     if (i === -1) return;
     this._waitListeners.splice(i, 1);
   },
@@ -307,21 +307,21 @@ export default {
    * @return {Object}
    */
   stringToObj(string) {
-    var lines = string.split("\n");
-    var obj = {};
+    const lines = string.split("\n");
+    const obj = {};
     lines.forEach(function (value) {
-      var match = /^(.*):(.*)/.exec(value);
+      const match = /^(.*):(.*)/.exec(value);
       if (match) {
-        var key,
+        let key,
           newKey = match[1].trim();
         if (obj.hasOwnProperty(key)) {
-          var i = 1;
+          let i = 1;
           while (obj.hasOwnProperty(newKey)) {
             newKey = key + String(i);
             i++;
           }
         }
-        var arr = this.stringToAry(match[2].trim());
+        let arr = this.stringToAry(match[2].trim());
         if (arr.length === 1) arr = arr[0];
         obj[newKey] = arr || "";
       }
@@ -339,10 +339,10 @@ export default {
    */
   stringToAry(string) {
     // couldn't get this to work with split so went with regex
-    var regex = /\s*(\(.*?\))|([^,]+)/g;
-    var arr = [];
+    const regex = /\s*(\(.*?\))|([^,]+)/g;
+    const arr = [];
     while (true) {
-      var match = regex.exec(string);
+      const match = regex.exec(string);
       if (match) {
         arr.push(match[0]);
       } else {
@@ -354,7 +354,7 @@ export default {
 
   stringToType(string) {
     string = string.trim();
-    var rx = this._regex;
+    const rx = this._regex;
     if (rx.isString.test(string)) {
       string = string.slice(1, -1);
     }
@@ -364,7 +364,7 @@ export default {
     if (rx.isFloat.test(string)) {
       return Number(string);
     }
-    var isPoint = rx.isPoint.exec(string);
+    const isPoint = rx.isPoint.exec(string);
     if (isPoint) {
       return new Point(Number(isPoint[1]), Number(isPoint[2]));
     }
@@ -377,8 +377,8 @@ export default {
     }
     if (rx.isObj.test(string)) {
       try {
-        var obj = JSON.parse(string);
-        for (var key in obj) {
+        const obj = JSON.parse(string);
+        for (const key in obj) {
           obj[key] = this.stringToType(obj[key]);
         }
         return obj;
@@ -413,8 +413,8 @@ export default {
    */
   indexToPoint(index, maxCols, maxRows) {
     if (index < 0) return new Point(-1, -1);
-    var x = index % maxCols;
-    var y = Math.floor(index / maxCols);
+    const x = index % maxCols;
+    const y = Math.floor(index / maxCols);
     return new Point(x, y);
   },
 
@@ -439,8 +439,8 @@ export default {
   },
 
   updateWaiters() {
-    var waiters = this._waitListeners;
-    for (var i = waiters.length - 1; i >= 0; i--) {
+    const waiters = this._waitListeners;
+    for (let i = waiters.length - 1; i >= 0; i--) {
       if (!waiters[i]) {
         waiters.splice(i, 1);
         continue;

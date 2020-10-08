@@ -1,11 +1,11 @@
 Input.stopPropagation = function () {
-  var key = this._latestButton;
+  const key = this._latestButton;
   this._currentState[key] = false;
   this._latestButton = null;
-  for (var i = 0; i < this._gamepadStates.length; i++) {
+  for (let i = 0; i < this._gamepadStates.length; i++) {
     if (!this._gamepadStates[i]) continue;
-    for (var j = 0; j < this._gamepadStates[i].length; j++) {
-      var button = Imported.QInput
+    for (let j = 0; j < this._gamepadStates[i].length; j++) {
+      const button = Imported.QInput
         ? this.gamepadKeys[j]
         : this.gamepadMapper[j];
       if (button === key) {

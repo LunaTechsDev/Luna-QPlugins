@@ -2,8 +2,8 @@ import QPlus from "../QPlus";
 import { _PARAMS } from "../constants";
 
 if (_PARAMS["Ignore Mouse when inactive"]) {
-  var isFocused = true;
-  var focusWaiter;
+  let isFocused = true;
+  let focusWaiter;
 
   window.addEventListener("focus", function (e) {
     if (focusWaiter) {
@@ -24,7 +24,7 @@ if (_PARAMS["Ignore Mouse when inactive"]) {
     isFocused = false;
   });
 
-  var Alias_TouchInput_update = TouchInput.update;
+  const Alias_TouchInput_update = TouchInput.update;
   TouchInput.update = function () {
     if (!isFocused) {
       this.clear();

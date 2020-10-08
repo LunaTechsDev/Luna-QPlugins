@@ -33,14 +33,14 @@ document.body.ondragover = function (e) {
 
 if (Utils.RPGMAKER_NAME === "MZ") {
   PluginManager.registerCommand("LunaQPlus", "wait", (args) => {
-    var min = Number(args.min);
-    var max = Number(args.max);
+    let min = Number(args.min);
+    let max = Number(args.max);
     if (!max) {
       max = min;
       min = 0;
     }
 
-    var waitTime = Math.randomIntBetween(min, max);
+    const waitTime = Math.randomIntBetween(min, max);
     // @todo probably a much better way to do this
     $gameMap._interpreter.wait(waitTime);
   });

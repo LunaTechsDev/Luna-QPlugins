@@ -1,4 +1,4 @@
-var Alias_Game_CharacterBase_initMembers =
+const Alias_Game_CharacterBase_initMembers =
   Game_CharacterBase.prototype.initMembers;
 Game_CharacterBase.prototype.initMembers = function () {
   Alias_Game_CharacterBase_initMembers.call(this);
@@ -41,7 +41,7 @@ Game_CharacterBase.prototype.radianToDirection = function (radian, useDiag) {
   if (useDiag) {
     // use degrees for diagonals
     // since I don't know clean PI numbers for these degrees
-    var deg = (radian * 180) / Math.PI;
+    const deg = (radian * 180) / Math.PI;
     if (deg >= 22.5 && deg <= 67.5) {
       return 3;
     } else if (deg >= 112.5 && deg <= 157.5) {
@@ -69,7 +69,7 @@ Game_CharacterBase.prototype.setSelfSwitch = function () {
   return;
 };
 
-var Alias_Game_CharacterBase_updateAnimation =
+const Alias_Game_CharacterBase_updateAnimation =
   Game_CharacterBase.prototype.updateAnimation;
 Game_CharacterBase.prototype.updateAnimation = function () {
   if (this._globalLocked >= 2) {
@@ -78,7 +78,7 @@ Game_CharacterBase.prototype.updateAnimation = function () {
   Alias_Game_CharacterBase_updateAnimation.call(this);
 };
 
-var Alias_Game_CharacterBase_updateMove =
+const Alias_Game_CharacterBase_updateMove =
   Game_CharacterBase.prototype.updateMove;
 Game_CharacterBase.prototype.updateMove = function () {
   if (this._globalLocked >= 1) {
@@ -87,7 +87,7 @@ Game_CharacterBase.prototype.updateMove = function () {
   Alias_Game_CharacterBase_updateMove.call(this);
 };
 
-var Alias_Game_Character_updateRoutineMove =
+const Alias_Game_Character_updateRoutineMove =
   Game_Character.prototype.updateRoutineMove;
 Game_Character.prototype.updateRoutineMove = function () {
   if (this._globalLocked >= 1) {

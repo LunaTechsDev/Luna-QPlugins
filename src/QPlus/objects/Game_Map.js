@@ -15,13 +15,13 @@ Game_Map.prototype.globalLock = function (charas, mode, level) {
   level = level === undefined ? 1 : level;
   if (mode === 0) {
     $gamePlayer._globalLocked = !charas.contains($gamePlayer) ? level : 0;
-    var events = this.events();
-    for (var i = 0; i < events.length; i++) {
+    const events = this.events();
+    for (let i = 0; i < events.length; i++) {
       if (charas.contains(events[i])) continue;
       events[i]._globalLocked = level;
     }
   } else {
-    for (var i = 0; i < charas.length; i++) {
+    for (let i = 0; i < charas.length; i++) {
       if (charas[i]) {
         charas[i]._globalLocked = level;
       }

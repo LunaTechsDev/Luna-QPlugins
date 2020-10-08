@@ -1,4 +1,4 @@
-var Alias_Game_Event_initMembers = Game_Event.prototype.initMembers;
+const Alias_Game_Event_initMembers = Game_Event.prototype.initMembers;
 Game_Event.prototype.initMembers = function () {
   Alias_Game_Event_initMembers.call(this);
   this._comments = null;
@@ -10,12 +10,12 @@ Game_Event.prototype.charaId = function () {
 };
 
 Game_Event.prototype.notes = function (withComments) {
-  var notes = this.event() ? this.event().note : "";
+  const notes = this.event() ? this.event().note : "";
   return notes + (withComments ? this.comments() : "");
 };
 
 Game_Event.prototype.comments = function (withNotes) {
-  var notes = "";
+  let notes = "";
   if (this.event()) {
     notes = this.event().note;
   }
@@ -36,38 +36,38 @@ Game_Event.prototype.setupComments = function () {
   }
 };
 
-var Alias_Game_Event_setupPage = Game_Event.prototype.setupPage;
+const Alias_Game_Event_setupPage = Game_Event.prototype.setupPage;
 Game_Event.prototype.setupPage = function () {
-  var firstTime = this._prevDir === null;
+  const firstTime = this._prevDir === null;
   this._prevDir = this.direction();
   Alias_Game_Event_setupPage.call(this);
-  var retainDir = /<retainDir>/i.test(this.comments(true));
+  const retainDir = /<retainDir>/i.test(this.comments(true));
   if (!firstTime && retainDir) {
     this.setDirection(this._prevDir);
   }
 };
 
-var Alias_Game_Event_clearPageSettings = Game_Event.prototype.clearPageSettings;
+const Alias_Game_Event_clearPageSettings = Game_Event.prototype.clearPageSettings;
 Game_Event.prototype.clearPageSettings = function () {
   Alias_Game_Event_clearPageSettings.call(this);
   this._comments = "";
 };
 
-var Alias_Game_Event_setupPageSettings = Game_Event.prototype.setupPageSettings;
+const Alias_Game_Event_setupPageSettings = Game_Event.prototype.setupPageSettings;
 Game_Event.prototype.setupPageSettings = function () {
   Alias_Game_Event_setupPageSettings.call(this);
   this.setupComments();
 };
 
 Game_Event.prototype.setSelfSwitch = function (selfSwitch, bool) {
-  var mapId = this._mapId;
-  var eventId = this._eventId;
+  const mapId = this._mapId;
+  const eventId = this._eventId;
   if (!mapId || !eventId) return;
-  var key = [mapId, eventId, selfSwitch];
+  const key = [mapId, eventId, selfSwitch];
   $gameSelfSwitches.setValue(key, bool);
 };
 
-var Alias_Game_Event_updateSelfMovement =
+const Alias_Game_Event_updateSelfMovement =
   Game_Event.prototype.updateSelfMovement;
 Game_Event.prototype.updateSelfMovement = function () {
   if (!this.canMove()) return;
