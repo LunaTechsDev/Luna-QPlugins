@@ -1,5 +1,11 @@
+import QMovement from "./QMovement";
+import Polygon_Collider from "./colliders/Polygon_Collider";
+import Box_Collider from "./colliders/Box_Collider";
+import Circle_Collider from "./colliders/Circle_Collider";
+import Sprite_Collider from "./colliders/Sprite_Collider";
+
 export default class ColliderManager {
-  constructor() {
+  static setup() {
     this._colliders = [];
     this._colliderGrid = [];
     this._characterGrid = [];
@@ -11,7 +17,7 @@ export default class ColliderManager {
     this.visible = QMovement.showColliders;
   }
 
-  clear() {
+  static clear() {
     this._colliders = [];
     this._colliderGrid = [];
     this._characterGrid = [];
@@ -19,7 +25,7 @@ export default class ColliderManager {
     this.containerDict = {};
   }
 
-  refresh() {
+  static refresh() {
     this.clear();
     this._colliderGrid = new Array(this._mapWidth);
     for (let x = 0; x < this._colliderGrid.length; x++) {
@@ -38,7 +44,7 @@ export default class ColliderManager {
     this._needsRefresh = false;
   }
 
-  addCollider(collider, duration, ignoreGrid) {
+  static addCollider(collider, duration, ignoreGrid) {
     if (!$dataMap) return;
     const i = this._colliders.indexOf(collider);
     if (i === -1) {
@@ -52,7 +58,7 @@ export default class ColliderManager {
     }
   }
 
-  addCharacter(character, duration) {
+  static addCharacter(character, duration) {
     if (!$dataMap) return;
     const i = this._colliders.indexOf(character);
     if (i === -1) {
@@ -64,7 +70,7 @@ export default class ColliderManager {
     this.updateGrid(character);
   }
 
-  remove(collider) {
+  static remove(collider) {
     const i = this._colliders.indexOf(collider);
     if (i < 0) return;
     this.removeFromGrid(collider);
@@ -72,12 +78,12 @@ export default class ColliderManager {
     this._colliders.splice(i, 1);
   }
 
-  removeSprite(sprite) {
+  static removeSprite(sprite) {
     this.container.removeChild(sprite);
     delete this.containerDict[sprite._collider.id];
   }
 
-  updateGrid(collider, prevGrid) {
+  static updateGrid(collider, prevGrid) {
     if (this._needsRefresh) return;
     let currGrid;
     let grid;
@@ -117,7 +123,7 @@ export default class ColliderManager {
     }
   }
 
-  removeFromGrid(collider) {
+  static removeFromGrid(collider) {
     let grid;
     let edge;
     if (collider._colliders) {
@@ -140,7 +146,7 @@ export default class ColliderManager {
     }
   }
 
-  getCharactersNear(collider, only) {
+  static getCharactersNear(collider, only) {
     const grid = collider.sectorEdge();
     const near = [];
     const checked = {};
@@ -173,7 +179,7 @@ export default class ColliderManager {
     return near;
   }
 
-  getCollidersNear(collider, only, debug) {
+  static getCollidersNear(collider, only, debug) {
     const grid = collider.sectorEdge();
     const near = [];
     const checked = {};
@@ -209,7 +215,7 @@ export default class ColliderManager {
     return near;
   }
 
-  getAllNear(collider, only) {
+  static getAllNear(collider, only) {
     const grid = collider.sectorEdge();
     const near = [];
     const checked = {};
@@ -252,17 +258,17 @@ export default class ColliderManager {
     return near;
   }
 
-  sectorCols() {
+  static sectorCols() {
     return Math.floor((this._mapWidth * QMovement.tileSize) / this._sectorSize);
   }
 
-  sectorRows() {
+  static sectorRows() {
     return Math.floor(
       (this._mapHeight * QMovement.tileSize) / this._sectorSize
     );
   }
 
-  draw(collider, duration) {
+  static draw(collider, duration) {
     if ($gameTemp.isPlaytest()) {
       if (this.containerDict[collider.id]) {
         this.containerDict[collider.id]._collider = collider;
@@ -278,7 +284,7 @@ export default class ColliderManager {
     }
   }
 
-  update() {
+  static update() {
     if (this.visible) {
       this.show();
     } else {
@@ -286,19 +292,19 @@ export default class ColliderManager {
     }
   }
 
-  toggle() {
+  static toggle() {
     this.visible = !this.visible;
   }
 
-  show() {
+  static show() {
     this.container.visible = true;
   }
 
-  hide() {
+  static hide() {
     this.container.visible = false;
   }
 
-  convertToCollider(arr) {
+  static convertToCollider(arr) {
     let type = arr[0].toLowerCase();
     if (type === "preset") {
       const arr = QMovement.presets[arr[1]];
@@ -330,7 +336,7 @@ export default class ColliderManager {
     return collider;
   }
 
-  rayCast(origin, angle, dist, filter) {
+  static rayCast(origin, angle, dist, filter) {
     // Incomplete
     // need to finish the Polygon_Collider.prototype.lineIntersection function
     const ray = new Box_Collider(dist, 1, 0, 0, {

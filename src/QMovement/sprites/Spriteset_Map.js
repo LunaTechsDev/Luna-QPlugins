@@ -1,3 +1,5 @@
+import ColliderManager from "../ColliderManager";
+
 const Alias_Spriteset_Map_createLowerLayer =
   Spriteset_Map.prototype.createLowerLayer;
 Spriteset_Map.prototype.createLowerLayer = function () {

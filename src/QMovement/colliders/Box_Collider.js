@@ -1,3 +1,5 @@
+import Polygon_Collider from "./Polygon_Collider";
+
 export default function Box_Collider() {
   this.initialize.apply(this, arguments);
 }

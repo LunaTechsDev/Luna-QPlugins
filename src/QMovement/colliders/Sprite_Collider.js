@@ -1,3 +1,6 @@
+import ColliderManager from "../ColliderManager";
+import QMovement from "../QMovement";
+
 export default function Sprite_Collider() {
   this.initialize.apply(this, arguments);
 }

@@ -1,3 +1,7 @@
+import ColliderManager from "../ColliderManager";
+import Box_Collider from "../colliders/Box_Collider";
+import QMovement from "../QMovement";
+
 Object.defineProperties(Game_CharacterBase.prototype, {
   px: {
     get: function () {
@@ -457,17 +461,12 @@ Game_CharacterBase.prototype.updateMove = function () {
 };
 
 Game_CharacterBase.prototype.updateArc = function () {
+  let newRad = 0;
   if (this._currentRad < this._targetRad) {
-    let newRad = Math.min(
-      this._currentRad + this.angularSpeed(),
-      this._targetRad
-    );
+    newRad = Math.min(this._currentRad + this.angularSpeed(), this._targetRad);
   }
   if (this._currentRad > this._targetRad) {
-    let newRad = Math.max(
-      this._currentRad - this.angularSpeed(),
-      this._targetRad
-    );
+    newRad = Math.max(this._currentRad - this.angularSpeed(), this._targetRad);
   }
   const x1 = this._pivotX + this._radiusL * Math.cos(newRad);
   const y1 = this._pivotY + this._radiusH * Math.sin(newRad);

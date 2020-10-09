@@ -1,3 +1,5 @@
+import ColliderManager from "../ColliderManager";
+
 export default function Polygon_Collider() {
   this.initialize.apply(this, arguments);
 }

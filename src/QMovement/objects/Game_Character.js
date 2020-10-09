@@ -1,3 +1,5 @@
+import QMovement from "../QMovement";
+
 const Alias_Game_Character_processMoveCommand =
   Game_Character.prototype.processMoveCommand;
 Game_Character.prototype.processMoveCommand = function (command) {

@@ -1,9 +1,12 @@
+import ColliderManager from "../ColliderManager";
+import QMovement from "../QMovement";
+
 Input.keyMapper[121] = "f10";
 
 const Alias_Scene_Map_updateMain = Scene_Map.prototype.updateMain;
 Scene_Map.prototype.updateMain = function () {
   Alias_Scene_Map_updateMain.call(this);
-  const key = Imported.QInput ? "#f10" : "f10";
+  const key = typeof QInput !== "undefined" ? "#f10" : "f10";
   if ($gameTemp.isPlaytest() && Input.isTriggered(key)) {
     ColliderManager.toggle();
   }

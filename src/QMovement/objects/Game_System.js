@@ -1,3 +1,5 @@
+import ColliderManager from "../ColliderManager";
+
 const Alias_Game_System_onBeforeSave = Game_System.prototype.onBeforeSave;
 Game_System.prototype.onBeforeSave = function () {
   Alias_Game_System_onBeforeSave.call(this);

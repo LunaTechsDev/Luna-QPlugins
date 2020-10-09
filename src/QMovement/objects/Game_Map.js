@@ -1,3 +1,8 @@
+import ColliderManager from "../ColliderManager";
+import Box_Collider from "../colliders/Box_Collider";
+import Circle_Collider from "../colliders/Circle_Collider";
+import QMovement from "../QMovement";
+
 const Alias_Game_Map_setup = Game_Map.prototype.setup;
 Game_Map.prototype.setup = function (mapId) {
   if ($dataMap) {

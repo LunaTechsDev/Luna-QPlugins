@@ -33,6 +33,8 @@ export default {
   ...QMovement,
 };
 
+ColliderManager.setup();
+
 if (Utils.RPGMAKER_NAME === "MZ") {
   PluginManager.registerCommand("Luna_QMovement", "transfer", (args) => {
     let { dir = 0, fade = "black" } = args;

@@ -1,3 +1,5 @@
+import QMovement from "../QMovement";
+
 Game_Party.prototype.steps = function () {
   return Math.floor(this._steps);
 };

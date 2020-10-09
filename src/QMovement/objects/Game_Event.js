@@ -1,10 +1,15 @@
-const Alias_Game_Event_clearPageSettings = Game_Event.prototype.clearPageSettings;
+import QMovement from "../QMovement";
+import ColliderManager from "../ColliderManager";
+
+const Alias_Game_Event_clearPageSettings =
+  Game_Event.prototype.clearPageSettings;
 Game_Event.prototype.clearPageSettings = function () {
   Alias_Game_Event_clearPageSettings.call(this);
   this._ignoreCharacters = [];
 };
 
-const Alias_Game_Event_setupPageSettings = Game_Event.prototype.setupPageSettings;
+const Alias_Game_Event_setupPageSettings =
+  Game_Event.prototype.setupPageSettings;
 Game_Event.prototype.setupPageSettings = function () {
   Alias_Game_Event_setupPageSettings.call(this);
   this.reloadColliders();
@@ -40,7 +45,10 @@ Game_Event.prototype.defaultColliderConfig = function () {
 };
 
 Game_Event.prototype.ignoreCharacters = function (type) {
-  const ignores = Game_CharacterBase.prototype.ignoreCharacters.call(this, type);
+  const ignores = Game_CharacterBase.prototype.ignoreCharacters.call(
+    this,
+    type
+  );
   return ignores.concat(this._ignoreCharacters);
 };
 

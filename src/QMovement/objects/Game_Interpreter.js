@@ -1,3 +1,6 @@
+import ColliderManager from "../ColliderManager";
+import QMovement from "../QMovement";
+
 const Alias_Game_Interpreter_pluginCommand =
   Game_Interpreter.prototype.pluginCommand;
 Game_Interpreter.prototype.pluginCommand = function (command, args) {

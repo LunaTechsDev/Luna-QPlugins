@@ -1,3 +1,6 @@
+import Polygon_Collider from "./Polygon_Collider";
+import Box_Collider from "./Box_Collider";
+
 export default function Circle_Collider() {
   this.initialize.apply(this, arguments);
 }

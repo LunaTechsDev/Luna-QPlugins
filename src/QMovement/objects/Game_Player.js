@@ -1,3 +1,5 @@
+import ColliderManager from "../ColliderManager";
+
 const Alias_Game_Player_initMembers = Game_Player.prototype.initMembers;
 Game_Player.prototype.initMembers = function () {
   Alias_Game_Player_initMembers.call(this);
@@ -61,7 +63,11 @@ Game_Player.prototype.moveByInput = function () {
         return this.moveByMouse(x, y);
       }
     }
-    if (Imported.QInput && Input.preferGamepad() && $gameMap.offGrid()) {
+    if (
+      typeof QInput !== "undefined" &&
+      Input.preferGamepad() &&
+      $gameMap.offGrid()
+    ) {
       this.moveWithAnalog();
     } else {
       if ([4, 6].contains(direction)) {
