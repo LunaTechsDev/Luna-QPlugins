@@ -1,5 +1,3 @@
-import ColliderManager from "../ColliderManager";
-
 export default function Polygon_Collider() {
   this.initialize.apply(this, arguments);
 }
@@ -23,6 +21,7 @@ Polygon_Collider.prototype.initMembers = function (x, y) {
   this._offset = new Point(0, 0);
   this._pivot = new Point(0, 0);
   this._radian = 0;
+  this._sectorSize = QMovement.tileSize;
   this._note = "";
   this.meta = {};
   this.id = Polygon_Collider._counter++;
@@ -216,15 +215,19 @@ Polygon_Collider.prototype.refreshVertices = function () {
   this.setBounds();
 };
 
+Polygon_Collider.prototype.setSectorSize = function (value) {
+  return (this._sectorSize = value);
+};
+
 Polygon_Collider.prototype.sectorEdge = function () {
   let x1 = this._xMin + this.x + this.ox;
   let x2 = this._xMax + this.x + this.ox - 1;
   let y1 = this._yMin + this.y + this.oy;
   let y2 = this._yMax + this.y + this.oy - 1;
-  x1 = Math.floor(x1 / ColliderManager._sectorSize);
-  x2 = Math.floor(x2 / ColliderManager._sectorSize);
-  y1 = Math.floor(y1 / ColliderManager._sectorSize);
-  y2 = Math.floor(y2 / ColliderManager._sectorSize);
+  x1 = Math.floor(x1 / this._sectorSize);
+  x2 = Math.floor(x2 / this._sectorSize);
+  y1 = Math.floor(y1 / this._sectorSize);
+  y2 = Math.floor(y2 / this._sectorSize);
   return {
     x1: x1,
     x2: x2,
