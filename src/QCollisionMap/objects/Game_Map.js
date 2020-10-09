@@ -1,11 +1,11 @@
-var Alias_Game_Map_reloadTileMap = Game_Map.prototype.reloadTileMap;
+const Alias_Game_Map_reloadTileMap = Game_Map.prototype.reloadTileMap;
 Game_Map.prototype.reloadTileMap = function () {
   Alias_Game_Map_reloadTileMap.call(this);
   this.setupCollisionMap();
 };
 
 Game_Map.prototype.setupCollisionMap = function () {
-  var cm = /<cm:(.*?)>/i.exec($dataMap.note);
+  const cm = /<cm:(.*?)>/i.exec($dataMap.note);
   // regionmaps are disabled
   //var rm = /<rm[=|:](.*?)>/i.exec($dataMap.note);
   this.loadCollisionmap(cm ? cm[1] : null);
@@ -46,8 +46,8 @@ Game_Map.prototype.collisionMapBoxPass = function (
   if (collider._radian !== 0) {
     return this.collisionMapPolyPass(collider, dir, passableColors);
   }
-  var edgePoints = collider.edge();
-  var edges = {
+  const edgePoints = collider.edge();
+  const edges = {
     top: {
       x1: edgePoints.x1,
       x2: edgePoints.x2,
@@ -73,12 +73,12 @@ Game_Map.prototype.collisionMapBoxPass = function (
       y2: edgePoints.y2,
     },
   };
-  var x1 = Math.floor(edges[dir].x1);
-  var x2 = Math.floor(edges[dir].x2);
-  var y1 = Math.floor(edges[dir].y1);
-  var y2 = Math.floor(edges[dir].y2);
-  for (var x = x1; x <= x2; ) {
-    for (var y = y1; y <= y2; ) {
+  const x1 = Math.floor(edges[dir].x1);
+  const x2 = Math.floor(edges[dir].x2);
+  const y1 = Math.floor(edges[dir].y1);
+  const y2 = Math.floor(edges[dir].y2);
+  for (let x = x1; x <= x2; ) {
+    for (let y = y1; y <= y2; ) {
       if (
         !passableColors.contains(
           ColliderManager.collisionMap.bitmap.getColor(x, y)
@@ -124,12 +124,12 @@ Game_Map.prototype.collisionMapCirclePass = function (
       break;
     }
   }
-  var r3;
+  let r3;
   while (r1 <= r2) {
     r3 = r1 + collider._radian;
-    var pos = collider.circlePosition(r3);
-    var x = Math.floor(pos.x);
-    var y = Math.floor(pos.y);
+    const pos = collider.circlePosition(r3);
+    const x = Math.floor(pos.x);
+    const y = Math.floor(pos.y);
     if (
       !passableColors.contains(
         ColliderManager.collisionMap.bitmap.getColor(x, y)
@@ -147,9 +147,9 @@ Game_Map.prototype.collisionMapPolyPass = function (
   dir,
   passableColors
 ) {
-  var points = collider._vertices.slice();
-  var finalPoints = [];
-  var midPoints = [];
+  let points = collider._vertices.slice();
+  const finalPoints = [];
+  const midPoints = [];
   if (dir === "top" || dir === "bottom") {
     var startPoint = this.collisionMapPoints(collider, dir, collider._xMin, 0);
     var endPoint = this.collisionMapPoints(collider, dir, collider._xMax, 0);
@@ -159,21 +159,21 @@ Game_Map.prototype.collisionMapPolyPass = function (
     var endPoint = this.collisionMapPoints(collider, dir, collider._yMax, 1);
     var horz = true;
   }
-  var minIndex = collider._baseVertices.indexOf(startPoint);
-  var maxIndex = collider._baseVertices.indexOf(endPoint);
+  const minIndex = collider._baseVertices.indexOf(startPoint);
+  const maxIndex = collider._baseVertices.indexOf(endPoint);
   var endPoint = collider.vertices()[maxIndex];
-  var firstHalf = points.splice(0, minIndex);
+  const firstHalf = points.splice(0, minIndex);
   points = points.concat(firstHalf);
   if (dir === "bottom" || dir === "left") {
     points.reverse();
     points.unshift(points.pop());
   }
-  for (var i = 0; i < points.length - 1; i++) {
-    var x1 = points[i].x;
-    var y1 = points[i].y;
-    var x2 = points[i + 1].x;
-    var y2 = points[i + 1].y;
-    var rad = Math.atan2(y1 - y2, x2 - x1);
+  for (let i = 0; i < points.length - 1; i++) {
+    let x1 = points[i].x;
+    let y1 = points[i].y;
+    const x2 = points[i + 1].x;
+    const y2 = points[i + 1].y;
+    const rad = Math.atan2(y1 - y2, x2 - x1);
     if (horz) {
       var steps = Math.abs(y2 - y1) / _SCANSIZE;
       var slope = (x2 - x1) / steps;
@@ -183,7 +183,7 @@ Game_Map.prototype.collisionMapPolyPass = function (
       var slope = (y2 - y1) / steps;
       var inc = x1 > x2 ? -1 : 1;
     }
-    var a1 = (a2 = horz ? y1 : x1);
+    let a1 = (a2 = horz ? y1 : x1);
     while (a1 - a2 <= steps) {
       if (
         !passableColors.contains(
@@ -204,7 +204,7 @@ Game_Map.prototype.collisionMapPolyPass = function (
 };
 
 Game_Map.prototype.collisionMapPoints = function (collider, dir, value, axis) {
-  var point = collider._baseVertices.filter(function (p) {
+  let point = collider._baseVertices.filter(function (p) {
     return axis === 0 ? p.x === value : p.y === value;
   });
   point.sort(function (a, b) {
@@ -223,7 +223,7 @@ Game_Map.prototype.collisionMapPoints = function (collider, dir, value, axis) {
     }
   });
   point = point[0];
-  for (var i = 0; i < collider._baseVertices.length; i++) {
+  for (let i = 0; i < collider._baseVertices.length; i++) {
     if (
       collider._baseVertices[i].x === point.x &&
       collider._baseVertices[i].y === point.y

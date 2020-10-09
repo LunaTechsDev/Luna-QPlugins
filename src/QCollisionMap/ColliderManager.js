@@ -1,9 +1,9 @@
-var ColliderManager = QMovement.ColliderManager;
+const ColliderManager = QMovement.ColliderManager;
 
 ColliderManager.collisionMap = new Sprite();
 ColliderManager.collisionMap.bitmap = new Bitmap();
 
-var Alias_ColliderManager_clear = ColliderManager.clear;
+const Alias_ColliderManager_clear = ColliderManager.clear;
 ColliderManager.clear = function () {
   Alias_ColliderManager_clear.call(this);
   this.clearCollisionMap();
@@ -21,7 +21,7 @@ ColliderManager.clearCollisionMap = function () {
   ColliderManager.collisionMap.bitmap = new Bitmap();
 };
 
-var Alias_ColliderManager_update = ColliderManager.update;
+const Alias_ColliderManager_update = ColliderManager.update;
 ColliderManager.update = function () {
   Alias_ColliderManager_update.call(this);
   this.updateCollisionMap();
