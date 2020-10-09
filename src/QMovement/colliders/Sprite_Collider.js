@@ -1,4 +1,3 @@
-import ColliderManager from "../ColliderManager";
 import QMovement from "../QMovement";
 
 export default function Sprite_Collider() {
@@ -10,11 +9,16 @@ Sprite_Collider.prototype.constructor = Sprite_Collider;
 
 Sprite_Collider.prototype.initialize = function (collider, duration) {
   Sprite.prototype.initialize.call(this);
+  this._emitter = new PIXI.utils.EventEmitter();
   this.z = 7;
   this._duration = duration || 0;
   this._cache = {};
   this.setupCollider(collider);
   this.checkChanges();
+};
+
+Sprite_Collider.prototype.on = function (eventName, func) {
+  this._emitter.on(eventName, func);
 };
 
 Sprite_Collider.prototype.setCache = function () {
@@ -95,7 +99,7 @@ Sprite_Collider.prototype.checkChanges = function () {
 Sprite_Collider.prototype.updateDecay = function () {
   this._duration--;
   if (this._duration <= 0 || this._collider.kill) {
-    ColliderManager.removeSprite(this);
+    this._emitter.emit("collider-kill", this);
     this._collider = null;
   }
 };

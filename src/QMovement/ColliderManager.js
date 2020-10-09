@@ -279,9 +279,14 @@ export default class ColliderManager {
       }
       collider.kill = false;
       const sprite = new Sprite_Collider(collider, duration || -1);
+      sprite.on("collider-kill", this._onSpriteColliderKill.bind(this));
       this.container.addChild(sprite);
       this.containerDict[collider.id] = sprite;
     }
+  }
+
+  static _onSpriteColliderKill(sprite) {
+    this.removeSprite(sprite);
   }
 
   static update() {
