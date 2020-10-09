@@ -31,17 +31,17 @@ document.body.ondragover = function (e) {
   return false;
 };
 
-if (Utils.RPGMAKER_NAME === "MZ") {
-  PluginManager.registerCommand("LunaQPlus", "wait", (args) => {
-    let min = Number(args.min);
-    let max = Number(args.max);
-    if (!max) {
-      max = min;
-      min = 0;
-    }
+//#if !_MV
+PluginManager.registerCommand("Luna_QPlus", "wait", (args) => {
+  let min = Number(args.min);
+  let max = Number(args.max);
+  if (!max) {
+    max = min;
+    min = 0;
+  }
 
-    const waitTime = Math.randomIntBetween(min, max);
-    // @todo probably a much better way to do this
-    $gameMap._interpreter.wait(waitTime);
-  });
-}
+  const waitTime = Math.randomIntBetween(min, max);
+  // @todo probably a much better way to do this
+  $gameMap._interpreter.wait(waitTime);
+});
+//#endif
