@@ -798,8 +798,8 @@ Game_CharacterBase.prototype.smartMoveDir8 = function (dir) {
   for (let i = 0; i < 2; i++) {
     const sign = i === 0 ? 1 : -1;
     let j = 0;
-    let x2 = x1;
-    let y2 = y1;
+    x2 = x1;
+    y2 = y1;
     if (horz) {
       x2 = $gameMap.roundPXWithDirection(x1, dir, dist);
     } else {
