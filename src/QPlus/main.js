@@ -32,7 +32,7 @@ document.body.ondragover = function (e) {
 };
 
 if (Utils.RPGMAKER_NAME === "MZ") {
-  PluginManager.registerCommand("LunaQPlus", "wait", (args) => {
+  PluginManager.registerCommand("Luna_QPlus", "wait", (args) => {
     let min = Number(args.min);
     let max = Number(args.max);
     if (!max) {
