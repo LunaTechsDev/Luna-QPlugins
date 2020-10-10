@@ -1,3 +1,7 @@
+import { _SCANSIZE } from "../constants";
+
+const ColliderManager = QMovement.ColliderManager;
+
 const Alias_Game_Map_reloadTileMap = Game_Map.prototype.reloadTileMap;
 Game_Map.prototype.reloadTileMap = function () {
   Alias_Game_Map_reloadTileMap.call(this);

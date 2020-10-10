@@ -1,3 +1,5 @@
+import { _CMFOLDER } from "./constants";
+
 const ColliderManager = QMovement.ColliderManager;
 
 ColliderManager.collisionMap = new Sprite();

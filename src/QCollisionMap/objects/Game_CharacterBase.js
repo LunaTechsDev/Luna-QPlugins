@@ -1,3 +1,5 @@
+const ColliderManager = QMovement.ColliderManager;
+
 const Alias_Game_CharacterBase_collisionCheck =
   Game_CharacterBase.prototype.collisionCheck;
 Game_CharacterBase.prototype.collisionCheck = function (x, y, dir, dist, type) {
