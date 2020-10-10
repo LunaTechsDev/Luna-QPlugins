@@ -102,33 +102,37 @@ Game_Map.prototype.collisionMapCirclePass = function (
   dir,
   passableColors
 ) {
+  let r1 = 0;
+  let r2 = 0;
+  let r3 = 0;
+  let s = 0;
   switch (dir) {
     case "bottom": {
-      var r1 = Math.PI;
-      var r2 = Math.PI * 2;
-      var s = Math.PI / collider.width;
+      r1 = Math.PI;
+      r2 = Math.PI * 2;
+      s = Math.PI / collider.width;
       break;
     }
     case "left": {
-      var r1 = Math.PI / 2;
-      var r2 = (3 * Math.PI) / 2;
-      var s = Math.PI / collider.height;
+      r1 = Math.PI / 2;
+      r2 = (3 * Math.PI) / 2;
+      s = Math.PI / collider.height;
       break;
     }
     case "right": {
-      var r1 = -Math.PI / 2;
-      var r2 = Math.PI / 2;
-      var s = Math.PI / collider.height;
+      r1 = -Math.PI / 2;
+      r2 = Math.PI / 2;
+      s = Math.PI / collider.height;
       break;
     }
     case "top": {
-      var r1 = 0;
-      var r2 = Math.PI;
-      var s = Math.PI / collider.width;
+      r1 = 0;
+      r2 = Math.PI;
+      s = Math.PI / collider.width;
       break;
     }
   }
-  let r3;
+
   while (r1 <= r2) {
     r3 = r1 + collider._radian;
     const pos = collider.circlePosition(r3);
@@ -154,18 +158,21 @@ Game_Map.prototype.collisionMapPolyPass = function (
   let points = collider._vertices.slice();
   const finalPoints = [];
   const midPoints = [];
+  let startPoint = null;
+  let endPoint = null;
+  let horz = false;
   if (dir === "top" || dir === "bottom") {
-    var startPoint = this.collisionMapPoints(collider, dir, collider._xMin, 0);
-    var endPoint = this.collisionMapPoints(collider, dir, collider._xMax, 0);
+    startPoint = this.collisionMapPoints(collider, dir, collider._xMin, 0);
+    endPoint = this.collisionMapPoints(collider, dir, collider._xMax, 0);
   } else {
     // left or right
-    var startPoint = this.collisionMapPoints(collider, dir, collider._yMin, 1);
-    var endPoint = this.collisionMapPoints(collider, dir, collider._yMax, 1);
-    var horz = true;
+    startPoint = this.collisionMapPoints(collider, dir, collider._yMin, 1);
+    endPoint = this.collisionMapPoints(collider, dir, collider._yMax, 1);
+    horz = true;
   }
   const minIndex = collider._baseVertices.indexOf(startPoint);
   const maxIndex = collider._baseVertices.indexOf(endPoint);
-  var endPoint = collider.vertices()[maxIndex];
+  endPoint = collider.vertices()[maxIndex];
   const firstHalf = points.splice(0, minIndex);
   points = points.concat(firstHalf);
   if (dir === "bottom" || dir === "left") {
@@ -175,17 +182,20 @@ Game_Map.prototype.collisionMapPolyPass = function (
   for (let i = 0; i < points.length - 1; i++) {
     let x1 = points[i].x;
     let y1 = points[i].y;
+    let steps = 0;
+    let slope = 0;
+    let inc = 0;
     const x2 = points[i + 1].x;
     const y2 = points[i + 1].y;
     const rad = Math.atan2(y1 - y2, x2 - x1);
     if (horz) {
-      var steps = Math.abs(y2 - y1) / _SCANSIZE;
-      var slope = (x2 - x1) / steps;
-      var inc = y1 > y2 ? -1 : 1;
+      steps = Math.abs(y2 - y1) / _SCANSIZE;
+      slope = (x2 - x1) / steps;
+      inc = y1 > y2 ? -1 : 1;
     } else {
-      var steps = Math.abs(x2 - x1) / _SCANSIZE;
-      var slope = (y2 - y1) / steps;
-      var inc = x1 > x2 ? -1 : 1;
+      steps = Math.abs(x2 - x1) / _SCANSIZE;
+      slope = (y2 - y1) / steps;
+      inc = x1 > x2 ? -1 : 1;
     }
     let a1 = (a2 = horz ? y1 : x1);
     while (a1 - a2 <= steps) {
