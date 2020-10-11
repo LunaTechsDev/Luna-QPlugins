@@ -9,7 +9,7 @@
  * @param Scan Size
  * @desc How accurate to scan Collision Map, 1 is most Accurate
  * Default: 4
- * @type Number
+ * @type number
  * @min 1
  * @default 4
  *

@@ -19,7 +19,7 @@
  * @parent Main Settings
  * @desc The amount of pixels you want to move per Movement.
  * Plugin Default: 1   MV Default: 48
- * @type Number
+ * @type number
  * @min 1
  * @default 1
  *
@@ -27,7 +27,7 @@
  * @parent Main Settings
  * @desc Size of tiles in pixels
  * Default: 48
- * @type Number
+ * @type number
  * @min 1
  * @default 48
  *
@@ -85,7 +85,7 @@
  * @parent Optional Settings
  * @desc Adjust the speed when moving diagonal.
  * Default: 0 TODO not functional
- * @type Number
+ * @type number
  * @min 0
  * @default 0
  *
@@ -95,21 +95,21 @@
  * @text Default Player Collider
  * @parent Colliders
  * @desc Default collider for the player.
- * @type Struct<Collider>
+ * @type struct<Collider>
  * @default {"Type":"box","Width":"36","Height":"24","Offset X":"6","Offset Y":"24"}
  *
  * @param Event Collider
  * @text Default Event Collider
  * @parent Colliders
  * @desc Default collider for events.
- * @type Struct<Collider>
+ * @type struct<Collider>
  * @default {"Type":"box","Width":"36","Height":"24","Offset X":"6","Offset Y":"24"}
  *
  * @param Presets
  * @parent Colliders
  * @desc List of preset colliders that you can assign to
  * events
- * @type Struct<ColliderPreset>[]
+ * @type struct<ColliderPreset>[]
  * @default []
  *
  * @param Debug Settings
@@ -125,8 +125,6 @@
  *
  * @command transfer
  * @desc Perform a map transfer to a pixel x / y position.
- * @type Type
- * @default Default
  * 
  * @arg mapId
  * @desc the MapID to transfer to
