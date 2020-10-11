@@ -7,7 +7,7 @@
  *
  * @param Quick Test
  * @desc When true, game will skip title screen and start a new game
- * @type Boolean
+ * @type boolean
  * @default true
  *
  * @param Default Enabled Switches
@@ -18,13 +18,11 @@
  * @param Ignore Mouse when inactive
  * @desc When true, the game window will ignore mouse input when the game
  * isn't focused / active
- * @type Boolean
+ * @type boolean
  * @default false
  * 
  * @command wait
  * @desc Will insert a random wait between min and max frames.
- * @type Type
- * @default Default
  * 
  * @arg min
  * @desc The minimum value to wait.
