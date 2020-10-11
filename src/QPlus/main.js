@@ -4,15 +4,20 @@ import SimpleTilemap from "./core/SimpleTilemap";
 import "./core/Input";
 import "./core/TouchInput";
 import "./core/Math";
+
 import "./managers/DataManager";
 import "./managers/SceneManager";
+
 import "./objects/Game_CharacterBase";
 import "./objects/Game_Event";
-import "./objects/Game_Map";
-import "./objects/Game_Temp";
 import "./objects/Game_Interpreter";
+import "./objects/Game_Map";
+import "./objects/Game_Player";
+import "./objects/Game_Temp";
+
 import "./scenes/Scene_Base";
 import "./scenes/Scene_Boot";
+
 import "./sprites/Sprite_Character";
 import "./sprites/Spriteset_Map";
 
