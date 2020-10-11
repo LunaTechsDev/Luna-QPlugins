@@ -34,12 +34,13 @@ if (_PARAMS["Ignore Mouse when inactive"]) {
   };
 }
 
+//#if _MV
 TouchInput._onMouseMove = function (event) {
   const x = Graphics.pageToCanvasX(event.pageX);
   const y = Graphics.pageToCanvasY(event.pageY);
   this._onMove(x, y);
 };
-
+//#endif
 TouchInput.stopPropagation = function () {
   this._screenPressed = false;
   this._triggered = false;
