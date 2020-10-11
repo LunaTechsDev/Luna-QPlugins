@@ -33,3 +33,16 @@ if (_PARAMS["Ignore Mouse when inactive"]) {
     Alias_TouchInput_update.call(this);
   };
 }
+
+TouchInput._onMouseMove = function (event) {
+  const x = Graphics.pageToCanvasX(event.pageX);
+  const y = Graphics.pageToCanvasY(event.pageY);
+  this._onMove(x, y);
+};
+
+TouchInput.stopPropagation = function () {
+  this._screenPressed = false;
+  this._triggered = false;
+  this._cancelled = false;
+  this._released = false;
+};
