@@ -309,7 +309,7 @@ export default {
   stringToObj(string) {
     const lines = string.split("\n");
     const obj = {};
-    lines.forEach(function (value) {
+    lines.forEach((value) => {
       const match = /^(.*):(.*)/.exec(value);
       if (match) {
         let key,
