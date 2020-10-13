@@ -4,6 +4,7 @@
 
 //=============================================================================
 // New Classes
+const ColliderManager = QMovement.ColliderManager;
 
 function Game_MapObj() {
   this.initialize.apply(this, arguments);
@@ -676,7 +677,7 @@ var $dataQMap = null;
       var ext = fileName.pop();
       path.push(encodeURIComponent(fileName.join(".")) + "." + ext);
       path = path.join("/");
-      this.bitmap = ImageManager.loadNormalBitmap(path, 0);
+      this.bitmap = ImageManager.loadBitmapFromUrl(path);
       this.bitmap.smooth = this._mapObj.meta.smooth;
       this._lastFrameI = null;
       this.bitmap.addLoadListener(
