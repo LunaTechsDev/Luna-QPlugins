@@ -175,7 +175,7 @@ var $dataQMap = null;
     this.setupMapObjs();
   };
 
-  if (Imported.QMovement) {
+  if (typeof QMovement !== "undefined") {
     var Alias_Game_Map_reloadColliders = Game_Map.prototype.reloadColliders;
     Game_Map.prototype.reloadColliders = function () {
       Alias_Game_Map_reloadColliders.call(this);
@@ -240,7 +240,7 @@ var $dataQMap = null;
   //-----------------------------------------------------------------------------
   // Game_CharacterBase
 
-  if (!Imported.QMovement) {
+  if (typeof QMovement === "undefined") {
     var Alias_Game_CharacterBase_isCollidedWithCharacters =
       Game_CharacterBase.prototype.isCollidedWithCharacters;
     Game_CharacterBase.prototype.isCollidedWithCharacters = function (x, y) {
@@ -312,7 +312,7 @@ var $dataQMap = null;
     }
     this.meta = this.qmeta || {};
 
-    if (Imported.QSprite && this.isQSprite) {
+    if (typeof QSprite !== "undefined" && this.isQSprite) {
       this.convertQSprite();
     }
     this.initMembers();
@@ -469,7 +469,7 @@ var $dataQMap = null;
     if (!this.visible) {
       return false;
     }
-    if (!Imported.QMovement) {
+    if (typeof QMovement === "undefined") {
       return this.intersectsWithSimple(type, chara._realX, chara._realY);
     } else {
       return this.collider(type).intersects(chara.collider("collision"));
@@ -510,7 +510,7 @@ var $dataQMap = null;
   Game_MapObj.prototype.removeColliders = function () {
     for (var collider in this._colliders) {
       if (!this._colliders.hasOwnProperty(collider)) continue;
-      if (Imported.QMovement) {
+      if (typeof QMovement !== "undefined") {
         ColliderManager.remove(this._colliders[collider]);
       }
       this._colliders[collider] = null;
@@ -540,7 +540,7 @@ var $dataQMap = null;
   };
 
   Game_MapObj.prototype.convertToCollider = function (arr, ctype) {
-    if (!Imported.QMovement) {
+    if (typeof QMovement === "undefined") {
       return this.toSimpleCollider(arr);
     }
     var collider = ColliderManager.convertToCollider(arr);
