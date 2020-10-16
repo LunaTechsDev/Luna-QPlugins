@@ -37,7 +37,7 @@ QPlus.request("data/QMap.json")
         window.close();
       }
     } else {
-      setQMapInfos(newJson);
+      setQMapInfos(json);
     }
   })
   .onError(function () {
