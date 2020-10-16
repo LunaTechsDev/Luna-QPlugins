@@ -1,4 +1,4 @@
-import { $dataQMap } from "../constants";
+import { getQMapData } from "../constants";
 
 const Alias_Game_Interpreter_pluginCommand =
   Game_Interpreter.prototype.pluginCommand;
@@ -10,7 +10,7 @@ Game_Interpreter.prototype.pluginCommand = function (command, args) {
 };
 
 Game_Interpreter.prototype.qMapCommand = function (args) {
-  if (!$dataQMap || $dataQMap.length === 0) {
+  if (!getQMapData() || getQMapData().length === 0) {
     return;
   }
   const objName = args.shift();

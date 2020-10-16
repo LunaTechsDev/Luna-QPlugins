@@ -7,7 +7,7 @@ DataManager.isDatabaseLoaded = function () {
 
 const Alias_DataManager_isMapLoaded = DataManager.isMapLoaded;
 DataManager.isMapLoaded = function () {
-  return Alias_DataManager_isMapLoaded.call(this) && !!$dataQMap;
+  return Alias_DataManager_isMapLoaded.call(this) && !!getQMapData();
 };
 
 const Alias_DataManager_loadMapData = DataManager.loadMapData;
@@ -20,7 +20,7 @@ DataManager.loadMapData = function (mapId) {
       QPlus.request("data/QMaps/" + filename)
         .onSuccess(function (json) {
           setQMapData(json);
-          DataManager.onLoad($dataQMap);
+          DataManager.onLoad(getQMapData());
         })
         .onError(function () {
           throw new Error("Failed to load 'data/QMaps" + filename + "'");

@@ -1,4 +1,5 @@
 import Game_MapObj from "./Game_MapObj";
+import { getQMapData } from "../constants";
 
 const Alias_Game_Map_initialize = Game_Map.prototype.initialize;
 Game_Map.prototype.initialize = function () {
@@ -41,7 +42,7 @@ if (typeof QMovement !== "undefined") {
 Game_Map.prototype.setupMapObjs = function () {
   this._mapObjs = {};
   this._mapObjsWithColliders = [];
-  const data = $dataQMap || [];
+  const data = getQMapData() || [];
   for (let i = 0; i < data.length; i++) {
     if (data[i]) {
       const objData = JSON.parse(JSON.stringify(data[i]));
