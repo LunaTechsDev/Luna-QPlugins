@@ -1,10 +1,7 @@
 /*:
  * @plugindesc <QMap>
  * Creates maps made with QMap Editor
- * @version 2.0.3
- * @author Quxios  | Version 2.0.3
- * @site https://quxios.github.io/
- * @updateurl https://quxios.github.io/data/pluginsMin.json
+ * @author LunaTechs | Quxios
  *
  * @requires QPlus
  *
@@ -20,7 +17,7 @@
  * ============================================================================
  * ## How to use
  * ============================================================================
- * Create a map using the [QMap Editor](https://github.com/quxios/QMapEditor).
+ * Create a map using the [QMap Editor](https://github.com/lunatechsdev/LunaQMapEditor).
  * And that's it, no setup required.
  *
  * ============================================================================
