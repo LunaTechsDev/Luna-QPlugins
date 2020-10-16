@@ -1,4 +1,4 @@
-import { $dataQMapInfos } from "./constants";
+import { setQMapInfos } from "./constants";
 
 QPlus.request("data/QMap.json")
   .onSuccess(function (json) {
@@ -31,13 +31,13 @@ QPlus.request("data/QMap.json")
           path.join(dataPath, "QMap.json"),
           JSON.stringify(newJson)
         );
-        $dataQMapInfos = newJson;
+        setQMapInfos(newJson);
       } else {
         alert("Invalid QMap datatype");
         window.close();
       }
     } else {
-      $dataQMapInfos = json;
+      setQMapInfos(newJson);
     }
   })
   .onError(function () {
