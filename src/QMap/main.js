@@ -677,7 +677,11 @@ let $dataQMap = null;
       const ext = fileName.pop();
       path.push(encodeURIComponent(fileName.join(".")) + "." + ext);
       path = path.join("/");
+      //#if _MV
+      this.bitmap = ImageManager.loadNormalBitmap(path, 0);
+      //#else
       this.bitmap = ImageManager.loadBitmapFromUrl(path);
+      //#endif
       this.bitmap.smooth = this._mapObj.meta.smooth;
       this._lastFrameI = null;
       this.bitmap.addLoadListener(
