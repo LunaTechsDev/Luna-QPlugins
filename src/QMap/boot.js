@@ -2,6 +2,7 @@ import { setQMapInfos } from "./constants";
 
 QPlus.request("data/QMap.json")
   .onSuccess(function (json) {
+    const newJson = ["2"];
     if (json[0] !== "2") {
       // convert old json type to new
       if (Utils.isOptionValid("test")) {
@@ -15,7 +16,6 @@ QPlus.request("data/QMap.json")
         if (!fs.existsSync(qMapPath)) {
           fs.mkdirSync(qMapPath);
         }
-        const newJson = ["2"];
         for (let i = 1; i < json.length; i++) {
           const map = json[i];
           if (map && map.length > 0) {
