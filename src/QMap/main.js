@@ -14,8 +14,8 @@ function Sprite_MapObject() {
   this.initialize.apply(this, arguments);
 }
 
-var $dataQMapInfos = null;
-var $dataQMap = null;
+let $dataQMapInfos = null;
+let $dataQMap = null;
 
 //=============================================================================
 // QMap
@@ -26,22 +26,22 @@ var $dataQMap = null;
       if (json[0] !== "2") {
         // convert old json type to new
         if (Utils.isOptionValid("test")) {
-          var fs = require("fs");
-          var path = require("path");
-          var dataPath = path.join(
+          const fs = require("fs");
+          const path = require("path");
+          const dataPath = path.join(
             path.dirname(process.mainModule.filename),
             "data/"
           );
-          var qMapPath = path.join(dataPath, "QMaps/");
+          const qMapPath = path.join(dataPath, "QMaps/");
           if (!fs.existsSync(qMapPath)) {
             fs.mkdirSync(qMapPath);
           }
-          var newJson = ["2"];
-          for (var i = 1; i < json.length; i++) {
-            var map = json[i];
+          const newJson = ["2"];
+          for (let i = 1; i < json.length; i++) {
+            const map = json[i];
             if (map && map.length > 0) {
               newJson[i] = true;
-              var filename = "QMap%1.json".format(i.padZero(3));
+              const filename = "QMap%1.json".format(i.padZero(3));
               fs.writeFileSync(
                 path.join(qMapPath, filename),
                 JSON.stringify(map)
@@ -68,23 +68,23 @@ var $dataQMap = null;
   //-----------------------------------------------------------------------------
   // DataManager
 
-  var Alias_DataManager_isDatabaseLoaded = DataManager.isDatabaseLoaded;
+  const Alias_DataManager_isDatabaseLoaded = DataManager.isDatabaseLoaded;
   DataManager.isDatabaseLoaded = function () {
     return Alias_DataManager_isDatabaseLoaded.call(this) && $dataQMapInfos;
   };
 
-  var Alias_DataManager_isMapLoaded = DataManager.isMapLoaded;
+  const Alias_DataManager_isMapLoaded = DataManager.isMapLoaded;
   DataManager.isMapLoaded = function () {
     return Alias_DataManager_isMapLoaded.call(this) && !!$dataQMap;
   };
 
-  var Alias_DataManager_loadMapData = DataManager.loadMapData;
+  const Alias_DataManager_loadMapData = DataManager.loadMapData;
   DataManager.loadMapData = function (mapId) {
     Alias_DataManager_loadMapData.call(this, mapId);
     if (mapId > 0) {
       if ($dataQMapInfos[mapId]) {
         $dataQMap = null;
-        var filename = "QMap%1.json".format(mapId.padZero(3));
+        const filename = "QMap%1.json".format(mapId.padZero(3));
         QPlus.request("data/QMaps/" + filename)
           .onSuccess(function (json) {
             $dataQMap = json;
@@ -99,11 +99,11 @@ var $dataQMap = null;
     }
   };
 
-  var Alias_DataManager_onLoad = DataManager.onLoad;
+  const Alias_DataManager_onLoad = DataManager.onLoad;
   DataManager.onLoad = function (object) {
     if (object === $dataQMap) {
-      for (var i = 0; i < object.length; i++) {
-        var data = object[i];
+      for (let i = 0; i < object.length; i++) {
+        const data = object[i];
         if (data.note === undefined && data.notes !== undefined) {
           // older version the property was name notes, should
           // have been just note
@@ -121,7 +121,7 @@ var $dataQMap = null;
   //-----------------------------------------------------------------------------
   // Game_Interpreter
 
-  var Alias_Game_Interpreter_pluginCommand =
+  const Alias_Game_Interpreter_pluginCommand =
     Game_Interpreter.prototype.pluginCommand;
   Game_Interpreter.prototype.pluginCommand = function (command, args) {
     if (command.toLowerCase() === "qmap") {
@@ -134,12 +134,12 @@ var $dataQMap = null;
     if (!$dataQMap || $dataQMap.length === 0) {
       return;
     }
-    var objName = args.shift();
-    var cmd = args.shift();
-    var mapObjs = $gameMap._mapObjs[objName];
+    const objName = args.shift();
+    const cmd = args.shift();
+    const mapObjs = $gameMap._mapObjs[objName];
     if (!mapObjs) return;
-    for (var i = 0; i < mapObjs.length; i++) {
-      var mapObj = mapObjs[i];
+    for (let i = 0; i < mapObjs.length; i++) {
+      const mapObj = mapObjs[i];
       switch (cmd.toLowerCase()) {
         case "alpha": {
           mapObj.alpha = args[0];
@@ -164,24 +164,24 @@ var $dataQMap = null;
   //-----------------------------------------------------------------------------
   // Game_Map
 
-  var Alias_Game_Map_initialize = Game_Map.prototype.initialize;
+  const Alias_Game_Map_initialize = Game_Map.prototype.initialize;
   Game_Map.prototype.initialize = function () {
     Alias_Game_Map_initialize.call(this);
     this._mapObjs = [];
   };
 
-  var Alias_Game_Map_setupEvents = Game_Map.prototype.setupEvents;
+  const Alias_Game_Map_setupEvents = Game_Map.prototype.setupEvents;
   Game_Map.prototype.setupEvents = function () {
     Alias_Game_Map_setupEvents.call(this);
     this.setupMapObjs();
   };
 
   if (typeof QMovement !== "undefined") {
-    var Alias_Game_Map_reloadColliders = Game_Map.prototype.reloadColliders;
+    const Alias_Game_Map_reloadColliders = Game_Map.prototype.reloadColliders;
     Game_Map.prototype.reloadColliders = function () {
       Alias_Game_Map_reloadColliders.call(this);
-      for (var key in this._mapObjs) {
-        for (var i = 0; i < this._mapObjs[key].length; i++) {
+      for (const key in this._mapObjs) {
+        for (let i = 0; i < this._mapObjs[key].length; i++) {
           if (this._mapObjs[key][i]) {
             this._mapObjs[key][i].reloadColliders();
           }
@@ -189,11 +189,11 @@ var $dataQMap = null;
       }
     };
 
-    var Alias_Game_Map_clearColliders = Game_Map.prototype.clearColliders;
+    const Alias_Game_Map_clearColliders = Game_Map.prototype.clearColliders;
     Game_Map.prototype.clearColliders = function () {
       Alias_Game_Map_clearColliders.call(this);
-      for (var key in this._mapObjs) {
-        for (var i = 0; i < this._mapObjs[key].length; i++) {
+      for (const key in this._mapObjs) {
+        for (let i = 0; i < this._mapObjs[key].length; i++) {
           if (this._mapObjs[key][i]) {
             this._mapObjs[key][i].removeColliders();
           }
@@ -205,12 +205,12 @@ var $dataQMap = null;
   Game_Map.prototype.setupMapObjs = function () {
     this._mapObjs = {};
     this._mapObjsWithColliders = [];
-    var data = $dataQMap || [];
-    for (var i = 0; i < data.length; i++) {
+    const data = $dataQMap || [];
+    for (let i = 0; i < data.length; i++) {
       if (data[i]) {
-        var objData = JSON.parse(JSON.stringify(data[i]));
-        var mapObj = new Game_MapObj(this._mapId, objData);
-        var name = mapObj.name;
+        const objData = JSON.parse(JSON.stringify(data[i]));
+        const mapObj = new Game_MapObj(this._mapId, objData);
+        const name = mapObj.name;
         if (!this._mapObjs[name]) {
           this._mapObjs[name] = [];
         }
@@ -222,15 +222,15 @@ var $dataQMap = null;
     }
   };
 
-  var Alias_Game_Map_updateEvents = Game_Map.prototype.updateEvents;
+  const Alias_Game_Map_updateEvents = Game_Map.prototype.updateEvents;
   Game_Map.prototype.updateEvents = function () {
     Alias_Game_Map_updateEvents.call(this);
     this.updateMapObjs();
   };
 
   Game_Map.prototype.updateMapObjs = function () {
-    for (var key in this._mapObjs) {
-      for (var i = 0; i < this._mapObjs[key].length; i++) {
+    for (const key in this._mapObjs) {
+      for (let i = 0; i < this._mapObjs[key].length; i++) {
         if (this._mapObjs[key][i]) {
           this._mapObjs[key][i].update();
         }
@@ -242,7 +242,7 @@ var $dataQMap = null;
   // Game_CharacterBase
 
   if (typeof QMovement === "undefined") {
-    var Alias_Game_CharacterBase_isCollidedWithCharacters =
+    const Alias_Game_CharacterBase_isCollidedWithCharacters =
       Game_CharacterBase.prototype.isCollidedWithCharacters;
     Game_CharacterBase.prototype.isCollidedWithCharacters = function (x, y) {
       return (
@@ -252,7 +252,7 @@ var $dataQMap = null;
     };
 
     Game_CharacterBase.prototype.isCollidedWithMapObj = function (x, y) {
-      var mapObjs = $gameMap._mapObjsWithColliders;
+      const mapObjs = $gameMap._mapObjsWithColliders;
       return mapObjs.some(function (mapObj) {
         return mapObj.intersectsWithSimple("collision", x, y);
       });
@@ -288,9 +288,9 @@ var $dataQMap = null;
      *  @param isQSprite [string]
      *  @param pose [string]
      */
-    for (var prop in objData) {
-      var propName = String(prop);
-      var value = objData[prop];
+    for (const prop in objData) {
+      let propName = String(prop);
+      let value = objData[prop];
       if (propName === "notes" || propName === "meta") {
         continue;
       }
@@ -320,7 +320,7 @@ var $dataQMap = null;
   };
 
   Game_MapObj.prototype.convertQSprite = function () {
-    var config = QSprite.json[this.isQSprite];
+    const config = QSprite.json[this.isQSprite];
     if (!config) return;
     this.anchorX = config.anchorX;
     this.anchorY = config.anchorY;
@@ -331,8 +331,8 @@ var $dataQMap = null;
   };
 
   Game_MapObj.prototype.initMembers = function () {
-    var tw = $gameMap.tileWidth();
-    var th = $gameMap.tileHeight();
+    const tw = $gameMap.tileWidth();
+    const th = $gameMap.tileHeight();
     this.x = this.px / tw;
     this.y = this.py / th;
     this.alpha = 1;
@@ -345,7 +345,7 @@ var $dataQMap = null;
 
   Game_MapObj.prototype.setupBreath = function () {
     if (!this.meta.breath) return;
-    var args = this.meta.breath.split(",").map(Number);
+    const args = this.meta.breath.split(",").map(Number);
     this._breathS = args[0] === undefined ? 1 : args[0] / 100;
     this._breathT = args[1] === undefined ? 60 : args[1];
     this._breathOT = args[2] === undefined ? 0 : args[2];
@@ -363,14 +363,14 @@ var $dataQMap = null;
   };
 
   Game_MapObj.prototype.screenX = function () {
-    var tw = $gameMap.tileWidth();
-    var x = $gameMap.adjustX(this.x);
+    const tw = $gameMap.tileWidth();
+    const x = $gameMap.adjustX(this.x);
     return Math.round(x * tw);
   };
 
   Game_MapObj.prototype.screenY = function () {
-    var th = $gameMap.tileHeight();
-    var y = $gameMap.adjustY(this.y);
+    const th = $gameMap.tileHeight();
+    const y = $gameMap.adjustY(this.y);
     return Math.round(y * th);
   };
 
@@ -415,11 +415,11 @@ var $dataQMap = null;
   Game_MapObj.prototype.update = function () {
     this.updateConditions();
     if (!this.visible) return;
-    var playerX = $gamePlayer._realX;
-    var playerY = $gamePlayer._realY;
+    const playerX = $gamePlayer._realX;
+    const playerY = $gamePlayer._realY;
     if (this._playerX !== playerX || this._playerY !== playerY) {
-      var dx = this._playerX - playerX;
-      var dy = this._playerY - playerY;
+      const dx = this._playerX - playerX;
+      const dy = this._playerY - playerY;
       this.updatePlayerMoved(dx, dy);
       this._playerX = playerX;
       this._playerY = playerY;
@@ -428,9 +428,9 @@ var $dataQMap = null;
   };
 
   Game_MapObj.prototype.updateConditions = function () {
-    var isOk = true;
-    for (var i = 0; i < this.conditions.length; i++) {
-      var cond = this.conditions[i];
+    let isOk = true;
+    for (let i = 0; i < this.conditions.length; i++) {
+      const cond = this.conditions[i];
       if (cond.type === "switch") {
         isOk = $gameSwitches.value(cond.value[0]) === cond.value[1];
       }
@@ -460,8 +460,8 @@ var $dataQMap = null;
   };
 
   Game_MapObj.prototype.updateBreath = function () {
-    var rt = (this._breathTick % this._breathT) / this._breathT;
-    var s = Math.sin(rt * Math.PI * 2) * this._breathS;
+    const rt = (this._breathTick % this._breathT) / this._breathT;
+    const s = Math.sin(rt * Math.PI * 2) * this._breathS;
     this.scale = new Point(1 + s, 1 + s);
     this._breathTick = (this._breathTick + 1) % this._breathT;
   };
@@ -478,19 +478,19 @@ var $dataQMap = null;
   };
 
   Game_MapObj.prototype.intersectsWithSimple = function (type, x1, y1) {
-    var bounds = this.getTileBounds(type);
-    var x2 = x1 + 0.9;
-    var y2 = y1 + 0.9;
-    var insideX1 =
+    const bounds = this.getTileBounds(type);
+    const x2 = x1 + 0.9;
+    const y2 = y1 + 0.9;
+    const insideX1 =
       (x1 >= bounds.x1 && x1 <= bounds.x2) ||
       (x2 >= bounds.x1 && x2 <= bounds.x2);
-    var insideY1 =
+    const insideY1 =
       (y1 >= bounds.y1 && y1 <= bounds.y2) ||
       (y2 >= bounds.y1 && y2 <= bounds.y2);
-    var insideX2 =
+    const insideX2 =
       (bounds.x1 >= x1 && bounds.x1 <= x2) ||
       (bounds.x2 >= x1 && bounds.x2 <= x2);
-    var insideY2 =
+    const insideY2 =
       (bounds.y1 >= y1 && bounds.y1 <= y2) ||
       (bounds.y2 >= x1 && bounds.y2 <= y2);
     return (insideX1 || insideX2) && (insideY1 || insideY2);
@@ -509,7 +509,7 @@ var $dataQMap = null;
   };
 
   Game_MapObj.prototype.removeColliders = function () {
-    for (var collider in this._colliders) {
+    for (const collider in this._colliders) {
       if (!this._colliders.hasOwnProperty(collider)) continue;
       if (typeof QMovement !== "undefined") {
         ColliderManager.remove(this._colliders[collider]);
@@ -520,7 +520,7 @@ var $dataQMap = null;
 
   Game_MapObj.prototype.setupColliders = function () {
     if (!$dataMap) return;
-    var configs = {};
+    let configs = {};
     this._colliders = {};
     if (this.meta.colliders) {
       configs = QPlus.stringToObj(this.meta.colliders);
@@ -528,7 +528,7 @@ var $dataQMap = null;
     if (this.meta.collider) {
       configs.default = QPlus.stringToAry(this.meta.collider);
     }
-    for (var collider in configs) {
+    for (const collider in configs) {
       if (!configs.hasOwnProperty(collider)) continue;
       this._colliders[collider] = this.convertToCollider(
         configs[collider],
@@ -544,12 +544,12 @@ var $dataQMap = null;
     if (typeof QMovement === "undefined") {
       return this.toSimpleCollider(arr);
     }
-    var collider = ColliderManager.convertToCollider(arr);
+    const collider = ColliderManager.convertToCollider(arr);
     collider.note = this.note;
     collider.isMapObj = true;
     collider.type = ctype;
-    var x1 = this.px + this.width * -this.anchorX;
-    var y1 = this.py + this.height * -this.anchorY;
+    const x1 = this.px + this.width * -this.anchorX;
+    const y1 = this.py + this.height * -this.anchorY;
     collider.moveTo(x1, y1);
     ColliderManager.addCollider(collider, -1, true);
     return collider;
@@ -570,12 +570,12 @@ var $dataQMap = null;
     if (this.collider(type)) {
       return this.getSimpleColliderBounds(type);
     }
-    var tw = $gameMap.tileWidth();
-    var th = $gameMap.tileHeight();
-    var x1 = this.x;
-    var y1 = this.y;
-    var x2 = x1 + this.width / tw;
-    var y2 = y1 + this.height / th;
+    const tw = $gameMap.tileWidth();
+    const th = $gameMap.tileHeight();
+    const x1 = this.x;
+    const y1 = this.y;
+    const x2 = x1 + this.width / tw;
+    const y2 = y1 + this.height / th;
     return {
       x1: x1,
       y1: y1,
@@ -585,13 +585,13 @@ var $dataQMap = null;
   };
 
   Game_MapObj.prototype.getSimpleColliderBounds = function (type) {
-    var collider = this.collider(type);
-    var tw = $gameMap.tileWidth();
-    var th = $gameMap.tileHeight();
-    var x1 = this.x + (this.width * -this.anchorX) / tw + collider.ox / tw;
-    var y1 = this.y + (this.height * -this.anchorY) / th + collider.oy / th;
-    var x2 = x1 + collider.width / tw;
-    var y2 = y1 + collider.height / th;
+    const collider = this.collider(type);
+    const tw = $gameMap.tileWidth();
+    const th = $gameMap.tileHeight();
+    const x1 = this.x + (this.width * -this.anchorX) / tw + collider.ox / tw;
+    const y1 = this.y + (this.height * -this.anchorY) / th + collider.oy / th;
+    const x2 = x1 + collider.width / tw;
+    const y2 = y1 + collider.height / th;
     return {
       x1: x1,
       y1: y1,
@@ -642,7 +642,7 @@ var $dataQMap = null;
 
   Sprite_MapObject.prototype.updateAnimation = function () {
     if (this._tick % this._mapObj.speed === 0) {
-      var isFinal = this._frameI === this._maxFrames - 1;
+      const isFinal = this._frameI === this._maxFrames - 1;
       this._frameI = (this._frameI + 1) % this._maxFrames;
       if (this._acceptedReq && isFinal) {
         if (this._acceptedReq === "once") {
@@ -660,9 +660,9 @@ var $dataQMap = null;
   };
 
   Sprite_MapObject.prototype.updateQSprite = function () {
-    var speed = this._mapObj._qSprite.speed;
+    const speed = this._mapObj._qSprite.speed;
     if (this._tick % speed === 0) {
-      var pattern = this._mapObj._qSprite.pattern;
+      const pattern = this._mapObj._qSprite.pattern;
       this._patternI = (this._patternI + 1) % pattern.length;
       this._frameI = pattern[this._patternI];
     }
@@ -672,9 +672,9 @@ var $dataQMap = null;
   Sprite_MapObject.prototype.updateBitmap = function () {
     if (this._filePath !== this._mapObj.filePath) {
       this._filePath = this._mapObj.filePath;
-      var path = this._filePath.split(/\/|\\/);
-      var fileName = path.pop().split(".");
-      var ext = fileName.pop();
+      let path = this._filePath.split(/\/|\\/);
+      const fileName = path.pop().split(".");
+      const ext = fileName.pop();
       path.push(encodeURIComponent(fileName.join(".")) + "." + ext);
       path = path.join("/");
       this.bitmap = ImageManager.loadBitmapFromUrl(path);
@@ -693,14 +693,14 @@ var $dataQMap = null;
       if (this._lastFrameI === this._frameI) return;
     }
     if (this._mapObj.type !== "full") {
-      var i = this._frameI;
-      var cols = this._mapObj.cols;
-      var rows = this._mapObj.rows;
-      var pw = this.bitmap.width / cols;
-      var ph = this.bitmap.height / rows;
-      var point = QPlus.indexToPoint(i, cols, rows);
-      var sx = point.x * pw;
-      var sy = point.y * ph;
+      const i = this._frameI;
+      const cols = this._mapObj.cols;
+      const rows = this._mapObj.rows;
+      const pw = this.bitmap.width / cols;
+      const ph = this.bitmap.height / rows;
+      const point = QPlus.indexToPoint(i, cols, rows);
+      const sx = point.x * pw;
+      const sy = point.y * ph;
       this.setFrame(sx, sy, pw, ph);
       this._lastFrameI = i;
     }
@@ -726,7 +726,7 @@ var $dataQMap = null;
   //-----------------------------------------------------------------------------
   // Spriteset_Map
 
-  var Alias_Spriteset_Map_createCharacters =
+  const Alias_Spriteset_Map_createCharacters =
     Spriteset_Map.prototype.createCharacters;
   Spriteset_Map.prototype.createCharacters = function () {
     Alias_Spriteset_Map_createCharacters.call(this);
@@ -735,14 +735,14 @@ var $dataQMap = null;
 
   Spriteset_Map.prototype.createMapObjs = function () {
     this._mapObjs = [];
-    var mapObjs = $gameMap._mapObjs;
-    for (var key in mapObjs) {
-      for (var i = 0; i < mapObjs[key].length; i++) {
+    const mapObjs = $gameMap._mapObjs;
+    for (const key in mapObjs) {
+      for (let i = 0; i < mapObjs[key].length; i++) {
         if (!mapObjs[key][i] || !mapObjs[key][i].filePath) continue;
         this._mapObjs.push(new Sprite_MapObject(mapObjs[key][i]));
       }
     }
-    for (i = 0; i < this._mapObjs.length; i++) {
+    for (let i = 0; i < this._mapObjs.length; i++) {
       this._tilemap.addChild(this._mapObjs[i]);
     }
   };
