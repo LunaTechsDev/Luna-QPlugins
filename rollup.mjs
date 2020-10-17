@@ -3,6 +3,7 @@ import jscc from "rollup-plugin-jscc";
 
 import { rollup } from "rollup";
 import { promises as fs } from "fs";
+import { existsSync } from "fs";
 
 const OUTPUT_DIR =
   process.env.NODE_ENV === "production" ? "./dist/" : "./games/";
@@ -55,6 +56,14 @@ const outputOptions = {
       return;
     }
     const paramsData = await fs.readFile(`./src/${dir}/Params.js`, "utf8");
+    let mvParamsData = null;
+    const mvParamsExist = existsSync(`./src/${dir}/ParamsMV.js`);
+
+    if (mvParamsExist) {
+      mvParamsData = await fs.readFile(`./src/${dir}/ParamsMV.js`, "utf8");
+    } else {
+      mvParamsData = null;
+    }
     const exportName = await getPluginTag(paramsData, "exportName");
 
     const bundleMZ = await rollup({
@@ -108,7 +117,7 @@ const outputOptions = {
 
     await bundleMV.write({
       banner: async () => {
-        return await fs.readFile(`./src/${dir}/Params.js`, "utf8");
+        return mvParamsData ? mvParamsData : paramsData;
       },
       name: exportName ? exportName : "",
       file: `${OUTPUT_DIR}/mv/js/plugins/Luna_${dir}MV.js`,
