@@ -111,7 +111,7 @@ const outputOptions = {
         return await fs.readFile(`./src/${dir}/Params.js`, "utf8");
       },
       name: exportName ? exportName : "",
-      file: `${OUTPUT_DIR}/mv/js/plugins/Luna_${dir}.js`,
+      file: `${OUTPUT_DIR}/mv/js/plugins/Luna_${dir}MV.js`,
       ...outputOptions,
     });
   });
