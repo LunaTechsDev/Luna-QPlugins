@@ -947,6 +947,7 @@ Game_CharacterBase.prototype.moveColliders = function (x, y) {
   const prev = this._colliders["bounds"].sectorEdge();
   for (const collider in this._colliders) {
     if (this._colliders.hasOwnProperty(collider)) {
+      console.log(this._colliders[collider]);
       this._colliders[collider].moveTo(x, y);
     }
   }
