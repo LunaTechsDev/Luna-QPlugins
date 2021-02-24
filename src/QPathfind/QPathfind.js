@@ -6,7 +6,8 @@ _PARAMS._SMARTWAIT = _PARAMS["Smart Wait"];
 _PARAMS._DASHONMOUSE = _PARAMS["Dash on Mouse"];
 _PARAMS._ANYANGLE = _PARAMS["Any Angle"];
 
-if (_PARAMS._ANYANGLE && typeof QMovement !== "undefined") _PARAMS._DIAGONALS = false;
+if (_PARAMS._ANYANGLE && typeof QMovement !== "undefined")
+  _PARAMS._DIAGONALS = false;
 _PARAMS._DEFAULTOPTIONS = {
   smart: 0, // 0 no smart, 1 recalc on blocked, 2 recalc at intervals
   chase: undefined, // charaID of character it's chasing
@@ -61,7 +62,7 @@ QPathfind.prototype.initMembers = function (charaId, endPoint, options) {
     this.options.adjustEnd = false;
   }
   if (options.chase !== undefined) {
-    var chasing = QPlus.getCharacter(options.chase);
+    const chasing = QPlus.getCharacter(options.chase);
     if (!chasing) {
       return this.character().clearPathfind();
     }
@@ -71,7 +72,7 @@ QPathfind.prototype.initMembers = function (charaId, endPoint, options) {
       endPoint = new Point(chasing.x, chasing.y);
     }
   }
-  var startPoint;
+  let startPoint;
   if (typeof QMovement !== "undefined") {
     this._mapWidth = $gameMap.width() * QMovement.tileSize;
     startPoint = new Point(this.character().px, this.character().py);
@@ -104,9 +105,9 @@ QPathfind.prototype.initMembers = function (charaId, endPoint, options) {
 
 QPathfind.prototype.beforeStart = function () {
   if (_PARAMS._DEBUG) console.time("Pathfind");
-  var x = this._endNode.x;
-  var y = this._endNode.y;
-  var canPass = true;
+  const x = this._endNode.x;
+  const y = this._endNode.y;
+  let canPass = true;
   if (typeof QMovement !== "undefined") {
     canPass = this.character().canPixelPass(x, y, 5, null, "_pathfind");
   } else {
@@ -125,17 +126,17 @@ QPathfind.prototype.beforeStart = function () {
 };
 
 QPathfind.prototype.adjustEndNode = function () {
-  var x1 = this._endNode.x;
-  var y1 = this._endNode.y;
-  var x2 = x1;
-  var y2 = y1;
-  var steps = 0;
-  var horz = 0;
-  var vert = 0;
-  var maxDist = typeof QMovement !== "undefined" ? QMovement.tileSize : 1;
-  var neighbors = [];
-  var dirs = _PARAMS._DIAGONALS ? 9 : 5;
-  for (var i = 1; i < dirs; i++) {
+  const x1 = this._endNode.x;
+  const y1 = this._endNode.y;
+  let x2 = x1;
+  let y2 = y1;
+  let steps = 0;
+  let horz = 0;
+  let vert = 0;
+  const maxDist = typeof QMovement !== "undefined" ? QMovement.tileSize : 1;
+  const neighbors = [];
+  const dirs = _PARAMS._DIAGONALS ? 9 : 5;
+  for (let i = 1; i < dirs; i++) {
     if (i < 5) {
       horz = vert = i * 2;
     } else {
@@ -172,17 +173,17 @@ QPathfind.prototype.adjustEndNode = function () {
       !this.character().canPixelPass(x2, y2, 5, null, "_pathfind")
     )
       continue;
-    var distx1 =
+    const distx1 =
       typeof QMovement !== "undefined"
         ? Math.abs(this.character().px - x2)
         : Math.abs(this.character().x - x2);
-    var distx2 = Math.abs(x1 - x2);
-    var disty1 =
+    const distx2 = Math.abs(x1 - x2);
+    const disty1 =
       typeof QMovement !== "undefined"
         ? Math.abs(this.character().py - y2)
         : Math.abs(this.character().y - y2);
-    var disty2 = Math.abs(y1 - y2);
-    var score = this.heuristic(
+    const disty2 = Math.abs(y1 - y2);
+    const score = this.heuristic(
       new Point(distx1, disty1),
       new Point(distx2, disty2)
     );
@@ -218,19 +219,22 @@ QPathfind.prototype.update = function () {
   if (this._completed && this.options.smart > 1) {
     this.updateSmart();
   } else if (!this._completed) {
-    var stepsPerFrame = this._intervals;
+    let stepsPerFrame = this._intervals;
     if (this.options.towards) {
       stepsPerFrame = Math.min(stepsPerFrame, 100);
     }
-    var ti;
+    let ti;
     if (_PARAMS._SMARTINTERVAL) {
       ti = Date.now();
       stepsPerFrame = 20000; // random large num
     }
-    for (var i = 0; i < stepsPerFrame; i++) {
+    for (let i = 0; i < stepsPerFrame; i++) {
+      let chasing = null
+      let oldThrough = null
+
       if (this.options.chase !== undefined) {
-        var chasing = QPlus.getCharacter(this.options.chase);
-        var oldThrough = chasing._through;
+        chasing = QPlus.getCharacter(this.options.chase);
+        oldThrough = chasing._through;
         chasing.setThrough(true);
       }
       this.aStar();
@@ -244,7 +248,7 @@ QPathfind.prototype.update = function () {
         break;
       }
       if (_PARAMS._SMARTINTERVAL) {
-        var dt = Date.now() - ti;
+        const dt = Date.now() - ti;
         if (i !== 0 && dt >= 16.67 / (QPathfind._pathfinders + 1)) {
           break;
         }
@@ -259,15 +263,15 @@ QPathfind.prototype.update = function () {
 QPathfind.prototype.updateSmart = function () {
   // TODO try to make this even "smarter"
   this._tick++;
-  var ot = 0;
+  let ot = 0;
   if (!this._forceReq && this.options.chase !== undefined) {
     // TODO return if already touching the character it's chasing
     // TODO if character hasn't moved in X frames force a restart
-    var chasing = QPlus.getCharacter(this.options.chase);
-    var p1 = new Point(chasing.x, chasing.y);
-    var p2 = new Point(this.character().x, this.character().y);
-    var dist = this.heuristic(p1, p2);
-    var range = 5;
+    const chasing = QPlus.getCharacter(this.options.chase);
+    const p1 = new Point(chasing.x, chasing.y);
+    const p2 = new Point(this.character().x, this.character().y);
+    const dist = this.heuristic(p1, p2);
+    const range = 5;
     if (dist > range) {
       ot = _SMARTOT;
     }
@@ -292,19 +296,19 @@ QPathfind.prototype.updateSmart = function () {
 QPathfind.prototype.requestRestart = function (ot) {
   if (!this._completed) return;
   if (this.options.chase !== undefined) {
-    var chasing = QPlus.getCharacter(this.options.chase);
+    const chasing = QPlus.getCharacter(this.options.chase);
     if (!chasing) return this.character().clearPathfind();
-    var dx = chasing.cx() - this.character().cx();
-    var dy = chasing.cy() - this.character().cy();
-    var radian = Math.atan2(dy, dx);
-    var x2 =
+    const dx = chasing.cx() - this.character().cx();
+    const dy = chasing.cy() - this.character().cy();
+    const radian = Math.atan2(dy, dx);
+    const x2 =
       this.character().px + Math.cos(radian) * this.character().moveTiles();
-    var y2 =
+    const y2 =
       this.character().py + Math.sin(radian) * this.character().moveTiles();
-    var colliderA = this.character().collider("collision");
-    var colliderB = chasing.collider("collision");
+    const colliderA = this.character().collider("collision");
+    const colliderB = chasing.collider("collision");
     colliderA.moveTo(x2, y2);
-    var collided = colliderA.intersects(colliderB);
+    const collided = colliderA.intersects(colliderB);
     colliderA.moveTo(this.character().px, this.character().py);
     if (collided) return;
   }
@@ -327,8 +331,8 @@ QPathfind.prototype.node = function (parent, point) {
 };
 
 QPathfind.prototype.getNodeAt = function (current, x, y) {
-  var node;
-  var val = x + y * this._mapWidth;
+  let node;
+  const val = x + y * this._mapWidth;
   if (this._grid[val]) {
     node = this._grid[val];
   } else {
@@ -343,8 +347,8 @@ QPathfind.prototype.character = function () {
 };
 
 QPathfind.prototype.aStar = function () {
-  var currI = 0;
-  var i, j;
+  let currI = 0;
+  let i, j;
   this._current = this._openNodes[0];
   j = this._openNodes.length;
   for (i = 0; i < j; i++) {
@@ -358,11 +362,11 @@ QPathfind.prototype.aStar = function () {
   }
   this._openNodes.splice(currI, 1);
   this._closed[this._current.value] = true;
-  var neighbors = this.findNeighbors(this._current);
+  const neighbors = this.findNeighbors(this._current);
   j = neighbors.length;
   for (i = 0; i < j; i++) {
     if (this._closed[neighbors[i].value]) continue;
-    var gScore = this._current.g + this.heuristic(this._current, neighbors[i]);
+    const gScore = this._current.g + this.heuristic(this._current, neighbors[i]);
     if (!neighbors[i].visited) {
       neighbors[i].visited = true;
       this._openNodes.push(neighbors[i]);
@@ -376,40 +380,44 @@ QPathfind.prototype.aStar = function () {
 };
 
 QPathfind.prototype.findNeighbors = function (current) {
-  var chara = this.character();
-  var x = current.x;
-  var y = current.y;
-  var xf = this._endNode.x;
-  var yf = this._endNode.y;
-  var neighbors = [];
-  var stepDist = 1;
+  const chara = this.character();
+  const x = current.x;
+  const y = current.y;
+  const xf = this._endNode.x;
+  const yf = this._endNode.y;
+  const neighbors = [];
+  let stepDist = 1;
+  let tiles = null
   if (typeof QMovement !== "undefined") {
     stepDist = chara.moveTiles();
-    var nearEnd =
+    const nearEnd =
       Math.abs(x - xf) < chara.optTiles() &&
       Math.abs(y - yf) < chara.optTiles();
-    var tiles = nearEnd ? chara.moveTiles() : chara.optTiles();
+      tiles = nearEnd ? chara.moveTiles() : chara.optTiles();
   }
-  var i;
-  var j = !typeof QMovement !== "undefined" && _PARAMS._DIAGONALS ? 8 : 4;
-  var dirs = [2, 4, 6, 8, 1, 3, 7, 9];
-  var diags = {
+  let i;
+  const j = !typeof QMovement !== "undefined" && _PARAMS._DIAGONALS ? 8 : 4;
+  const dirs = [2, 4, 6, 8, 1, 3, 7, 9];
+  const diags = {
     1: [4, 2],
     3: [6, 2],
     7: [4, 8],
     9: [6, 8],
   };
   for (i = 0; i < j; i++) {
-    var dir = dirs[i];
-    var horz = dirs[i];
-    var vert = dirs[i];
+    const dir = dirs[i];
+    let horz = dirs[i];
+    let vert = dirs[i];
     if (i >= 4) {
       horz = diags[dir][0];
       vert = diags[dir][1];
     }
-    var passed = false;
-    var onEnd = false;
-    var x2, y2;
+    let passed = false;
+    const onEnd = false;
+
+    let x2 = 0;
+    let y2 = 0;
+
     if (typeof QMovement !== "undefined") {
       x2 = $gameMap.roundPXWithDirection(x, horz, tiles);
       y2 = $gameMap.roundPYWithDirection(y, vert, tiles);
@@ -428,9 +436,9 @@ QPathfind.prototype.findNeighbors = function (current) {
         passed = chara.canPass(x, y, dir);
       }
     }
-    var val = x2 + y2 * this._mapWidth;
+    const val = x2 + y2 * this._mapWidth;
     if (passed || val === this._endNode.value) {
-      var node = this.getNodeAt(current, x2, y2);
+      const node = this.getNodeAt(current, x2, y2);
       if (typeof QMovement !== "undefined") {
         if (Math.abs(x2 - xf) < stepDist && Math.abs(y2 - yf) < stepDist) {
           // this is as close as we can get
@@ -451,7 +459,7 @@ QPathfind.prototype.onComplete = function () {
   this._failed = false;
   this._grid = {};
   if (this.options.towards) {
-    var firstSteps = this.createFinalPath().slice(0, 3);
+    const firstSteps = this.createFinalPath().slice(0, 3);
     return this.character().startPathfind(firstSteps);
   }
   this.character().startPathfind(this.createFinalPath());
@@ -473,10 +481,10 @@ QPathfind.prototype.onFail = function () {
 };
 
 QPathfind.prototype.createFinalPath = function () {
-  var node = this._current;
-  var path = [node];
+  let node = this._current;
+  const path = [node];
   while (node.parent) {
-    var next = node.parent;
+    let next = node.parent;
     if (_PARAMS._ANYANGLE && $gameMap.offGrid()) {
       while (
         next.parent &&
@@ -492,11 +500,11 @@ QPathfind.prototype.createFinalPath = function () {
       }
     } else if (_PARAMS._DIAGONALS) {
       while (next.parent) {
-        var dx = node.x - next.parent.x;
-        var dy = node.y - next.parent.y;
-        var rad = Math.atan2(dy, dx);
+        const dx = node.x - next.parent.x;
+        const dy = node.y - next.parent.y;
+        let rad = Math.atan2(dy, dx);
         rad += rad < 0 ? Math.PI * 2 : 0;
-        var deg = Math.floor((rad * 180) / Math.PI);
+        const deg = Math.floor((rad * 180) / Math.PI);
         if (
           [45, 135, 225, 315].contains(deg) &&
           this.character().canPassToFrom(
@@ -521,27 +529,27 @@ QPathfind.prototype.createFinalPath = function () {
 
 // http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html
 QPathfind.prototype.heuristic = function (initial, final) {
-  var dx = Math.abs(initial.x - final.x);
-  var dy = Math.abs(initial.y - final.y);
+  const dx = Math.abs(initial.x - final.x);
+  const dy = Math.abs(initial.y - final.y);
   if (!_PARAMS._DIAGONALS) {
     return dx + dy;
   } else {
-    var D = 1;
-    var D2 = Math.sqrt(2);
+    const D = 1;
+    const D2 = Math.sqrt(2);
     return D * (dx + dy) + (D2 - 2 * D) * Math.min(dx, dy);
   }
 };
 
 // static
 QPathfind.pathToRoute = function (chara, path) {
-  var route = {
+  const route = {
     list: [],
     repeat: false,
     skippable: false,
     wait: false,
   };
-  var current = path[0];
-  var codes = {
+  let current = path[0];
+  const codes = {
     2: 1,
     4: 2,
     6: 3,
@@ -551,15 +559,17 @@ QPathfind.pathToRoute = function (chara, path) {
     7: 7,
     9: 8,
   };
-  for (var i = 1; i < path.length; i++) {
+  for (let i = 1; i < path.length; i++) {
     if (!path[i]) break;
-    var sx = current.x - path[i].x;
-    var sy = current.y - path[i].y;
-    var dist, dir;
+    const sx = current.x - path[i].x;
+    const sy = current.y - path[i].y;
+    let dist = null
+    let dir = null
+
     if (sx !== 0 && sy !== 0) {
       // diag
-      var horz = sx > 0 ? 4 : 6;
-      var vert = sy > 0 ? 8 : 2;
+      const horz = sx > 0 ? 4 : 6;
+      const vert = sy > 0 ? 8 : 2;
       if (horz === 4 && vert === 8) dir = 7;
       if (horz === 4 && vert === 2) dir = 1;
       if (horz === 6 && vert === 8) dir = 9;
@@ -574,10 +584,10 @@ QPathfind.pathToRoute = function (chara, path) {
       dir = sy > 0 ? 8 : 2;
       dist = Math.abs(sy);
     }
-    var command = {};
+    const command = {};
     if (typeof QMovement !== "undefined") {
       if (_PARAMS._ANYANGLE && $gameMap.offGrid()) {
-        var radian = Math.atan2(-sy, -sx);
+        let radian = Math.atan2(-sy, -sx);
         if (radian < 0) radian += Math.PI * 2;
         dist = Math.sqrt(sx * sx + sy * sy);
         command.code = Game_Character.ROUTE_SCRIPT;

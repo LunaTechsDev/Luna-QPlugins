@@ -1,7 +1,7 @@
 import { _PARAMS } from '../QPathfind'
 
 if (typeof QMovement !== "undefined") {
-  var Alias_Scene_Map_updateDestination = Scene_Map.prototype.updateDestination;
+  const Alias_Scene_Map_updateDestination = Scene_Map.prototype.updateDestination;
   Scene_Map.prototype.updateDestination = function () {
     Alias_Scene_Map_updateDestination.call(this);
     if (!this.isMapTouchOk()) {
@@ -9,7 +9,7 @@ if (typeof QMovement !== "undefined") {
     }
   };
 
-  var Alias_Game_Player_requestMouseMove =
+  const Alias_Game_Player_requestMouseMove =
     Game_Player.prototype.requestMouseMove;
   Game_Player.prototype.requestMouseMove = function () {
     if (this._pathfind && !this._pathfind._completed) {
@@ -19,16 +19,16 @@ if (typeof QMovement !== "undefined") {
     Alias_Game_Player_requestMouseMove.call(this);
   };
 
-  var Alias_Game_Player_moveByMouse = Game_Player.prototype.moveByMouse;
+  const Alias_Game_Player_moveByMouse = Game_Player.prototype.moveByMouse;
   Game_Player.prototype.moveByMouse = function (x, y) {
     if (!Alias_Game_Player_moveByMouse.call(this, x, y)) {
       return false;
     }
-    var half = QMovement.tileSize / 2;
-    var x2 = x - half;
-    var y2 = y - half;
-    var dx = Math.abs(this._px - x2);
-    var dy = Math.abs(this._py - y2);
+    const half = QMovement.tileSize / 2;
+    const x2 = x - half;
+    const y2 = y - half;
+    const dx = Math.abs(this._px - x2);
+    const dy = Math.abs(this._py - y2);
     if (dx + dy < this.optTiles()) {
       this.clearMouseMove();
       return false;
@@ -43,7 +43,7 @@ if (typeof QMovement !== "undefined") {
     return true;
   };
 
-  var Alias_Game_Player_clearMouseMove = Game_Player.prototype.clearMouseMove;
+  const Alias_Game_Player_clearMouseMove = Game_Player.prototype.clearMouseMove;
   Game_Player.prototype.clearMouseMove = function () {
     if (this._movingWithMouse && this._isPathfinding) this.clearPathfind();
     Alias_Game_Player_clearMouseMove.call(this);

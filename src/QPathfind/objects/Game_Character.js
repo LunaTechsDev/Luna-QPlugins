@@ -32,10 +32,10 @@ Game_Character.prototype.isSamePathfind = function (x, y, options) {
   if (options.chase !== undefined) {
     return options.chase !== this._isChasing;
   }
-  var oldX1 = this._pathfind._originalEnd.x;
-  var oldY1 = this._pathfind._originalEnd.y;
-  var oldX2 = this._pathfind._endNode.x;
-  var oldY2 = this._pathfind._endNode.y;
+  const oldX1 = this._pathfind._originalEnd.x;
+  const oldY1 = this._pathfind._originalEnd.y;
+  const oldX2 = this._pathfind._endNode.x;
+  const oldY2 = this._pathfind._endNode.y;
   if ((x === oldX1 && y === oldY1) || (x === oldX2 && y === oldY2)) {
     return false;
   }
@@ -44,13 +44,13 @@ Game_Character.prototype.isSamePathfind = function (x, y, options) {
 
 Game_Character.prototype.restartPathfind = function () {
   if (!this._pathfind._completed) return;
-  var x = this._pathfind._endNode.x;
-  var y = this._pathfind._endNode.y;
+  const x = this._pathfind._endNode.x;
+  const y = this._pathfind._endNode.y;
   this._isPathfinding = false;
   if (this._moveRoute) {
     this.processRouteEnd();
   }
-  var options = this._pathfind.options;
+  const options = this._pathfind.options;
   this._isChasing = options.chase !== undefined ? options.chase : false;
   this._pathfind = new QPathfind(this.charaId(), new Point(x, y), options);
 };
@@ -62,7 +62,7 @@ Game_Character.prototype.startPathfind = function (path) {
 
 Game_Character.prototype.onPathfindComplete = function () {
   if (this._isChasing !== false) {
-    var chara = QPlus.getCharacter(this._isChasing);
+    const chara = QPlus.getCharacter(this._isChasing);
     if (chara) {
       this._isPathfinding = false;
       this.processRouteEnd();
@@ -85,7 +85,7 @@ Game_Character.prototype.clearPathfind = function () {
   }
 };
 
-var Alias_Game_Character_processRouteEnd =
+const Alias_Game_Character_processRouteEnd =
   Game_Character.prototype.processRouteEnd;
 Game_Character.prototype.processRouteEnd = function () {
   Alias_Game_Character_processRouteEnd.call(this);
@@ -94,7 +94,7 @@ Game_Character.prototype.processRouteEnd = function () {
   }
 };
 
-var Alias_Game_Character_isMoveRouteForcing =
+const Alias_Game_Character_isMoveRouteForcing =
   Game_Character.prototype.isMoveRouteForcing;
 Game_Character.prototype.isMoveRouteForcing = function () {
   if (this._isPathfinding && this._pathfind.options.breakable) {
@@ -103,11 +103,11 @@ Game_Character.prototype.isMoveRouteForcing = function () {
   return Alias_Game_Character_isMoveRouteForcing.call(this);
 };
 
-var Alias_Game_Character_advanceMoveRouteIndex =
+const Alias_Game_Character_advanceMoveRouteIndex =
   Game_Character.prototype.advanceMoveRouteIndex;
 Game_Character.prototype.advanceMoveRouteIndex = function () {
   if (this._isPathfinding) {
-    var moveRoute = this._moveRoute;
+    const moveRoute = this._moveRoute;
     if (
       moveRoute &&
       !this.isMovementSucceeded() &&

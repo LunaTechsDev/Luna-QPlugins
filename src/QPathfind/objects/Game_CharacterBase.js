@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
 // Game_CharacterBase
 
-var Alias_Game_CharacterBase_initMembers =
+const Alias_Game_CharacterBase_initMembers =
   Game_CharacterBase.prototype.initMembers;
 Game_CharacterBase.prototype.initMembers = function () {
   Alias_Game_CharacterBase_initMembers.call(this);
@@ -10,7 +10,7 @@ Game_CharacterBase.prototype.initMembers = function () {
   this._isChasing = false;
 };
 
-var Alias_Game_CharacterBase_update = Game_CharacterBase.prototype.update;
+const Alias_Game_CharacterBase_update = Game_CharacterBase.prototype.update;
 Game_CharacterBase.prototype.update = function () {
   Alias_Game_CharacterBase_update.call(this);
   if (this._pathfind) {
@@ -18,7 +18,7 @@ Game_CharacterBase.prototype.update = function () {
   }
 };
 
-var Alias_Game_CharacterBase_setPosition =
+const Alias_Game_CharacterBase_setPosition =
   Game_CharacterBase.prototype.setPosition;
 Game_CharacterBase.prototype.setPosition = function (x, y) {
   Alias_Game_CharacterBase_setPosition.call(this, x, y);
@@ -28,10 +28,10 @@ Game_CharacterBase.prototype.setPosition = function (x, y) {
 };
 
 if (typeof QMovement !== "undefined") {
-  var Alias_Game_CharacterBase_ignoreCharacters =
+  const Alias_Game_CharacterBase_ignoreCharacters =
     Game_CharacterBase.prototype.ignoreCharacters;
   Game_CharacterBase.prototype.ignoreCharacters = function (type) {
-    var ignores = Alias_Game_CharacterBase_ignoreCharacters.call(this, type);
+    const ignores = Alias_Game_CharacterBase_ignoreCharacters.call(this, type);
     if (this._isChasing !== false && type === "_pathfind") {
       ignores.push(Number(this._isChasing));
     }
@@ -43,8 +43,8 @@ if (typeof QMovement !== "undefined") {
       return this.moveTiles();
     }
     if (!this._optTiles) {
-      var w = Math.round(this.collider("collision").width);
-      var h = Math.round(this.collider("collision").height);
+      let w = Math.round(this.collider("collision").width);
+      let h = Math.round(this.collider("collision").height);
       while (w % this.moveTiles() !== 0) {
         w--;
         if (w <= this.moveTiles()) break;
@@ -58,11 +58,11 @@ if (typeof QMovement !== "undefined") {
     return this._optTiles;
   };
 
-  var Alias_Game_CharacterBase_setupColliders =
+  const Alias_Game_CharacterBase_setupColliders =
     Game_CharacterBase.prototype.setupColliders;
   Game_CharacterBase.prototype.setupColliders = function () {
     Alias_Game_CharacterBase_setupColliders.call(this);
-    var collider = this.collider("collision");
+    const collider = this.collider("collision");
     // this._colliders["_pathfind"] = JsonEx.parse(JsonEx.stringify(collider));
     this._optTiles = null;
   };

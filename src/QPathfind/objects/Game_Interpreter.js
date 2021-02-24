@@ -1,10 +1,10 @@
 //-----------------------------------------------------------------------------
 // Game_Interpreter
 
-var Alias_Game_Interpreter_updateWaitMode =
+const Alias_Game_Interpreter_updateWaitMode =
   Game_Interpreter.prototype.updateWaitMode;
 Game_Interpreter.prototype.updateWaitMode = function () {
-  var waiting = false;
+  let waiting = false;
   if (this._waitMode === "pathfind") {
     waiting = this._character._pathfind || this._character._isPathfinding;
     if (!waiting) {
@@ -14,7 +14,7 @@ Game_Interpreter.prototype.updateWaitMode = function () {
   return waiting || Alias_Game_Interpreter_updateWaitMode.call(this);
 };
 
-var Alias_Game_Interpreter_pluginCommand =
+const Alias_Game_Interpreter_pluginCommand =
   Game_Interpreter.prototype.pluginCommand;
 Game_Interpreter.prototype.pluginCommand = function (command, args) {
   if (command.toLowerCase() === "qpathfind") {
@@ -27,14 +27,14 @@ Game_Interpreter.prototype.qPathfindCommand = function (args) {
   // qPathfind CHARAID X Y
   // qPathfind CHARAID chase CHARAID2
   // qPathfind CHARAID clear
-  var chara;
+  let chara;
   if (args[0].toLowerCase() === "this") {
     chara = this.character(0);
   } else {
     chara = QPlus.getCharacter(args[0]);
   }
   if (!chara) return;
-  var args2 = args.slice(1);
+  const args2 = args.slice(1);
   if (args2[0].toLowerCase() === "chase") {
     if (args2[1].toLowerCase() === "this") {
       chara.initChase(this.character(0).charaId());
@@ -47,17 +47,17 @@ Game_Interpreter.prototype.qPathfindCommand = function (args) {
     chara.clearPathfind();
     return;
   }
-  var x;
-  var y;
+  let x;
+  let y;
   if (args2[0].toLowerCase() === "towards") {
-    var chara2;
+    let chara2;
     if (args2[1].toLowerCase() === "this") {
       chara2 = this.character(0);
     } else {
       chara2 = QPlus.getCharacter(args2[1]);
     }
     if (typeof QMovement !== "undefined") {
-      var pos = chara.centerWith(chara2);
+      const pos = chara.centerWith(chara2);
       x = pos.x;
       y = pos.y;
     } else {
@@ -85,7 +85,7 @@ Game_Interpreter.prototype.qPathfindCommand = function (args) {
     smart: Number(QPlus.getArg(args2, /^smart(\d+)/i)),
     adjustEnd: true,
   });
-  var wait = QPlus.getArg(args2, /^wait$/i);
+  const wait = QPlus.getArg(args2, /^wait$/i);
   if (wait) {
     this._character = chara;
     this.setWaitMode("pathfind");
