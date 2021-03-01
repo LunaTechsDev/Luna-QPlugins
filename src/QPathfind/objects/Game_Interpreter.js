@@ -1,6 +1,4 @@
-//-----------------------------------------------------------------------------
-// Game_Interpreter
-
+//#if _MV
 const Alias_Game_Interpreter_updateWaitMode =
   Game_Interpreter.prototype.updateWaitMode;
 Game_Interpreter.prototype.updateWaitMode = function () {
@@ -24,7 +22,7 @@ Game_Interpreter.prototype.pluginCommand = function (command, args) {
 };
 
 Game_Interpreter.prototype.qPathfindCommand = function (args) {
-  // qPathfind CHARAID X Y
+  // qPathfind CHARAID X 
   // qPathfind CHARAID chase CHARAID2
   // qPathfind CHARAID clear
   let chara;
@@ -91,3 +89,4 @@ Game_Interpreter.prototype.qPathfindCommand = function (args) {
     this.setWaitMode("pathfind");
   }
 };
+//#endif

@@ -4,7 +4,6 @@
  * @author LunaTechs | Quxios
  * @url https://lunatechs.dev/luna-qplugins
  *
- * @target MZ
  *
  * @param Diagonals
  * @desc Set to true or false to enable diagonals in the route
@@ -40,60 +39,6 @@
  * MV Default: true
  * @type Boolean
  * @default true
- * 
- * @command move
- * @desc Perform a move route using the pathfinding algorithm
- * 
- * @arg charId
- * @desc The character identifier (For player use 0, p, or player, for events use event ID or this)
- * @type note
- * @default player
- * 
- * @arg x
- * @desc The x tile/pixel you want the character to move to
- * @type note
- * @default 0
- * 
- * @arg y
- * @desc The y tile/pixel you want the character to move to
- * @type note
- * @default 0
- * 
- * @command towards
- * @desc Perform a pathfind towards another character.
- * 
- * @arg charId
- * @desc The character identifier (For player use 0, p, or player, for events use event ID or this)
- * @type note
- * @default player
- * 
- * @arg targetCharId
- * @desc The character identifier (For player use 0, p, or player, for events use event ID or this)
- * @type note
- * @default player
- * 
- * @arg x
- * @desc The x tile/pixel you want the character to move to
- * @type note
- * @default 0
- * 
- * @arg y
- * @desc The y tile/pixel you want the character to move to
- * @type note
- * @default 0
- * 
- * @command chase
- * @desc Perform a pathfind towards another character.
- * 
- * @arg charId
- * @desc The character identifier (For player use 0, p, or player, for events use event ID or this)
- * @type note
- * @default player
- * 
- * @arg targetCharId
- * @desc The character identifier (For player use 0, p, or player, for events use event ID or this)
- * @type note
- * @default player
  *
  * @help
  * ============================================================================

@@ -11,6 +11,7 @@ import "./managers/SceneManager";
 import "./objects/Game_CharacterBase";
 import "./objects/Game_Event";
 import "./objects/Game_Interpreter";
+
 import "./objects/Game_Map";
 import "./objects/Game_Player";
 import "./objects/Game_Temp";
