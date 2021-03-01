@@ -273,7 +273,7 @@ QPathfind.prototype.updateSmart = function () {
     const dist = this.heuristic(p1, p2);
     const range = 5;
     if (dist > range) {
-      ot = _SMARTOT;
+      ot = _PARAMS._SMARTOT;
     }
     if (!this.options.towards && !this._failed) {
       // If endpoint hasn't changed, no need to recalc
